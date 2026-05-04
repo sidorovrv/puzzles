@@ -41,6 +41,7 @@
 
   // ── Load image ────────────────────────────────────
   const img = new Image();
+  img.crossOrigin = 'anonymous';
   img.src = puzzleMeta.file;
   await new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
 

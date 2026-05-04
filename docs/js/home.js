@@ -13,6 +13,7 @@ const CATEGORIES = [
   { id: 'landmarks', label: 'Архитектура', icon: '🗼' },
   { id: 'food',      label: 'Еда',         icon: '🍕' },
   { id: 'objects',   label: 'Предметы',    icon: '📷' },
+  { id: 'art',       label: 'Живопись',    icon: '🖼️' },
 ];
 
 let _puzzles = [];
@@ -27,7 +28,6 @@ async function initHome() {
 
   renderFeatured();
   renderGrid('main-grid', _puzzles.slice(0, 12));
-  renderDailyTab();
   renderCategoriesSidebar();
   renderCategoriesGrid('all');
   renderMyPuzzles();
@@ -94,7 +94,7 @@ function switchTab(tabId) {
   const btn = document.querySelector(`.bottom-nav__tab[data-tab="${tabId}"]`);
   if (btn) btn.classList.add('active');
 
-  const titles = { main: 'Главная', daily: 'Пазл дня', categories: 'Категории', my: 'Мои пазлы' };
+  const titles = { main: 'Главная', categories: 'Категории', my: 'Мои пазлы' };
   document.getElementById('top-bar-title').textContent = titles[tabId] || '';
 }
 
@@ -110,7 +110,7 @@ function renderFeatured() {
     <div class="featured-card featured-card--daily" data-puzzle-id="${daily.id}">
       <div class="featured-card__label">Пазл дня</div>
       <div class="featured-card__title">${formatDate()}</div>
-      <img class="featured-card__thumb" src="${daily.thumb}" alt="${daily.title}">
+      <img class="featured-card__thumb" src="${daily.thumb}" alt="${daily.title}" onerror="this.style.display='none'">
     </div>
     <div class="featured-card featured-card--collection">
       <div class="featured-card__label">Коллекция</div>
@@ -163,18 +163,11 @@ function puzzleCardHTML(p) {
 
   return `
     <div class="puzzle-card" data-puzzle-id="${p.id}">
-      <img src="${p.thumb}" alt="${p.title}" loading="lazy">
+      <img src="${p.thumb}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">
       ${badge}
       ${lock}
     </div>
   `;
-}
-
-// ── Daily tab ─────────────────────────────────────────────────────────────────
-
-function renderDailyTab() {
-  const daily = getDailyPuzzle();
-  renderGrid('daily-grid', [daily]);
 }
 
 // ── Categories ────────────────────────────────────────────────────────────────
@@ -228,8 +221,11 @@ function openModal(puzzle) {
   _activePuzzle = puzzle;
   _selectedDiff = 144;
 
-  document.getElementById('modal-img').src   = puzzle.file;
-  document.getElementById('modal-img').alt   = puzzle.title;
+  const imgEl = document.getElementById('modal-img');
+  imgEl.style.display = '';
+  imgEl.onerror = () => { imgEl.style.display = 'none'; };
+  imgEl.src = puzzle.file;
+  imgEl.alt = puzzle.title;
   document.getElementById('modal-puzzle-title').textContent = puzzle.title;
 
   renderDiffButtons();
@@ -299,8 +295,10 @@ function startPuzzle() {
     }
   }
 
+  const id   = _activePuzzle.id;
+  const diff = _selectedDiff;
   closeModal();
-  const url = `puzzle.html?id=${_activePuzzle.id}&diff=${_selectedDiff}`;
+  const url = `puzzle.html?id=${id}&diff=${diff}`;
   window.location.href = url;
 }
 
