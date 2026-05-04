@@ -1,0 +1,227 @@
+[
+  {
+    "id": "nature_mountains",
+    "title": "Горы",
+    "category": "nature",
+    "file": "images/puzzles/nature/mountains.webp",
+    "thumb": "images/puzzles/nature/mountains.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "nature_forest",
+    "title": "Лесное озеро",
+    "category": "nature",
+    "file": "images/puzzles/nature/forest.webp",
+    "thumb": "images/puzzles/nature/forest.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "nature_ocean",
+    "title": "Морской берег",
+    "category": "nature",
+    "file": "images/puzzles/nature/ocean.webp",
+    "thumb": "images/puzzles/nature/ocean.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "nature_sunset",
+    "title": "Закат",
+    "category": "nature",
+    "file": "images/puzzles/nature/sunset.webp",
+    "thumb": "images/puzzles/nature/sunset.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "nature_waterfall",
+    "title": "Водопад",
+    "category": "nature",
+    "file": "images/puzzles/nature/waterfall.webp",
+    "thumb": "images/puzzles/nature/waterfall.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 900
+  },
+  {
+    "id": "animals_cat",
+    "title": "Рыжий кот",
+    "category": "animals",
+    "file": "images/puzzles/animals/cat.webp",
+    "thumb": "images/puzzles/animals/cat.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "animals_dog",
+    "title": "Собака",
+    "category": "animals",
+    "file": "images/puzzles/animals/dog.webp",
+    "thumb": "images/puzzles/animals/dog.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "animals_fox",
+    "title": "Лиса",
+    "category": "animals",
+    "file": "images/puzzles/animals/fox.webp",
+    "thumb": "images/puzzles/animals/fox.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "animals_owl",
+    "title": "Сова",
+    "category": "animals",
+    "file": "images/puzzles/animals/owl.webp",
+    "thumb": "images/puzzles/animals/owl.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "animals_bear",
+    "title": "Белый медведь",
+    "category": "animals",
+    "file": "images/puzzles/animals/bear.webp",
+    "thumb": "images/puzzles/animals/bear.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 900
+  },
+  {
+    "id": "landmarks_eiffel",
+    "title": "Эйфелева башня",
+    "category": "landmarks",
+    "file": "images/puzzles/landmarks/eiffel.webp",
+    "thumb": "images/puzzles/landmarks/eiffel.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "landmarks_kremlin",
+    "title": "Кремль",
+    "category": "landmarks",
+    "file": "images/puzzles/landmarks/kremlin.webp",
+    "thumb": "images/puzzles/landmarks/kremlin.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "landmarks_colosseum",
+    "title": "Колизей",
+    "category": "landmarks",
+    "file": "images/puzzles/landmarks/colosseum.webp",
+    "thumb": "images/puzzles/landmarks/colosseum.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "landmarks_greatwall",
+    "title": "Великая стена",
+    "category": "landmarks",
+    "file": "images/puzzles/landmarks/greatwall.webp",
+    "thumb": "images/puzzles/landmarks/greatwall.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "landmarks_tajmahal",
+    "title": "Тадж-Махал",
+    "category": "landmarks",
+    "file": "images/puzzles/landmarks/tajmahal.webp",
+    "thumb": "images/puzzles/landmarks/tajmahal.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 900
+  },
+  {
+    "id": "food_pizza",
+    "title": "Пицца",
+    "category": "food",
+    "file": "images/puzzles/food/pizza.webp",
+    "thumb": "images/puzzles/food/pizza.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "food_fruit",
+    "title": "Фрукты",
+    "category": "food",
+    "file": "images/puzzles/food/fruit.webp",
+    "thumb": "images/puzzles/food/fruit.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "food_coffee",
+    "title": "Кофе",
+    "category": "food",
+    "file": "images/puzzles/food/coffee.webp",
+    "thumb": "images/puzzles/food/coffee.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "food_cake",
+    "title": "Торт",
+    "category": "food",
+    "file": "images/puzzles/food/cake.webp",
+    "thumb": "images/puzzles/food/cake.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "food_sushi",
+    "title": "Суши",
+    "category": "food",
+    "file": "images/puzzles/food/sushi.webp",
+    "thumb": "images/puzzles/food/sushi.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 900
+  },
+  {
+    "id": "objects_flowers",
+    "title": "Цветы",
+    "category": "objects",
+    "file": "images/puzzles/objects/flowers.webp",
+    "thumb": "images/puzzles/objects/flowers.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "objects_books",
+    "title": "Книги",
+    "category": "objects",
+    "file": "images/puzzles/objects/books.webp",
+    "thumb": "images/puzzles/objects/books.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 0
+  },
+  {
+    "id": "objects_pencils",
+    "title": "Карандаши",
+    "category": "objects",
+    "file": "images/puzzles/objects/pencils.webp",
+    "thumb": "images/puzzles/objects/pencils.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "objects_camera",
+    "title": "Фотоаппарат",
+    "category": "objects",
+    "file": "images/puzzles/objects/camera.webp",
+    "thumb": "images/puzzles/objects/camera.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 300
+  },
+  {
+    "id": "objects_ceramics",
+    "title": "Керамика",
+    "category": "objects",
+    "file": "images/puzzles/objects/ceramics.webp",
+    "thumb": "images/puzzles/objects/ceramics.webp",
+    "coinReward": { "64": 120, "100": 300, "144": 900, "225": 3000, "400": 13500 },
+    "unlockCost": 900
+  }
+]

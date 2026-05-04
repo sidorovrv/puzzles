@@ -1,0 +1,155 @@
+/* ── Puzzle page layout ───────────────────────────── */
+.puzzle-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #e8e8e8;
+}
+
+.puzzle-top-bar {
+  flex-shrink: 0;
+  height: var(--top-bar-height);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 10;
+}
+
+.puzzle-top-bar__back {
+  width: 40px; height: 40px;
+  border: none; background: none;
+  font-size: 24px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  color: var(--color-text);
+}
+.puzzle-top-bar__back:active { background: var(--color-surface-2); }
+
+.puzzle-top-bar__title {
+  flex: 1;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+.puzzle-top-bar__actions {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.puzzle-top-bar__btn {
+  width: 40px; height: 40px;
+  border: none; background: none;
+  font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  color: var(--color-text);
+}
+.puzzle-top-bar__btn:active { background: var(--color-surface-2); }
+
+/* ── Canvas area ──────────────────────────────────── */
+.puzzle-canvas-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+
+#puzzle-canvas {
+  display: block;
+  cursor: default;
+}
+
+/* Hint overlay */
+.hint-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.hint-overlay.hidden { opacity: 0; }
+
+/* ── Piece tray ───────────────────────────────────── */
+.piece-tray {
+  flex-shrink: 0;
+  height: var(--tray-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+.piece-tray::-webkit-scrollbar { display: none; }
+
+.tray-piece {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: border-color 0.12s;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-2);
+}
+.tray-piece canvas {
+  width: 100%; height: 100%;
+  display: block;
+}
+.tray-piece.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+/* ── Progress bar ─────────────────────────────────── */
+.progress-bar-wrap {
+  height: 4px;
+  background: var(--color-border);
+  position: relative;
+  flex-shrink: 0;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.4s ease;
+}
+
+/* ── Completion overlay ───────────────────────────── */
+.completion-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+.completion-overlay.hidden { display: none; }
+
+.completion-card {
+  background: var(--color-surface);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-xl);
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: var(--shadow-modal);
+}
+.completion-card__emoji { font-size: 56px; margin-bottom: var(--space-md); }
+.completion-card__title { font-size: var(--font-size-xl); font-weight: 800; margin-bottom: var(--space-sm); }
+.completion-card__reward { font-size: var(--font-size-lg); color: var(--color-coin); font-weight: 700; margin-bottom: var(--space-lg); }

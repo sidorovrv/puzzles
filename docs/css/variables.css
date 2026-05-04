@@ -1,0 +1,51 @@
+:root {
+  /* Brand */
+  --color-primary: #4CAF50;
+  --color-primary-dark: #388E3C;
+  --color-primary-light: #A5D6A7;
+
+  /* Surfaces */
+  --color-bg: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f0f0f2;
+  --color-border: #e0e0e0;
+
+  /* Text */
+  --color-text: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-on-primary: #ffffff;
+
+  /* Accent */
+  --color-coin: #FFC107;
+  --color-lock: #9E9E9E;
+  --color-danger: #E53935;
+  --color-gold: #FFD700;
+
+  /* Layout */
+  --nav-height: 68px;
+  --top-bar-height: 56px;
+  --tray-height: 110px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 32px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Shadow */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.10);
+  --shadow-modal: 0 8px 32px rgba(0,0,0,0.18);
+
+  /* Font */
+  --font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-sm: 13px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 26px;
+  --font-size-xxl: 34px;
+}

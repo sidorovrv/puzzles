@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#4CAF50">
+  <title>Пазлы — Главная</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="images/icons/icon-192.png">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="top-bar">
+  <div class="coin-badge">
+    <span class="coin-badge__icon">🪙</span>
+    <span id="coin-count">0</span>
+  </div>
+  <div class="top-bar__title" id="top-bar-title">Главная</div>
+  <button class="top-bar__icon-btn" id="btn-trophy" title="Достижения">🏆</button>
+  <button class="top-bar__icon-btn" id="btn-settings" title="Настройки">⚙️</button>
+</header>
+
+<!-- ── TAB: Main ─────────────────────────────── -->
+<div id="tab-main" class="page-content tab-panel">
+
+  <!-- Featured row -->
+  <div class="featured-row" id="featured-row">
+    <!-- filled by home.js -->
+  </div>
+
+  <div class="section-heading">Все пазлы</div>
+  <div class="puzzle-grid" id="main-grid">
+    <!-- filled by home.js -->
+  </div>
+</div>
+
+<!-- ── TAB: Daily ────────────────────────────── -->
+<div id="tab-daily" class="page-content tab-panel hidden">
+  <div class="section-heading">Пазл дня</div>
+  <div class="puzzle-grid" id="daily-grid">
+    <!-- filled by home.js -->
+  </div>
+</div>
+
+<!-- ── TAB: Categories ───────────────────────── -->
+<div id="tab-categories" class="categories-layout tab-panel hidden">
+  <div class="categories-sidebar" id="categories-sidebar">
+    <!-- filled by home.js -->
+  </div>
+  <div class="categories-grid" id="categories-grid">
+    <!-- filled by home.js -->
+  </div>
+</div>
+
+<!-- ── TAB: My Puzzles ───────────────────────── -->
+<div id="tab-my" class="page-content tab-panel hidden">
+  <div class="section-heading">Мои пазлы</div>
+  <div class="puzzle-grid" id="my-grid">
+    <!-- filled by home.js -->
+  </div>
+  <p id="my-empty" class="text-center mt-lg hidden" style="color:var(--color-text-secondary)">
+    Вы ещё не начали ни одного пазла.
+  </p>
+</div>
+
+<!-- Bottom navigation -->
+<nav class="bottom-nav">
+  <button class="bottom-nav__tab active" data-tab="main">
+    <span class="tab-icon">🧩</span>
+    <span>Главная</span>
+  </button>
+  <button class="bottom-nav__tab" data-tab="daily">
+    <span class="tab-icon">📅</span>
+    <span>Сегодня</span>
+  </button>
+  <button class="bottom-nav__tab" data-tab="categories">
+    <span class="tab-icon">📚</span>
+    <span>Категории</span>
+  </button>
+  <button class="bottom-nav__tab" data-tab="my">
+    <span class="tab-icon">⭐</span>
+    <span>Мои пазлы</span>
+  </button>
+</nav>
+
+<!-- Difficulty modal -->
+<div class="modal-backdrop hidden" id="difficulty-modal">
+  <div class="modal-sheet">
+    <button class="modal-sheet__cancel" id="modal-cancel">Отмена</button>
+    <img class="modal-sheet__image" id="modal-img" src="" alt="">
+    <div class="modal-sheet__title" id="modal-puzzle-title"></div>
+    <div class="modal-sheet__reward">Награда: <strong id="modal-reward">0</strong> монет</div>
+    <div class="difficulty-row" id="difficulty-row">
+      <!-- filled by home.js -->
+    </div>
+    <button class="btn-primary" id="modal-start">Начать</button>
+  </div>
+</div>
+
+<!-- Settings modal -->
+<div class="modal-backdrop hidden" id="settings-modal">
+  <div class="modal-sheet">
+    <button class="modal-sheet__cancel" id="settings-close">Закрыть</button>
+    <div class="modal-sheet__title">Настройки</div>
+    <div style="margin-top:24px;display:flex;flex-direction:column;gap:12px;">
+      <button class="btn-primary" id="btn-export" style="background:var(--color-primary)">📤 Экспорт прогресса</button>
+      <button class="btn-primary" id="btn-import" style="background:var(--color-surface-2);color:var(--color-text)">📥 Импорт прогресса</button>
+      <input type="file" id="import-file-input" accept=".json" class="hidden">
+      <button class="btn-primary" id="btn-reset-pin" style="background:var(--color-surface-2);color:var(--color-text)">🔑 Изменить PIN-код</button>
+      <p style="text-align:center;color:var(--color-text-secondary);font-size:13px;margin-top:8px;" id="settings-username"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Install banner -->
+<div class="install-banner hidden" id="install-banner">
+  <span class="install-banner__text">
+    Для надёжного сохранения прогресса: нажмите «Поделиться» → «На экран Домой»
+  </span>
+  <button class="install-banner__close" id="install-banner-close">✕</button>
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/home.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
