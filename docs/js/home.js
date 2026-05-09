@@ -9,7 +9,7 @@ const Home = (() => {
   let _categoryPuzzles = new Map();
   let _currentCategory = null;
   let _modalPuzzle = null;
-  const STANDARD_PIECE_COUNTS = [24, 64, 100, 144, 225, 400];
+  const STANDARD_PIECE_COUNTS = [25, 64, 100, 144, 225, 400];
   let _selectedCount = STANDARD_PIECE_COUNTS[0];
 
   const CATEGORY_LABELS = {
@@ -28,6 +28,12 @@ const Home = (() => {
 
   function _contains(items, value) {
     return items.indexOf(value) !== -1;
+  }
+
+  function _isPerfectSquare(value) {
+    if (!Number.isInteger(value) || value <= 0) return false;
+    const root = Math.sqrt(value);
+    return Number.isInteger(root);
   }
 
   function _setClassState(element, className, enabled) {
@@ -209,7 +215,7 @@ const Home = (() => {
       Storage.getAllSaves()
         .filter(save => save.storagePuzzleId === storagePuzzleId)
         .map(save => save.pieceCount)
-        .filter(count => Number.isInteger(count) && count > 0)
+        .filter(_isPerfectSquare)
     )];
   }
 
@@ -316,11 +322,10 @@ const Home = (() => {
 
   function openDifficultyModal(puzzle) {
     _modalPuzzle = puzzle;
-    const counts = _difficultyCountsForPuzzle(puzzle);
     const preferredSave = _preferredSaveForPuzzle(puzzle);
-    _selectedCount = preferredSave && _contains(counts, preferredSave.pieceCount)
+    _selectedCount = preferredSave && _contains(STANDARD_PIECE_COUNTS, preferredSave.pieceCount)
       ? preferredSave.pieceCount
-      : counts[0] || STANDARD_PIECE_COUNTS[0];
+      : STANDARD_PIECE_COUNTS[0];
 
     document.getElementById('modal-preview-img').src = puzzle.thumbUrl;
     document.getElementById('modal-title').textContent = puzzle.description || puzzle.title;

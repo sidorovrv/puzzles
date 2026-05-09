@@ -25,8 +25,7 @@ const PuzzleRender = (() => {
   // Snap radius (px, in assembled-canvas coordinate space)
   const SNAP_RADIUS = 28;
   const TRAY_GESTURE_THRESHOLD = 10;
-  const TRAY_SCROLL_RATIO = 3;
-  const TRAY_SCROLL_WINDOW_MS = 500;
+  const TRAY_ITEM_GAP = 12;
   const SUPPORTS_POINTER_EVENTS = typeof window !== 'undefined' && 'PointerEvent' in window;
   const TOUCH_LISTENER_OPTIONS = (() => {
     let supportsPassive = false;
@@ -72,6 +71,8 @@ const PuzzleRender = (() => {
   // Drag state
   let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
   let _trayGesture = null;
+  let _trayPageIndex = 0;
+  let _trayPageCount = 0;
   let _activeTouchId = null;
   let _rafId     = null;
   let _resizeRafId = null;
@@ -254,22 +255,130 @@ const PuzzleRender = (() => {
     return Math.min(Math.max(value, min), max);
   }
 
-  function _shouldStartTrayScroll(dx, dy, startedAt) {
-    const elapsed = performance.now() - startedAt;
-    if (elapsed > TRAY_SCROLL_WINDOW_MS) return false;
-
-    const horizontalDistance = Math.abs(dx);
-    const verticalDistance = Math.abs(dy);
-    if (horizontalDistance < TRAY_GESTURE_THRESHOLD) return false;
-
-    return horizontalDistance >= verticalDistance * TRAY_SCROLL_RATIO;
+  function _getTrayElements() {
+    return {
+      tray: document.getElementById('piece-tray'),
+      viewport: document.getElementById('piece-tray-viewport'),
+      track: document.getElementById('piece-tray-track'),
+      prevBtn: document.getElementById('piece-tray-prev'),
+      nextBtn: document.getElementById('piece-tray-next'),
+    };
   }
 
-  function _updateTrayScroll(dx) {
-    if (!_trayGesture || !_trayGesture.captureEl) return;
+  function _buildTrayEntries(unlocked, maxPageWidth, displaySize) {
+    const safeWidth = Math.max(maxPageWidth, 1);
 
-    _trayGesture.captureEl.scrollLeft = _trayGesture.trayScrollLeft - dx;
-    _trayRect = _trayGesture.captureEl.getBoundingClientRect();
+    return unlocked.reduce((entries, piece) => {
+      const pc = _pieceCanvases[piece.id];
+      if (!pc) return entries;
+
+      const baseScale = displaySize / Math.max(piece.canvasW, piece.canvasH);
+      const widthScale = safeWidth / Math.max(piece.canvasW, 1);
+      const scale = Math.min(baseScale, widthScale);
+
+      entries.push({
+        piece,
+        pc,
+        scale,
+        trayWidth: Math.max(1, Math.round(piece.canvasW * scale)),
+        trayHeight: Math.max(1, Math.round(piece.canvasH * scale)),
+      });
+      return entries;
+    }, []);
+  }
+
+  function _buildTrayPages(entries, maxPageWidth) {
+    if (!entries.length) {
+      return [{ start: 0, end: 0 }];
+    }
+
+    const safeWidth = Math.max(maxPageWidth, 1);
+    const pages = [];
+    let start = 0;
+    let used = 0;
+
+    entries.forEach((entry, index) => {
+      const nextUsed = used === 0
+        ? entry.trayWidth
+        : used + TRAY_ITEM_GAP + entry.trayWidth;
+
+      if (used !== 0 && nextUsed > safeWidth) {
+        pages.push({ start, end: index });
+        start = index;
+        used = entry.trayWidth;
+        return;
+      }
+
+      used = nextUsed;
+    });
+
+    pages.push({ start, end: entries.length });
+    return pages;
+  }
+
+  function _findTrayPageIndexForPiece(pages, entries, pieceId) {
+    if (pieceId == null) return -1;
+
+    for (let pageIndex = 0; pageIndex < pages.length; pageIndex++) {
+      const page = pages[pageIndex];
+      for (let index = page.start; index < page.end; index++) {
+        if (entries[index].piece.id === pieceId) {
+          return pageIndex;
+        }
+      }
+    }
+
+    return -1;
+  }
+
+  function _syncTrayPager(pageCount) {
+    const { prevBtn, nextBtn } = _getTrayElements();
+    if (prevBtn) {
+      prevBtn.disabled = pageCount <= 1 || _trayPageIndex <= 0;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = pageCount <= 1 || _trayPageIndex >= pageCount - 1;
+    }
+  }
+
+  function _changeTrayPage(delta) {
+    if (_trayPageCount <= 1) return;
+
+    const nextPageIndex = _clamp(_trayPageIndex + delta, 0, _trayPageCount - 1);
+    if (nextPageIndex === _trayPageIndex) return;
+
+    _trayPageIndex = nextPageIndex;
+    _populateTray();
+  }
+
+  function _showPreviousTrayPage() {
+    _changeTrayPage(-1);
+  }
+
+  function _showNextTrayPage() {
+    _changeTrayPage(1);
+  }
+
+  function _renderTrayEntry(track, entry) {
+    const trayCanvas = document.createElement('canvas');
+    trayCanvas.className = 'tray-piece';
+    trayCanvas.dataset.pieceId = entry.piece.id;
+
+    const tc = _resizeCanvas(trayCanvas, entry.trayWidth, entry.trayHeight);
+    tc.drawImage(
+      entry.pc,
+      0,
+      0,
+      entry.pc.width,
+      entry.pc.height,
+      0,
+      0,
+      entry.trayWidth,
+      entry.trayHeight
+    );
+
+    trayCanvas._pieceScale = entry.scale;
+    track.appendChild(trayCanvas);
   }
 
   function _getPieceBounds(piece, currentX = piece.currentX, currentY = piece.currentY) {
@@ -360,8 +469,6 @@ const PuzzleRender = (() => {
   }
 
   function _returnPieceToTray(piece, preferredIndex = null) {
-    const tray = document.getElementById('piece-tray');
-    const trayScrollLeft = tray ? tray.scrollLeft : 0;
     const trayPieces = _trayPieces()
       .filter(candidate => candidate.id !== piece.id)
       .sort((a, b) => a.trayIndex - b.trayIndex);
@@ -381,7 +488,7 @@ const PuzzleRender = (() => {
     piece.currentY = piece.correctY;
 
     _normalizeTrayIndices();
-    _populateTray(trayScrollLeft);
+    _populateTray({ focusPieceId: piece.id });
   }
 
   // ── Restore saved state ──────────────────────────────
@@ -527,42 +634,41 @@ const PuzzleRender = (() => {
   }
 
   // ── Piece tray ───────────────────────────────────────
-  function _populateTray(preserveScrollLeft = null) {
-    const tray = document.getElementById('piece-tray');
-    const scrollLeft = Number.isFinite(preserveScrollLeft)
-      ? preserveScrollLeft
-      : tray.scrollLeft;
-    tray.innerHTML = '';
+  function _populateTray(options = {}) {
+    const { focusPieceId = null } = options;
+    const { tray, viewport, track } = _getTrayElements();
+    if (!tray || !viewport || !track) return;
 
-    const trayH = tray.clientHeight || 120;
-    const displaySize = Math.min(trayH - 16, 90);
+    track.innerHTML = '';
+
+    const trayH = viewport.clientHeight || tray.clientHeight || 120;
+    const displaySize = Math.min(Math.max(trayH - 8, 48), 90);
+    const maxPageWidth = Math.max(viewport.clientWidth - 2, 120);
 
     // Sort unlocked pieces by trayIndex
     const unlocked = _trayPieces()
       .sort((a, b) => a.trayIndex - b.trayIndex);
 
-    unlocked.forEach(piece => {
-      const pc = _pieceCanvases[piece.id];
-      if (!pc) return;
-      const trayCanvas = document.createElement('canvas');
-      const scale = displaySize / Math.max(piece.canvasW, piece.canvasH);
-      const trayWidth = Math.max(1, Math.round(piece.canvasW * scale));
-      const trayHeight = Math.max(1, Math.round(piece.canvasH * scale));
-      trayCanvas.className = 'tray-piece';
-      trayCanvas.dataset.pieceId = piece.id;
-      const tc = _resizeCanvas(trayCanvas, trayWidth, trayHeight);
-      tc.drawImage(pc, 0, 0, pc.width, pc.height, 0, 0, trayWidth, trayHeight);
+    const entries = _buildTrayEntries(unlocked, maxPageWidth, displaySize);
+    const pages = _buildTrayPages(entries, maxPageWidth);
 
-      // Store scale for hit-testing
-      trayCanvas._pieceScale = scale;
+    _trayPageCount = pages.length;
 
-      tray.appendChild(trayCanvas);
-    });
+    if (focusPieceId != null) {
+      const pageIndex = _findTrayPageIndexForPiece(pages, entries, focusPieceId);
+      if (pageIndex !== -1) {
+        _trayPageIndex = pageIndex;
+      }
+    }
 
-    tray.scrollLeft = Math.max(0, Math.min(
-      scrollLeft,
-      Math.max(tray.scrollWidth - tray.clientWidth, 0)
-    ));
+    _trayPageIndex = _clamp(_trayPageIndex, 0, Math.max(_trayPageCount - 1, 0));
+
+    const currentPage = pages[_trayPageIndex] || pages[0];
+    for (let index = currentPage.start; index < currentPage.end; index++) {
+      _renderTrayEntry(track, entries[index]);
+    }
+
+    _syncTrayPager(_trayPageCount);
     _trayRect = tray.getBoundingClientRect();
   }
 
@@ -615,18 +721,15 @@ const PuzzleRender = (() => {
     return null;
   }
 
-  function _beginTrayGesture(tray, piece, rect, pointerId, clientX, clientY, captureEl = null) {
+  function _beginTrayGesture(piece, rect, pointerId, clientX, clientY, captureEl = null) {
     _trayGesture = {
       captureEl,
       piece,
-      mode: 'pending',
       originTrayIndex: piece.trayIndex,
       pointerId,
       rect,
       startClientX: clientX,
       startClientY: clientY,
-      startedAt: performance.now(),
-      trayScrollLeft: tray ? tray.scrollLeft : 0,
     };
   }
 
@@ -732,8 +835,8 @@ const PuzzleRender = (() => {
   function _onTrayTouchStart(event) {
     if (_activeTouchId !== null) return;
 
-    const tray = document.getElementById('piece-tray');
-    const pieceEl = _closestByClass(event.target, 'tray-piece', tray);
+    const { track } = _getTrayElements();
+    const pieceEl = _closestByClass(event.target, 'tray-piece', track);
     if (!pieceEl) return;
 
     const touch = event.changedTouches && event.changedTouches[0];
@@ -746,7 +849,6 @@ const PuzzleRender = (() => {
     _refreshLayoutRects();
     _activeTouchId = touch.identifier;
     _beginTrayGesture(
-      tray,
       piece,
       pieceEl.getBoundingClientRect(),
       touch.identifier,
@@ -768,12 +870,6 @@ const PuzzleRender = (() => {
       const distance = Math.hypot(dx, dy);
 
       if (distance < TRAY_GESTURE_THRESHOLD) {
-        return;
-      }
-
-      if (_shouldStartTrayScroll(dx, dy, _trayGesture.startedAt)) {
-        _trayGesture = null;
-        _activeTouchId = null;
         return;
       }
 
@@ -857,14 +953,14 @@ const PuzzleRender = (() => {
 
   // ── Event binding ────────────────────────────────────
   function _bindEvents() {
-    const tray = document.getElementById('piece-tray');
+    const { track, prevBtn, nextBtn } = _getTrayElements();
 
     // Canvas pointer events (for pieces already on the canvas — locked pieces are immovable)
     if (SUPPORTS_POINTER_EVENTS) {
       _floatCanvas.addEventListener('pointerdown', _onCanvasPointerDown);
 
       // Tray pointer events
-      if (tray) tray.addEventListener('pointerdown', _onTrayPointerDown);
+      if (track) track.addEventListener('pointerdown', _onTrayPointerDown);
 
       // Global pointer move / up
       window.addEventListener('pointermove', _onPointerMove);
@@ -872,16 +968,19 @@ const PuzzleRender = (() => {
       window.addEventListener('pointercancel', _onPointerUp);
     } else {
       _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
-      if (tray) tray.addEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+      if (track) track.addEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
       document.addEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
       document.addEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
       document.addEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
       _floatCanvas.addEventListener('mousedown', _onCanvasMouseDown);
-      if (tray) tray.addEventListener('mousedown', _onTrayMouseDown);
+      if (track) track.addEventListener('mousedown', _onTrayMouseDown);
       window.addEventListener('mousemove', _onMouseMove);
       window.addEventListener('mouseup', _onMouseUp);
     }
+
+    if (prevBtn) prevBtn.addEventListener('click', _showPreviousTrayPage);
+    if (nextBtn) nextBtn.addEventListener('click', _showNextTrayPage);
 
     window.addEventListener('resize', _onResize);
     if (window.visualViewport) {
@@ -895,26 +994,29 @@ const PuzzleRender = (() => {
 
   function _unbindEvents() {
     if (!_floatCanvas) return; // never started — nothing was bound
-    const tray = document.getElementById('piece-tray');
+    const { track, prevBtn, nextBtn } = _getTrayElements();
 
     if (SUPPORTS_POINTER_EVENTS) {
       _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
-      if (tray) tray.removeEventListener('pointerdown', _onTrayPointerDown);
+      if (track) track.removeEventListener('pointerdown', _onTrayPointerDown);
       window.removeEventListener('pointermove', _onPointerMove);
       window.removeEventListener('pointerup', _onPointerUp);
       window.removeEventListener('pointercancel', _onPointerUp);
     } else {
       _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
-      if (tray) tray.removeEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+      if (track) track.removeEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
       document.removeEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
       document.removeEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
       document.removeEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
       _floatCanvas.removeEventListener('mousedown', _onCanvasMouseDown);
-      if (tray) tray.removeEventListener('mousedown', _onTrayMouseDown);
+      if (track) track.removeEventListener('mousedown', _onTrayMouseDown);
       window.removeEventListener('mousemove', _onMouseMove);
       window.removeEventListener('mouseup', _onMouseUp);
     }
+
+    if (prevBtn) prevBtn.removeEventListener('click', _showPreviousTrayPage);
+    if (nextBtn) nextBtn.removeEventListener('click', _showNextTrayPage);
 
     _activeTouchId = null;
     window.removeEventListener('resize', _onResize);
@@ -952,8 +1054,8 @@ const PuzzleRender = (() => {
 
   // ── Pointer handlers ─────────────────────────────────
   function _onTrayPointerDown(e) {
-    const tray = document.getElementById('piece-tray');
-    const el = _closestByClass(e.target, 'tray-piece', tray);
+    const { tray, track } = _getTrayElements();
+    const el = _closestByClass(e.target, 'tray-piece', track);
     if (!el) return;
     _refreshLayoutRects();
 
@@ -961,12 +1063,11 @@ const PuzzleRender = (() => {
     const piece   = _pieces[pieceId];
     if (!piece || piece.locked) return;
 
-    const trayScrollLeft = tray ? tray.scrollLeft : 0;
     const rect = el.getBoundingClientRect();
     if (e.pointerType === 'touch' || e.pointerType === 'pen') {
       e.preventDefault();
 
-      _beginTrayGesture(tray, piece, rect, e.pointerId, e.clientX, e.clientY, tray);
+      _beginTrayGesture(piece, rect, e.pointerId, e.clientX, e.clientY, tray);
 
       if (tray && typeof tray.setPointerCapture === 'function') {
         try {
@@ -985,14 +1086,11 @@ const PuzzleRender = (() => {
       originTrayIndex: piece.trayIndex,
       pointerId: e.pointerId,
       rect,
-      trayScrollLeft,
     }, e);
   }
 
   function _startTrayDrag(gesture, event) {
     const { piece, originTrayIndex, rect } = gesture;
-    const tray = document.getElementById('piece-tray');
-    const trayScrollLeft = tray ? tray.scrollLeft : gesture.trayScrollLeft;
     const canvasRect = _canvasRect || _floatCanvas.getBoundingClientRect();
 
     piece.currentX = rect.left - canvasRect.left + piece.ox;
@@ -1001,7 +1099,7 @@ const PuzzleRender = (() => {
     piece.trayIndex = -1;
 
     _normalizeTrayIndices();
-    _populateTray(trayScrollLeft);
+    _populateTray();
 
     _dragging = {
       piece,
@@ -1055,20 +1153,7 @@ const PuzzleRender = (() => {
       const dy = e.clientY - _trayGesture.startClientY;
       const distance = Math.hypot(dx, dy);
 
-      if (_trayGesture.mode === 'scrolling') {
-        e.preventDefault();
-        _updateTrayScroll(dx);
-        return;
-      }
-
       if (distance < TRAY_GESTURE_THRESHOLD) {
-        return;
-      }
-
-      if (_shouldStartTrayScroll(dx, dy, _trayGesture.startedAt)) {
-        e.preventDefault();
-        _trayGesture.mode = 'scrolling';
-        _updateTrayScroll(dx);
         return;
       }
 
@@ -1234,7 +1319,8 @@ const PuzzleRender = (() => {
     if (_assembledCtx) _assembledCtx.clearRect(0, 0, _canvasW, _canvasH);
     if (_floatCtx)     _floatCtx.clearRect(0, 0, _canvasW, _canvasH);
     _clearDragLayer();
-    document.getElementById('piece-tray').innerHTML = '';
+    const { track } = _getTrayElements();
+    if (track) track.innerHTML = '';
     document.getElementById('hint-overlay').classList.remove('active');
 
     _pieces = [];
@@ -1242,6 +1328,8 @@ const PuzzleRender = (() => {
     _boardBounds = null;
     _dragging = null;
     _trayGesture = null;
+    _trayPageIndex = 0;
+    _trayPageCount = 0;
     _puzzleViewRect = null;
     _canvasRect = null;
     _trayRect = null;
