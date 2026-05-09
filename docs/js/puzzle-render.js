@@ -28,6 +28,25 @@ const PuzzleRender = (() => {
   const TRAY_SCROLL_RATIO = 3;
   const TRAY_SCROLL_WINDOW_MS = 500;
   const SUPPORTS_POINTER_EVENTS = typeof window !== 'undefined' && 'PointerEvent' in window;
+  const TOUCH_LISTENER_OPTIONS = (() => {
+    let supportsPassive = false;
+
+    try {
+      const options = {};
+      Object.defineProperty(options, 'passive', {
+        get() {
+          supportsPassive = true;
+          return false;
+        },
+      });
+      window.addEventListener('test-passive', null, options);
+      window.removeEventListener('test-passive', null, options);
+    } catch (err) {
+      supportsPassive = false;
+    }
+
+    return supportsPassive ? { passive: false } : false;
+  })();
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -47,7 +66,7 @@ const PuzzleRender = (() => {
   let _dragOffsetX     = 0;
   let _dragOffsetY     = 0;
   let _pixelRatio      = 1;
-  let _squareImageCrop = null;
+  let _imageCrop       = null;
   let _hintImageSrc    = '';
 
   // Drag state
@@ -73,12 +92,10 @@ const PuzzleRender = (() => {
 
     const naturalWidth = img.naturalWidth || img.width || 1;
     const naturalHeight = img.naturalHeight || img.height || 1;
-    const sourceSize = Math.max(1, Math.min(naturalWidth, naturalHeight));
-    const sourceX = Math.max(0, (naturalWidth - sourceSize) / 2);
-    const sourceY = Math.max(0, (naturalHeight - sourceSize) / 2);
-    _squareImageCrop = { x: sourceX, y: sourceY, size: sourceSize };
+    const naturalAspect = naturalWidth / naturalHeight;
+    const { cols, rows } = PuzzleEngine.gridDims(pieceCount, naturalAspect);
+    _imageCrop = _computeImageCrop(naturalWidth, naturalHeight, cols / rows);
     _hintImageSrc = '';
-    const { cols, rows } = PuzzleEngine.gridDims(pieceCount, 1);
     _cols = cols;
     _rows = rows;
 
@@ -88,13 +105,13 @@ const PuzzleRender = (() => {
     const stagePadding = Math.max(24, Math.min(56, Math.min(_canvasW, _canvasH) * 0.05));
     const availableW = Math.max(_canvasW - stagePadding * 2, 160);
     const availableH = Math.max(_canvasH - stagePadding * 2, 160);
-    const ratio = Math.min(availableW / sourceSize, availableH / sourceSize);
-    const imgW = sourceSize * ratio;
-    const imgH = sourceSize * ratio;
+    const ratio = Math.min(availableW / _imageCrop.width, availableH / _imageCrop.height);
+    const imgW = _imageCrop.width * ratio;
+    const imgH = _imageCrop.height * ratio;
     _cellW = imgW / cols;
     _cellH = imgH / rows;
-    const sourceCellW = sourceSize / cols;
-    const sourceCellH = sourceSize / rows;
+    const sourceCellW = _imageCrop.width / cols;
+    const sourceCellH = _imageCrop.height / rows;
 
     // Seed & PRNG
     _seed = Number.isFinite(savedState && savedState.seed)
@@ -123,10 +140,10 @@ const PuzzleRender = (() => {
     // Build piece image canvases
     _pieceCanvases = _pieces.map(p =>
       PuzzleEngine.clipPieceImage(img, p, _cellW, _cellH, {
-        sourceX,
-        sourceY,
-        sourceWidth: sourceSize,
-        sourceHeight: sourceSize,
+        sourceX: _imageCrop.x,
+        sourceY: _imageCrop.y,
+        sourceWidth: _imageCrop.width,
+        sourceHeight: _imageCrop.height,
         displayWidth: imgW,
         displayHeight: imgH,
         dpr: _pixelRatio,
@@ -235,6 +252,33 @@ const PuzzleRender = (() => {
     return Math.min(Math.max(value, min), max);
   }
 
+  function _computeImageCrop(sourceWidth, sourceHeight, targetAspect) {
+    const safeWidth = Math.max(1, sourceWidth);
+    const safeHeight = Math.max(1, sourceHeight);
+    const safeAspect = Number.isFinite(targetAspect) && targetAspect > 0
+      ? targetAspect
+      : safeWidth / safeHeight;
+    const sourceAspect = safeWidth / safeHeight;
+
+    if (sourceAspect > safeAspect) {
+      const cropWidth = safeHeight * safeAspect;
+      return {
+        x: (safeWidth - cropWidth) / 2,
+        y: 0,
+        width: cropWidth,
+        height: safeHeight,
+      };
+    }
+
+    const cropHeight = safeWidth / safeAspect;
+    return {
+      x: 0,
+      y: (safeHeight - cropHeight) / 2,
+      width: safeWidth,
+      height: cropHeight,
+    };
+  }
+
   function _shouldStartTrayScroll(dx, dy, startedAt) {
     const elapsed = performance.now() - startedAt;
     if (elapsed > TRAY_SCROLL_WINDOW_MS) return false;
@@ -296,37 +340,34 @@ const PuzzleRender = (() => {
     );
   }
 
-  function _getSquareHintSrc() {
+  function _getHintSrc() {
     if (_hintImageSrc) return _hintImageSrc;
-    if (!_img || !_squareImageCrop) return _img ? _img.src : '';
+    if (!_img || !_imageCrop) return _img ? _img.src : '';
 
-    const hintSize = Math.max(
+    const maxHintDimension = Math.max(
       1,
-      Math.round(
-        Math.min(
-          _squareImageCrop.size,
-          Math.max(_canvasW, _canvasH) * _pixelRatio,
-          1600
-        )
-      )
+      Math.round(Math.min(Math.max(_canvasW, _canvasH) * _pixelRatio, 1600))
     );
+    const scale = maxHintDimension / Math.max(_imageCrop.width, _imageCrop.height);
+    const hintWidth = Math.max(1, Math.round(_imageCrop.width * scale));
+    const hintHeight = Math.max(1, Math.round(_imageCrop.height * scale));
     const canvas = document.createElement('canvas');
-    canvas.width = hintSize;
-    canvas.height = hintSize;
+    canvas.width = hintWidth;
+    canvas.height = hintHeight;
 
     const ctx = canvas.getContext('2d');
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(
       _img,
-      _squareImageCrop.x,
-      _squareImageCrop.y,
-      _squareImageCrop.size,
-      _squareImageCrop.size,
+      _imageCrop.x,
+      _imageCrop.y,
+      _imageCrop.width,
+      _imageCrop.height,
       0,
       0,
-      hintSize,
-      hintSize
+      hintWidth,
+      hintHeight
     );
 
     _hintImageSrc = canvas.toDataURL();
@@ -718,11 +759,11 @@ const PuzzleRender = (() => {
       window.addEventListener('pointerup', _onPointerUp);
       window.addEventListener('pointercancel', _onPointerUp);
     } else {
-      _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, false);
-      if (tray) tray.addEventListener('touchstart', _onTrayTouchStart, false);
-      window.addEventListener('touchmove', _onTouchMove, false);
-      window.addEventListener('touchend', _onTouchEnd, false);
-      window.addEventListener('touchcancel', _onTouchEnd, false);
+      _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
+      if (tray) tray.addEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+      document.addEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
+      document.addEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
+      document.addEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
       _floatCanvas.addEventListener('mousedown', _onCanvasMouseDown);
       if (tray) tray.addEventListener('mousedown', _onTrayMouseDown);
@@ -751,11 +792,11 @@ const PuzzleRender = (() => {
       window.removeEventListener('pointerup', _onPointerUp);
       window.removeEventListener('pointercancel', _onPointerUp);
     } else {
-      _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, false);
-      if (tray) tray.removeEventListener('touchstart', _onTrayTouchStart, false);
-      window.removeEventListener('touchmove', _onTouchMove, false);
-      window.removeEventListener('touchend', _onTouchEnd, false);
-      window.removeEventListener('touchcancel', _onTouchEnd, false);
+      _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
+      if (tray) tray.removeEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+      document.removeEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
+      document.removeEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
+      document.removeEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
       _floatCanvas.removeEventListener('mousedown', _onCanvasMouseDown);
       if (tray) tray.removeEventListener('mousedown', _onTrayMouseDown);
@@ -1066,7 +1107,7 @@ const PuzzleRender = (() => {
   function _onHint() {
     const overlay = document.getElementById('hint-overlay');
     const hintImg = document.getElementById('hint-img');
-    hintImg.src = _getSquareHintSrc();
+    hintImg.src = _getHintSrc();
     overlay.classList.add('active');
     setTimeout(() => {
       overlay.classList.remove('active');
@@ -1168,7 +1209,7 @@ const PuzzleRender = (() => {
     _trayRect = null;
     _dragOffsetX = 0;
     _dragOffsetY = 0;
-    _squareImageCrop = null;
+    _imageCrop = null;
     _hintImageSrc = '';
     _puzzle = null;
     _puzzleId = null;

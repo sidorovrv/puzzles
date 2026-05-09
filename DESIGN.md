@@ -130,14 +130,15 @@ Shown when a category is selected in the sidebar.
 |                                          |
 |  Выберите сложность:                     |
 |                                          |
-|   [ 24 ]  [ 64 ]  [ 100 ]  [ 144 ]      |
+| [ 24 ] [ 64 ] [ 100 ] [ 144 ] [ 225 ]   |
+| [ 400 ]                                  |
 |                  Фрагментов             |
 |                                          |
 |  [           Начать           ]          |
 +------------------------------------------+
 ```
 
-- Piece counts: **24, 64, 100, 144** (iPad-friendly range).
+- Piece counts: **24, 64, 100, 144, 225, 400**.
 - If a save exists for this puzzle + piece count, button label changes to
   **"Продолжить"** and shows elapsed time.
 - Tapping Start/Continue closes the modal and switches the content area to the Puzzle Solver.
@@ -215,7 +216,8 @@ Unsplash (`images.unsplash.com`) and Pixabay (`cdn.pixabay.com`) are **banned fr
 ```
 Fetch full image  (from URL or cache)
   -> Draw onto offscreen canvas at target resolution
-  -> Grid: cols x rows  (e.g. 12 x 12 = 144 pieces)
+  -> Grid: cols x rows chosen from the requested piece count
+  -> Source image cropped to the grid aspect ratio so piece cells stay square
   -> Each shared edge assigned tab direction (in/out) deterministically from piece index
   -> Each piece clipped to offscreen canvas with ~10 px bleed for tabs
   -> Pieces scattered randomly using seeded PRNG (seed = puzzleId + pieceCount)

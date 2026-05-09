@@ -11,6 +11,7 @@ const App = (() => {
   let _lifecycleBound = false;
   let _serviceWorkerListenersBound = false;
   let _reloadPendingForUpdate = false;
+  let _viewportHeightBound = false;
 
   function _clampDescription(value, maxLength = MAX_DESCRIPTION_LENGTH) {
     if (typeof value !== 'string') return value;
@@ -33,6 +34,8 @@ const App = (() => {
 
   // ── Init ────────────────────────────────────────────
   async function init() {
+    _syncViewportHeight();
+    _bindViewportHeightEvents();
     _bindLifecycleEvents();
     _registerServiceWorker();
 
@@ -55,6 +58,25 @@ const App = (() => {
     if (_lifecycleBound) return;
     window.addEventListener('pagehide', _persistActivePuzzle);
     _lifecycleBound = true;
+  }
+
+  function _syncViewportHeight() {
+    document.documentElement.style.setProperty('--app-height', window.innerHeight + 'px');
+  }
+
+  function _bindViewportHeightEvents() {
+    if (_viewportHeightBound) return;
+
+    window.addEventListener('resize', _syncViewportHeight);
+    window.addEventListener('orientationchange', _syncViewportHeight);
+    window.addEventListener('pageshow', _syncViewportHeight);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', _syncViewportHeight);
+      window.visualViewport.addEventListener('scroll', _syncViewportHeight);
+    }
+
+    _viewportHeightBound = true;
   }
 
   function _persistActivePuzzle() {

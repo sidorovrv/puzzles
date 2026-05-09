@@ -9,8 +9,8 @@ const Home = (() => {
   let _categoryPuzzles = new Map();
   let _currentCategory = null;
   let _modalPuzzle = null;
-  let _selectedCount = 25;
-  const STANDARD_PIECE_COUNTS = [25, 64, 100, 144];
+  const STANDARD_PIECE_COUNTS = [24, 64, 100, 144, 225, 400];
+  let _selectedCount = STANDARD_PIECE_COUNTS[0];
 
   const CATEGORY_LABELS = {
     nature: 'Природа',
@@ -316,10 +316,11 @@ const Home = (() => {
 
   function openDifficultyModal(puzzle) {
     _modalPuzzle = puzzle;
+    const counts = _difficultyCountsForPuzzle(puzzle);
     const preferredSave = _preferredSaveForPuzzle(puzzle);
-    _selectedCount = preferredSave && _contains(STANDARD_PIECE_COUNTS, preferredSave.pieceCount)
+    _selectedCount = preferredSave && _contains(counts, preferredSave.pieceCount)
       ? preferredSave.pieceCount
-      : STANDARD_PIECE_COUNTS[0];
+      : counts[0] || STANDARD_PIECE_COUNTS[0];
 
     document.getElementById('modal-preview-img').src = puzzle.thumbUrl;
     document.getElementById('modal-title').textContent = puzzle.description || puzzle.title;
