@@ -66,6 +66,8 @@ const PuzzleRender = (() => {
   let _pixelRatio      = 1;
   let _squareImageCrop = null;
   let _hintImageSrc    = '';
+  let _debugLogEntries = [];
+  let _debugLastMoveAt = 0;
 
   // Drag state
   let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
@@ -164,10 +166,15 @@ const PuzzleRender = (() => {
       _restoreState(savedState);
       _startedAt      = savedState.startedAt;
       _elapsedSeconds = savedState.elapsedSeconds;
+      _resetDebugLog();
+      _logDebug(`restore ${pieceCount} pieces`);
     } else {
       PuzzleEngine.scatterPieces(_pieces, rng);
       _startedAt      = Math.floor(Date.now() / 1000);
       _elapsedSeconds = 0;
+      _resetDebugLog();
+      _logDebug(`new ${pieceCount} pieces`);
+      _placeInitialBoardPiece();
     }
 
     _rebuildAssembledCanvas();
@@ -227,6 +234,42 @@ const PuzzleRender = (() => {
   function _getPixelRatio() {
     const dpr = window.devicePixelRatio || 1;
     return Number.isFinite(dpr) && dpr > 0 ? dpr : 1;
+  }
+
+  function _getDebugLogElement() {
+    return document.getElementById('touch-debug-log');
+  }
+
+  function _resetDebugLog() {
+    _debugLogEntries = [];
+    _debugLastMoveAt = 0;
+
+    const el = _getDebugLogElement();
+    if (el) {
+      el.textContent = '';
+    }
+  }
+
+  function _logDebug(message) {
+    const el = _getDebugLogElement();
+    if (!el) return;
+
+    const seconds = (Date.now() % 600000) / 1000;
+    const timestamp = seconds.toFixed(2).padStart(6, '0');
+    _debugLogEntries.push(`${timestamp} ${message}`);
+    if (_debugLogEntries.length > 10) {
+      _debugLogEntries.shift();
+    }
+
+    el.textContent = _debugLogEntries.join('\n');
+  }
+
+  function _logDragMove(message) {
+    const now = Date.now();
+    if (now - _debugLastMoveAt < 120) return;
+
+    _debugLastMoveAt = now;
+    _logDebug(message);
   }
 
   function _resizeCanvas(canvas, cssWidth, cssHeight) {
@@ -404,6 +447,26 @@ const PuzzleRender = (() => {
       x: _clamp(targetX, minX, maxX),
       y: allowBottomOverflow ? Math.max(targetY, minY) : _clamp(targetY, minY, maxY),
     };
+  }
+
+  function _placeInitialBoardPiece() {
+    const firstPiece = _trayPieces()
+      .sort((a, b) => a.trayIndex - b.trayIndex)[0] || _pieces[0];
+    if (!firstPiece) return;
+
+    firstPiece.location = 'board';
+    firstPiece.trayIndex = -1;
+
+    const centered = _constrainPieceToPlayArea(
+      firstPiece,
+      (_canvasW - firstPiece.canvasW) / 2 + firstPiece.ox,
+      (_canvasH - firstPiece.canvasH) / 2 + firstPiece.oy
+    );
+
+    firstPiece.currentX = centered.x;
+    firstPiece.currentY = centered.y;
+    _normalizeTrayIndices();
+    _logDebug(`seed p${firstPiece.id} @ ${Math.round(firstPiece.currentX)},${Math.round(firstPiece.currentY)}`);
   }
 
   function _drawPieceCanvas(ctx, piece, x, y, width = piece.canvasW, height = piece.canvasH) {
@@ -778,6 +841,7 @@ const PuzzleRender = (() => {
     _dragging = null;
 
     if (_pointInRect(clientX, clientY, _trayRect)) {
+      _logDebug(`drop tray p${piece.id}`);
       _returnPieceToTray(piece, fromTray ? originTrayIndex : _trayPieces().length);
       _autoSave(_pieces.every(candidate => candidate.locked));
       Home.refreshAfterSave();
@@ -786,6 +850,7 @@ const PuzzleRender = (() => {
 
     const pieceBounds = _getPieceBounds(piece);
     if (fromTray && pieceBounds.bottom > _canvasH) {
+      _logDebug(`drop tray-overflow p${piece.id}`);
       _returnPieceToTray(piece, originTrayIndex);
       _autoSave(_pieces.every(candidate => candidate.locked));
       Home.refreshAfterSave();
@@ -795,8 +860,10 @@ const PuzzleRender = (() => {
     const dx = piece.currentX - piece.correctX;
     const dy = piece.currentY - piece.correctY;
     if (Math.sqrt(dx * dx + dy * dy) < SNAP_RADIUS) {
+      _logDebug(`drop snap p${piece.id}`);
       _snapPiece(piece);
     } else {
+      _logDebug(`drop board p${piece.id} @ ${Math.round(piece.currentX)},${Math.round(piece.currentY)}`);
       _autoSave(_pieces.every(candidate => candidate.locked));
       Home.refreshAfterSave();
     }
@@ -809,11 +876,13 @@ const PuzzleRender = (() => {
     if (!touch) return;
 
     if (!_startCanvasDragAt(touch.clientX, touch.clientY)) {
+      _logDebug(`canvas start miss @ ${Math.round(touch.clientX)},${Math.round(touch.clientY)}`);
       return;
     }
 
     event.preventDefault();
     _activeTouchId = touch.identifier;
+    _logDebug(`canvas start drag p${_dragging.piece.id} @ ${Math.round(touch.clientX)},${Math.round(touch.clientY)}`);
   }
 
   function _onTrayTouchStart(event) {
@@ -831,6 +900,7 @@ const PuzzleRender = (() => {
     if (!piece || piece.locked) return;
 
     event.preventDefault();
+    _logDebug(`tray start p${piece.id} @ ${Math.round(touch.clientX)},${Math.round(touch.clientY)}`);
     _refreshLayoutRects();
     _activeTouchId = touch.identifier;
     _beginTrayGesture(
@@ -856,9 +926,11 @@ const PuzzleRender = (() => {
       const distance = Math.hypot(dx, dy);
 
       if (distance < TRAY_GESTURE_THRESHOLD) {
+        _logDragMove(`tray wait p${_trayGesture.piece.id} dy=${Math.round(dy)}`);
         return;
       }
 
+      _logDebug(`tray promote p${_trayGesture.piece.id} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
       _startTrayDrag(_trayGesture, {
         clientX: touch.clientX,
         clientY: touch.clientY,
@@ -870,6 +942,7 @@ const PuzzleRender = (() => {
 
     event.preventDefault();
     _updateDraggingPosition(touch.clientX, touch.clientY);
+    _logDragMove(`drag p${_dragging.piece.id} @ ${Math.round(_dragging.piece.currentX)},${Math.round(_dragging.piece.currentY)}`);
   }
 
   function _onTouchEnd(event) {
@@ -879,6 +952,7 @@ const PuzzleRender = (() => {
     if (!touch) return;
 
     if (_trayGesture && !_dragging) {
+      _logDebug(`touch end no-drag p${_trayGesture.piece.id}`);
       _trayGesture = null;
       _activeTouchId = null;
       return;
@@ -886,6 +960,7 @@ const PuzzleRender = (() => {
 
     if (_dragging) {
       event.preventDefault();
+      _logDebug(`touch end drag p${_dragging.piece.id}`);
       _finishDragging(touch.clientX, touch.clientY);
     }
 
@@ -1029,6 +1104,7 @@ const PuzzleRender = (() => {
 
     const rect = el.getBoundingClientRect();
     e.preventDefault();
+    _logDebug(`mouse tray start p${piece.id}`);
     _startTrayDrag({
       piece,
       originTrayIndex: piece.trayIndex,
@@ -1056,13 +1132,19 @@ const PuzzleRender = (() => {
       offsetY: (event.clientY - rect.top) * (piece.canvasH / rect.height) - piece.oy,
     };
     _trayGesture = null;
+    _logDebug(`tray drag p${piece.id} offset=${Math.round(_dragging.offsetX)},${Math.round(_dragging.offsetY)}`);
 
     _updateDraggingPosition(event.clientX, event.clientY);
   }
 
   function _onCanvasMouseStart(e) {
     e.preventDefault();
-    if (!_startCanvasDragAt(e.clientX, e.clientY)) return;
+    if (!_startCanvasDragAt(e.clientX, e.clientY)) {
+      _logDebug(`mouse canvas miss @ ${Math.round(e.clientX)},${Math.round(e.clientY)}`);
+      return;
+    }
+
+    _logDebug(`mouse canvas drag p${_dragging.piece.id} @ ${Math.round(e.clientX)},${Math.round(e.clientY)}`);
   }
 
   function _findPieceAt(mx, my) {
@@ -1095,6 +1177,7 @@ const PuzzleRender = (() => {
 
     if (!_dragging) return;
     _updateDraggingPosition(e.clientX, e.clientY);
+    _logDragMove(`mouse drag p${_dragging.piece.id} @ ${Math.round(_dragging.piece.currentX)},${Math.round(_dragging.piece.currentY)}`);
   }
 
   function _onMouseUpInternal(e) {
@@ -1252,6 +1335,7 @@ const PuzzleRender = (() => {
     const { track } = _getTrayElements();
     if (track) track.innerHTML = '';
     document.getElementById('hint-overlay').classList.remove('active');
+    _resetDebugLog();
 
     _pieces = [];
     _pieceCanvases = [];
