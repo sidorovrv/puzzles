@@ -26,7 +26,6 @@ const PuzzleRender = (() => {
   const SNAP_RADIUS = 28;
   const TRAY_GESTURE_THRESHOLD = 10;
   const TRAY_ITEM_GAP = 12;
-  const SUPPORTS_POINTER_EVENTS = typeof window !== 'undefined' && 'PointerEvent' in window;
   const TOUCH_LISTENER_OPTIONS = (() => {
     let supportsPassive = false;
 
@@ -696,13 +695,13 @@ const PuzzleRender = (() => {
     return null;
   }
 
-  function _normalizeLegacyInput(event, pointerType, pointerId, clientX, clientY, target) {
+  function _normalizeLegacyInput(event, inputType, inputId, clientX, clientY, target) {
     return {
       target: target || event.target,
       clientX,
       clientY,
-      pointerId,
-      pointerType,
+      inputId,
+      inputType,
       preventDefault() {
         event.preventDefault();
       },
@@ -721,30 +720,15 @@ const PuzzleRender = (() => {
     return null;
   }
 
-  function _beginTrayGesture(piece, rect, pointerId, clientX, clientY, captureEl = null) {
+  function _beginTrayGesture(piece, rect, inputId, clientX, clientY) {
     _trayGesture = {
-      captureEl,
       piece,
       originTrayIndex: piece.trayIndex,
-      pointerId,
+      inputId,
       rect,
       startClientX: clientX,
       startClientY: clientY,
     };
-  }
-
-  function _releaseTrayPointerCapture(pointerId) {
-    if (!_trayGesture || !_trayGesture.captureEl || pointerId == null) return;
-
-    if (typeof _trayGesture.captureEl.hasPointerCapture !== 'function') return;
-
-    try {
-      if (_trayGesture.captureEl.hasPointerCapture(pointerId)) {
-        _trayGesture.captureEl.releasePointerCapture(pointerId);
-      }
-    } catch (err) {
-      // Ignore browsers that do not keep pointer capture state here.
-    }
   }
 
   function _startCanvasDragAt(clientX, clientY) {
@@ -908,7 +892,7 @@ const PuzzleRender = (() => {
   }
 
   function _onCanvasMouseDown(event) {
-    _onCanvasPointerDown(_normalizeLegacyInput(
+    _onCanvasMouseStart(_normalizeLegacyInput(
       event,
       'mouse',
       1,
@@ -919,7 +903,7 @@ const PuzzleRender = (() => {
   }
 
   function _onTrayMouseDown(event) {
-    _onTrayPointerDown(_normalizeLegacyInput(
+    _onTrayMouseStart(_normalizeLegacyInput(
       event,
       'mouse',
       1,
@@ -930,7 +914,7 @@ const PuzzleRender = (() => {
   }
 
   function _onMouseMove(event) {
-    _onPointerMove(_normalizeLegacyInput(
+    _onMouseMoveInternal(_normalizeLegacyInput(
       event,
       'mouse',
       1,
@@ -941,7 +925,7 @@ const PuzzleRender = (() => {
   }
 
   function _onMouseUp(event) {
-    _onPointerUp(_normalizeLegacyInput(
+    _onMouseUpInternal(_normalizeLegacyInput(
       event,
       'mouse',
       1,
@@ -955,29 +939,16 @@ const PuzzleRender = (() => {
   function _bindEvents() {
     const { track, prevBtn, nextBtn } = _getTrayElements();
 
-    // Canvas pointer events (for pieces already on the canvas — locked pieces are immovable)
-    if (SUPPORTS_POINTER_EVENTS) {
-      _floatCanvas.addEventListener('pointerdown', _onCanvasPointerDown);
+    _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
+    if (track) track.addEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+    document.addEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
+    document.addEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
+    document.addEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
-      // Tray pointer events
-      if (track) track.addEventListener('pointerdown', _onTrayPointerDown);
-
-      // Global pointer move / up
-      window.addEventListener('pointermove', _onPointerMove);
-      window.addEventListener('pointerup', _onPointerUp);
-      window.addEventListener('pointercancel', _onPointerUp);
-    } else {
-      _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
-      if (track) track.addEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
-      document.addEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
-      document.addEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
-      document.addEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
-
-      _floatCanvas.addEventListener('mousedown', _onCanvasMouseDown);
-      if (track) track.addEventListener('mousedown', _onTrayMouseDown);
-      window.addEventListener('mousemove', _onMouseMove);
-      window.addEventListener('mouseup', _onMouseUp);
-    }
+    _floatCanvas.addEventListener('mousedown', _onCanvasMouseDown);
+    if (track) track.addEventListener('mousedown', _onTrayMouseDown);
+    window.addEventListener('mousemove', _onMouseMove);
+    window.addEventListener('mouseup', _onMouseUp);
 
     if (prevBtn) prevBtn.addEventListener('click', _showPreviousTrayPage);
     if (nextBtn) nextBtn.addEventListener('click', _showNextTrayPage);
@@ -996,24 +967,16 @@ const PuzzleRender = (() => {
     if (!_floatCanvas) return; // never started — nothing was bound
     const { track, prevBtn, nextBtn } = _getTrayElements();
 
-    if (SUPPORTS_POINTER_EVENTS) {
-      _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
-      if (track) track.removeEventListener('pointerdown', _onTrayPointerDown);
-      window.removeEventListener('pointermove', _onPointerMove);
-      window.removeEventListener('pointerup', _onPointerUp);
-      window.removeEventListener('pointercancel', _onPointerUp);
-    } else {
-      _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
-      if (track) track.removeEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
-      document.removeEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
-      document.removeEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
-      document.removeEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
+    _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, TOUCH_LISTENER_OPTIONS);
+    if (track) track.removeEventListener('touchstart', _onTrayTouchStart, TOUCH_LISTENER_OPTIONS);
+    document.removeEventListener('touchmove', _onTouchMove, TOUCH_LISTENER_OPTIONS);
+    document.removeEventListener('touchend', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
+    document.removeEventListener('touchcancel', _onTouchEnd, TOUCH_LISTENER_OPTIONS);
 
-      _floatCanvas.removeEventListener('mousedown', _onCanvasMouseDown);
-      if (track) track.removeEventListener('mousedown', _onTrayMouseDown);
-      window.removeEventListener('mousemove', _onMouseMove);
-      window.removeEventListener('mouseup', _onMouseUp);
-    }
+    _floatCanvas.removeEventListener('mousedown', _onCanvasMouseDown);
+    if (track) track.removeEventListener('mousedown', _onTrayMouseDown);
+    window.removeEventListener('mousemove', _onMouseMove);
+    window.removeEventListener('mouseup', _onMouseUp);
 
     if (prevBtn) prevBtn.removeEventListener('click', _showPreviousTrayPage);
     if (nextBtn) nextBtn.removeEventListener('click', _showNextTrayPage);
@@ -1052,9 +1015,9 @@ const PuzzleRender = (() => {
     });
   }
 
-  // ── Pointer handlers ─────────────────────────────────
-  function _onTrayPointerDown(e) {
-    const { tray, track } = _getTrayElements();
+  // ── Mouse helpers ────────────────────────────────────
+  function _onTrayMouseStart(e) {
+    const { track } = _getTrayElements();
     const el = _closestByClass(e.target, 'tray-piece', track);
     if (!el) return;
     _refreshLayoutRects();
@@ -1064,27 +1027,10 @@ const PuzzleRender = (() => {
     if (!piece || piece.locked) return;
 
     const rect = el.getBoundingClientRect();
-    if (e.pointerType === 'touch' || e.pointerType === 'pen') {
-      e.preventDefault();
-
-      _beginTrayGesture(piece, rect, e.pointerId, e.clientX, e.clientY, tray);
-
-      if (tray && typeof tray.setPointerCapture === 'function') {
-        try {
-          tray.setPointerCapture(e.pointerId);
-        } catch (err) {
-          // Ignore browsers that reject capture here.
-        }
-      }
-      return;
-    }
-
     e.preventDefault();
     _startTrayDrag({
-      captureEl: tray,
       piece,
       originTrayIndex: piece.trayIndex,
-      pointerId: e.pointerId,
       rect,
     }, e);
   }
@@ -1110,28 +1056,12 @@ const PuzzleRender = (() => {
     };
     _trayGesture = null;
 
-    if (gesture.captureEl && typeof gesture.captureEl.setPointerCapture === 'function') {
-      try {
-        gesture.captureEl.setPointerCapture(gesture.pointerId);
-      } catch (err) {
-        // Ignore browsers that reject late pointer capture during tray promotion.
-      }
-    }
-
-    _onPointerMove(event);
+    _updateDraggingPosition(event.clientX, event.clientY);
   }
 
-  function _onCanvasPointerDown(e) {
+  function _onCanvasMouseStart(e) {
     e.preventDefault();
     if (!_startCanvasDragAt(e.clientX, e.clientY)) return;
-
-    if (typeof _floatCanvas.setPointerCapture === 'function' && e.pointerId != null) {
-      try {
-        _floatCanvas.setPointerCapture(e.pointerId);
-      } catch (err) {
-        // Ignore browsers that reject capture here.
-      }
-    }
   }
 
   function _findPieceAt(mx, my) {
@@ -1147,8 +1077,8 @@ const PuzzleRender = (() => {
     return null;
   }
 
-  function _onPointerMove(e) {
-    if (_trayGesture && !_dragging && e.pointerId === _trayGesture.pointerId) {
+  function _onMouseMoveInternal(e) {
+    if (_trayGesture && !_dragging && e.inputId === _trayGesture.inputId) {
       const dx = e.clientX - _trayGesture.startClientX;
       const dy = e.clientY - _trayGesture.startClientY;
       const distance = Math.hypot(dx, dy);
@@ -1166,9 +1096,8 @@ const PuzzleRender = (() => {
     _updateDraggingPosition(e.clientX, e.clientY);
   }
 
-  function _onPointerUp(e) {
-    if (_trayGesture && e.pointerId === _trayGesture.pointerId) {
-      _releaseTrayPointerCapture(e.pointerId);
+  function _onMouseUpInternal(e) {
+    if (_trayGesture && e.inputId === _trayGesture.inputId) {
       _trayGesture = null;
     }
 
