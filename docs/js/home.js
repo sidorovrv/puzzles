@@ -6,6 +6,7 @@
 
 const Home = (() => {
   let _puzzles = [];         // full puzzles.json array
+  let _categoryPuzzles = new Map();
   let _currentCategory = null;
   let _modalPuzzle = null;
   let _selectedCount = 24;
@@ -13,8 +14,14 @@ const Home = (() => {
   const CATEGORY_LABELS = {
     nature: 'Природа',
     animals: 'Животные',
+    architecture: 'Архитектура',
+    plants: 'Растения',
+    carnivora: 'Хищники',
+    mammals: 'Млекопитающие',
+    architecture_exteriors: 'Архитектурные фасады',
     landmarks: 'Достопримечательности',
     food: 'Еда',
+    space: 'Космос',
     objects: 'Предметы',
   };
 
@@ -22,6 +29,7 @@ const Home = (() => {
 
   function init(puzzles) {
     _puzzles = puzzles;
+    _categoryPuzzles = new Map();
     _buildSidebar();
     _bindModal();
     // Show first category by default
@@ -85,8 +93,29 @@ const Home = (() => {
     _setActiveNav(cat);
     document.getElementById('home-category-title').textContent =
       CATEGORY_LABELS[cat] || cat;
-    const filtered = _puzzles.filter(p => p.category === cat);
+    const filtered = _getCategoryPuzzles(cat);
     _renderGrid(filtered);
+  }
+
+  function _getCategoryPuzzles(category) {
+    if (_categoryPuzzles.has(category)) {
+      return _categoryPuzzles.get(category);
+    }
+
+    const shuffled = _shufflePuzzles(_puzzles.filter(puzzle => puzzle.category === category));
+    _categoryPuzzles.set(category, shuffled);
+    return shuffled;
+  }
+
+  function _shufflePuzzles(puzzles) {
+    const shuffled = [...puzzles];
+
+    for (let index = shuffled.length - 1; index > 0; index--) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+
+    return shuffled;
   }
 
   function selectMyPuzzles() {
@@ -94,8 +123,8 @@ const Home = (() => {
     _setActiveNav('__my');
     document.getElementById('home-category-title').textContent = 'Мои пазлы';
     const saves = Storage.getAllSaves();
-    const savedIds = new Set(saves.map(s => s.puzzleId));
-    const myPuzzles = _puzzles.filter(p => savedIds.has(p.id));
+    const savedIds = new Set(saves.map(save => save.storagePuzzleId));
+    const myPuzzles = _puzzles.filter(puzzle => savedIds.has(Storage.getPuzzleStorageId(puzzle)));
     _renderGrid(myPuzzles, true);
   }
 
@@ -116,12 +145,33 @@ const Home = (() => {
     });
   }
 
+  function _preferredSaveForPuzzle(puzzle) {
+    const storagePuzzleId = Storage.getPuzzleStorageId(puzzle);
+    const saves = Storage.getAllSaves().filter(save => save.storagePuzzleId === storagePuzzleId);
+    if (!saves.length) return null;
+
+    const inProgress = saves.filter(save => !save.completed);
+    const pool = inProgress.length ? inProgress : saves;
+
+    return pool.reduce((best, candidate) => {
+      const bestRatio = best.lockedCount / Math.max(best.pieceCount, 1);
+      const candidateRatio = candidate.lockedCount / Math.max(candidate.pieceCount, 1);
+
+      if (candidateRatio !== bestRatio) {
+        return candidateRatio > bestRatio ? candidate : best;
+      }
+
+      if (candidate.lockedCount !== best.lockedCount) {
+        return candidate.lockedCount > best.lockedCount ? candidate : best;
+      }
+
+      return candidate.pieceCount > best.pieceCount ? candidate : best;
+    });
+  }
+
   function _buildCard(puzzle, forMyPuzzles) {
     // Find best save for this puzzle (most recent / most progress)
-    const saves = Storage.getAllSaves().filter(s => s.puzzleId === puzzle.id);
-    const bestSave = saves.length
-      ? saves.reduce((a, b) => (a.lockedCount > b.lockedCount ? a : b))
-      : null;
+    const bestSave = _preferredSaveForPuzzle(puzzle);
 
     const card = document.createElement('div');
     card.className = 'puzzle-card';
@@ -129,7 +179,7 @@ const Home = (() => {
 
     const img = document.createElement('img');
     img.src = puzzle.thumbUrl;
-    img.alt = puzzle.title;
+    img.alt = puzzle.description || puzzle.title;
     img.loading = 'lazy';
     card.appendChild(img);
 
@@ -155,7 +205,7 @@ const Home = (() => {
 
     const title = document.createElement('div');
     title.className = 'puzzle-card-title';
-    title.textContent = puzzle.title;
+    title.textContent = puzzle.description || puzzle.title;
     body.appendChild(title);
 
     if (bestSave && !bestSave.completed) {
@@ -182,10 +232,11 @@ const Home = (() => {
 
   function openDifficultyModal(puzzle) {
     _modalPuzzle = puzzle;
-    _selectedCount = 24;
+    const preferredSave = _preferredSaveForPuzzle(puzzle);
+    _selectedCount = preferredSave ? preferredSave.pieceCount : 24;
 
     document.getElementById('modal-preview-img').src = puzzle.thumbUrl;
-    document.getElementById('modal-title').textContent = puzzle.title;
+    document.getElementById('modal-title').textContent = puzzle.description || puzzle.title;
 
     _updateModalButtons();
 
@@ -202,7 +253,7 @@ const Home = (() => {
     });
 
     // Show save info for selected count
-    const save = Storage.loadState(_modalPuzzle.id, _selectedCount);
+    const save = Storage.loadState(_modalPuzzle, _selectedCount);
     const infoEl = document.getElementById('modal-save-info');
     const startBtn = document.getElementById('modal-start-btn');
 
@@ -237,8 +288,10 @@ const Home = (() => {
       if (!_modalPuzzle) return;
       const puzzleId = _modalPuzzle.id;
       const count    = _selectedCount;
+      const save = Storage.loadState(_modalPuzzle, count);
+      const restart = Boolean(save && save.completed);
       _closeModal();
-      App.showPuzzle(puzzleId, count);
+      App.showPuzzle(puzzleId, count, { restart });
     });
   }
 

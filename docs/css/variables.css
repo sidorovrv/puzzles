@@ -10,17 +10,17 @@
   --color-text-secondary: #6e6e73;
   --color-gold: #FFD700;
   --color-gold-dark: #FFA000;
-  --color-overlay-bg: rgba(0, 0, 0, 0.55);
-  --color-sidebar-bg: #1e1e2e;
-  --color-sidebar-text: #e0e0e0;
-  --color-sidebar-active-bg: #4CAF50;
-  --color-sidebar-active-text: #ffffff;
-  --color-sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+  --color-overlay-bg: rgba(245, 247, 250, 0.78);
+  --color-sidebar-bg: #fcfcfd;
+  --color-sidebar-text: #2c2c31;
+  --color-sidebar-active-bg: #e3f3e5;
+  --color-sidebar-active-text: #2f6c33;
+  --color-sidebar-hover-bg: #f1f6f2;
   --color-progress-bg: #e0e0e0;
   --color-progress-fill: #4CAF50;
-  --color-tray-bg: #2a2a3a;
-  --color-toolbar-bg: #2a2a3a;
-  --color-toolbar-text: #f0f0f0;
+  --color-tray-bg: #f7fafc;
+  --color-toolbar-bg: rgba(255, 255, 255, 0.92);
+  --color-toolbar-text: #1c1c1e;
 
   /* Spacing */
   --space-xs: 4px;

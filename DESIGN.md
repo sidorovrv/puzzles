@@ -241,11 +241,16 @@ On pointerup:
 
 Locked pieces are painted onto a persistent "assembled" canvas layer and are immovable.
 
-### Save format (localStorage, key = save_<puzzleId>_<pieceCount>)
+### Save format (localStorage, key = save_<stablePuzzleId>_<pieceCount>)
+
+`stablePuzzleId` is derived from the source image identity, not the current catalogue
+category. That keeps saves attached to the same Wikimedia image even if `puzzles.json`
+is regenerated and the visible `puzzleId` changes.
 
 ```json
 {
-  "puzzleId": "nature_mountains",
+  "puzzleId": "animals_23241619",
+  "storagePuzzleId": "page_23241619",
   "pieceCount": 144,
   "seed": 4829201,
   "startedAt": 1714870000,

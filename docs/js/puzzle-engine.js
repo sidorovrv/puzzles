@@ -28,16 +28,40 @@ const PuzzleEngine = (() => {
   }
 
   // ── Grid dimensions ──────────────────────────────────
-  function gridDims(pieceCount) {
-    // Find cols x rows closest to square, matching pieceCount
-    const sqrt = Math.round(Math.sqrt(pieceCount));
-    // Prefer landscape-ish
-    for (let cols = sqrt + 2; cols >= 1; cols--) {
-      if (pieceCount % cols === 0) {
-        return { cols, rows: pieceCount / cols };
+  function gridDims(pieceCount, imageAspectRatio = 1) {
+    const safeCount = Number.isInteger(pieceCount) && pieceCount > 0 ? pieceCount : 1;
+    const targetAspect = Number.isFinite(imageAspectRatio) && imageAspectRatio > 0
+      ? imageAspectRatio
+      : 1;
+    let best = null;
+    const maxFactor = Math.floor(Math.sqrt(safeCount));
+
+    for (let factor = 1; factor <= maxFactor; factor++) {
+      if (safeCount % factor !== 0) continue;
+
+      const pair = safeCount / factor;
+      considerCandidate(pair, factor);
+      if (factor !== pair) {
+        considerCandidate(factor, pair);
       }
     }
-    return { cols: sqrt, rows: Math.ceil(pieceCount / sqrt) };
+
+    return best
+      ? { cols: best.cols, rows: best.rows }
+      : { cols: safeCount, rows: 1 };
+
+    function considerCandidate(cols, rows) {
+      const cellAspect = (targetAspect * rows) / cols;
+      const squareError = Math.abs(Math.log(cellAspect));
+      const balanceError = Math.abs(cols - rows);
+
+      if (!best ||
+        squareError < best.squareError - 1e-9 ||
+        (Math.abs(squareError - best.squareError) <= 1e-9 && balanceError < best.balanceError) ||
+        (Math.abs(squareError - best.squareError) <= 1e-9 && balanceError === best.balanceError && cols > best.cols)) {
+        best = { cols, rows, squareError, balanceError };
+      }
+    }
   }
 
   // ── Tab direction for each edge ──────────────────────
@@ -88,6 +112,8 @@ const PuzzleEngine = (() => {
           id,
           col: c,
           row: r,
+          imageX: c * cellW,
+          imageY: r * cellH,
           correctX: c * cellW,
           correctY: r * cellH,
           currentX: 0,
@@ -140,6 +166,8 @@ const PuzzleEngine = (() => {
     const TAB_SIZE = Math.min(cellW, cellH) * 0.22; // protrusion length
     const canvasW = cellW + BLEED * 2 + TAB_SIZE * 2;
     const canvasH = cellH + BLEED * 2 + TAB_SIZE * 2;
+    const imageX = Number.isFinite(piece.imageX) ? piece.imageX : piece.correctX;
+    const imageY = Number.isFinite(piece.imageY) ? piece.imageY : piece.correctY;
 
     const offscreen = document.createElement('canvas');
     offscreen.width  = Math.ceil(canvasW);
@@ -156,18 +184,14 @@ const PuzzleEngine = (() => {
     _buildPiecePath(ctx, piece.tabs, cellW, cellH, ox, oy, TAB_SIZE);
     ctx.clip();
 
-    // Scale ratio: img displayed size → natural size
-    const scaleX = img.naturalWidth  / imgW;
-    const scaleY = img.naturalHeight / imgH;
-
+    // Draw the fitted image at its display size so the clipped piece lines up with
+    // the same coordinate space used by piece geometry, independent of canvas offsets.
     ctx.drawImage(
       img,
-      piece.correctX * scaleX,        // source x
-      piece.correctY * scaleY,        // source y
-      cellW * scaleX + (TAB_SIZE * 2 + BLEED * 2) * scaleX,  // source w (with bleed)
-      cellH * scaleY + (TAB_SIZE * 2 + BLEED * 2) * scaleY,  // source h (with bleed)
-      0, 0,
-      canvasW, canvasH
+      ox - imageX,
+      oy - imageY,
+      imgW,
+      imgH
     );
 
     // Thin border
@@ -197,7 +221,7 @@ const PuzzleEngine = (() => {
     ctx.moveTo(ox, oy);
 
     // Top edge (left → right)
-    _drawEdge(ctx, ox, oy, ox + cellW, oy, tabs.top, TAB_SIZE, 'h');
+    _drawEdge(ctx, ox, oy, ox + cellW, oy, -tabs.top, TAB_SIZE, 'h');
 
     // Right edge (top → bottom)
     _drawEdge(ctx, ox + cellW, oy, ox + cellW, oy + cellH, tabs.right, TAB_SIZE, 'v');
@@ -206,7 +230,7 @@ const PuzzleEngine = (() => {
     _drawEdge(ctx, ox + cellW, oy + cellH, ox, oy + cellH, tabs.bottom, TAB_SIZE, 'h');
 
     // Left edge (bottom → top)
-    _drawEdge(ctx, ox, oy + cellH, ox, oy, tabs.left, TAB_SIZE, 'v');
+    _drawEdge(ctx, ox, oy + cellH, ox, oy, -tabs.left, TAB_SIZE, 'v');
 
     ctx.closePath();
   }

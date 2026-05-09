@@ -1,4 +1,4 @@
-const SHELL_VERSION = '20260509-1';
+const SHELL_VERSION = '20260509-4';
 const SHELL_CACHE = 'puzzle-shell-' + SHELL_VERSION;
 const IMAGE_CACHE = 'puzzle-images-v1';
 
@@ -6,16 +6,47 @@ const SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './css/variables.css',
-  './css/app.css',
-  './css/puzzle.css',
-  './js/storage.js',
-  './js/puzzle-engine.js',
-  './js/puzzle-render.js',
-  './js/home.js',
-  './js/app.js',
+  './css/variables.css?v=20260509-3',
+  './css/app.css?v=20260509-3',
+  './css/puzzle.css?v=20260509-3',
+  './js/storage.js?v=20260509-4',
+  './js/puzzle-engine.js?v=20260509-4',
+  './js/puzzle-render.js?v=20260509-4',
+  './js/home.js?v=20260509-4',
+  './js/app.js?v=20260509-4',
   './data/puzzles.json',
+  './images/icons/icon.svg',
 ];
+
+const SHELL_PATHS = new Set(SHELL_ASSETS.map(asset => new URL(asset, self.location.href).pathname));
+
+async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+
+  try {
+    const response = await fetch(new Request(request, { cache: 'no-store' }));
+    if (response.ok) {
+      await cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    throw error;
+  }
+}
+
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+
+  const response = await fetch(request);
+  if (response.ok) {
+    await cache.put(request, response.clone());
+  }
+  return response;
+}
 
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -37,26 +68,30 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('fetch', event => {
   const { request } = event;
+  if (request.method !== 'GET') return;
+
   const url = new URL(request.url);
 
   // Cache-first for cross-origin puzzle images
   if (url.origin !== self.location.origin) {
-    event.respondWith(
-      caches.open(IMAGE_CACHE).then(async cache => {
-        const cached = await cache.match(request);
-        if (cached) return cached;
-        const response = await fetch(request);
-        if (response.ok) cache.put(request, response.clone());
-        return response;
-      })
-    );
+    event.respondWith(cacheFirst(request, IMAGE_CACHE));
     return;
   }
 
-  // Cache-first for same-origin shell assets
-  event.respondWith(
-    caches.match(request).then(cached => cached || fetch(request))
-  );
+  if (request.mode === 'navigate' || request.destination === 'document') {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+    return;
+  }
+
+  if (SHELL_PATHS.has(url.pathname)) {
+    event.respondWith(networkFirst(request, SHELL_CACHE));
+  }
 });

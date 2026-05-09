@@ -1,0 +1,1382 @@
+*** Begin Patch
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A South African cheetah in southern Namibia. He is urinating over a tree trunk.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAcinonyx_jubatus_-Southern_Namibia-8.jpg"
+  },
+-  {
+-    "id": "carnivora_67122448",
+-    "sourcePageId": 67122448,
+-    "title": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg/960px-Adults_%28469396%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Adults (469396) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdults_%28469396%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "carnivora_81465609",
+    "sourcePageId": 81465609,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Ailurus fulgens Cuvier, 1825 , Red panda; Karlsruhe Zoo , Karlsruhe , Germany .",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAilurus_fulgens_-_Karlsruhe_Zoo_01.jpg"
+  },
+-  {
+-    "id": "carnivora_4835718",
+-    "sourcePageId": 4835718,
+-    "title": "Иконный силуэт самолета",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Airplane_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Airplane_silhouette.svg/960px-Airplane_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконный силуэт самолета.",
+-    "sourceDescription": "Icon-type silhouette of an airplane. (Mainly to be used in Userboxes) Used on WIkipedia as an airport location icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAirplane_silhouette.svg"
+-  },
+  {
+    "id": "carnivora_40573988",
+    "sourcePageId": 40573988,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A photograph of an Amur Tiger at Münster Zoo",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAmurtiger-Zoo-Muenster.jpg"
+  },
+-  {
+-    "id": "carnivora_60125402",
+-    "sourcePageId": 60125402,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Android_Emoji_1f304.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Android_Emoji_1f304.svg/960px-Android_Emoji_1f304.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f304.svg"
+-  },
+-  {
+-    "id": "carnivora_60124425",
+-    "sourcePageId": 60124425,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Android_Emoji_1f339.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Android_Emoji_1f339.svg/960px-Android_Emoji_1f339.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f339.svg"
+-  },
+-  {
+-    "id": "carnivora_60125942",
+-    "sourcePageId": 60125942,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Android_Emoji_1f41a.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Android_Emoji_1f41a.svg/960px-Android_Emoji_1f41a.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f41a.svg"
+-  },
+-  {
+-    "id": "carnivora_60125313",
+-    "sourcePageId": 60125313,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Android_Emoji_1f426.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Android_Emoji_1f426.svg/960px-Android_Emoji_1f426.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f426.svg"
+-  },
+  {
+    "id": "carnivora_46771612",
+    "sourcePageId": 46771612,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Cape fur seal ( Arctocephalus pusillus ) at Cape Cross, Namibia",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArctocephalus_pusillus_2.jpg"
+  },
+-  {
+-    "id": "carnivora_65118155",
+-    "sourcePageId": 65118155,
+-    "title": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Arts_and_Culture_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Arts_and_Culture_-_The_Noun_Project.svg/960px-Arts_and_Culture_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Arts and Culture - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArts_and_Culture_-_The_Noun_Project.svg"
+-  },
+-  {
+-    "id": "carnivora_45929459",
+-    "sourcePageId": 45929459,
+-    "title": "Бамбуковая орхидея, Arundina graminifolia",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg/960px-Arundina_graminifolia_%285%29_1200_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бамбуковая орхидея, Arundina graminifolia.",
+-    "sourceDescription": "Bamboo orchid, Arundina graminifolia",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArundina_graminifolia_%285%29_1200_vector_icon.svg"
+-  },
+-  {
+-    "id": "carnivora_44946303",
+-    "sourcePageId": 44946303,
+-    "title": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом...",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Australian_Pelican_Kioloa_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Australian_Pelican_Kioloa_silhouette.svg/960px-Australian_Pelican_Kioloa_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом Южном Уэльсе, Австралия.",
+-    "sourceDescription": "An Australian Pelican ( pelecanus conspicillatus ) at Kioloa beach in New South Wales , Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAustralian_Pelican_Kioloa_silhouette.svg"
+-  },
+  {
+    "id": "carnivora_45267619",
+    "sourcePageId": 45267619,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Brown bear ( Ursus arctos arctos ) running. From Skandinavisk Dyrepark, Denmark.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABrown_bear_%28Ursus_arctos_arctos%29_running.jpg"
+  },
+-  {
+-    "id": "carnivora_24126067",
+-    "sourcePageId": 24126067,
+-    "title": "Значок черной ошибки",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/Bug_icon_-_Noun_project_198.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Bug_icon_-_Noun_project_198.svg/960px-Bug_icon_-_Noun_project_198.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок черной ошибки.",
+-    "sourceDescription": "A black bug icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABug_icon_-_Noun_project_198.svg"
+-  },
+-  {
+-    "id": "carnivora_12404322",
+-    "sourcePageId": 12404322,
+-    "title": "Силуэт Buteo jamaicensis",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Buteo_jamaicensis_2_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Buteo_jamaicensis_2_silhouette.svg/960px-Buteo_jamaicensis_2_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт Buteo jamaicensis",
+-    "sourceDescription": "Silhouette of Buteo jamaicensis",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AButeo_jamaicensis_2_silhouette.svg"
+-  },
+  {
+    "id": "carnivora_12276123",
+    "sourcePageId": 12276123,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Arctic Wolf in the Wisentgehege Springe game park near Springe , Hanover , Germany",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACanis_lupus_arctos_%28Pocock%2C_1935%29.jpg"
+  },
+-  {
+-    "id": "carnivora_64904045",
+-    "sourcePageId": 64904045,
+-    "title": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Car_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Car_-_The_Noun_Project.svg/960px-Car_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "sourceDescription": "Car - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACar_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "carnivora_23998929",
+    "sourcePageId": 23998929,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Cheetah",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACheetah4.jpg"
+  },
+-  {
+-    "id": "carnivora_44652223",
+-    "sourcePageId": 44652223,
+-    "title": "Взрослая красноклювая чайка в Мальборо, Новая Зеландия: Векторный силуэт",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg/960px-Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослая красноклювая чайка в Мальборо, Новая Зеландия: Векторный силуэт.",
+-    "sourceDescription": "An adult Red-billed Gull in Marlborough, New Zealand: Vector silhouette.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AChroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg"
+-  },
+-  {
+-    "id": "carnivora_30579841",
+-    "sourcePageId": 30579841,
+-    "title": "Иконка города из The Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/City_icon_%28Noun_Project%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/City_icon_%28Noun_Project%29.svg/960px-City_icon_%28Noun_Project%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка города из The Noun Project.",
+-    "sourceDescription": "City icon from The Noun Project .",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACity_icon_%28Noun_Project%29.svg"
+-  },
+  {
+    "id": "carnivora_87999584",
+    "sourcePageId": 87999584,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Close-up view of the head of a white tiger ( Bengal tiger species), yawning with the tongue out, at Singapore Zoo .",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AClose-up_view_of_the_head_of_a_white_tiger%2C_yawning_with_the_tongue_out.jpg"
+  },
+-  {
+-    "id": "carnivora_68423062",
+-    "sourcePageId": 68423062,
+-    "title": "Прибрежный (8676) — значок The Noun Project.svg из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/20/Coastal_%288676%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Coastal_%288676%29_-_The_Noun_Project.svg/960px-Coastal_%288676%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Прибрежный (8676) — значок The Noun Project.svg из Noun Project.",
+-    "sourceDescription": "Coastal (8676) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACoastal_%288676%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "carnivora_42803334",
+    "sourcePageId": 42803334,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Common seal ( Phoca vitulina ) juvenile, off Skomer Island, Pembrokeshire, Wales",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACommon_seal_%28Phoca_vitulina%29_juvenile.jpg"
+  },
+-  {
+-    "id": "carnivora_67122784",
+-    "sourcePageId": 67122784,
+-    "title": "Cougar (28783) — значок The Noun Project.svg из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Cougar_%2828783%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Cougar_%2828783%29_-_The_Noun_Project.svg/960px-Cougar_%2828783%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Cougar (28783) — значок The Noun Project.svg из Noun Project.",
+-    "sourceDescription": "Cougar (28783) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACougar_%2828783%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "carnivora_3692033",
+    "sourcePageId": 3692033,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A labrador of the Perchtoldsdorf district search and rescue dog unit.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ADSC09611a_Search_and_Rescue_Dog%2C_Austrian_Red_Cross_Perchtoldsdorf%2C_2024-10.jpg"
+  },
+-  {
+-    "id": "carnivora_41906299",
+-    "sourcePageId": 41906299,
+-    "title": "Силуэт утки",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Duck_on_Yeadon_Tarn_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Duck_on_Yeadon_Tarn_silhouette.svg/960px-Duck_on_Yeadon_Tarn_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт утки.",
+-    "sourceDescription": "Duck silhouette.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ADuck_on_Yeadon_Tarn_silhouette.svg"
+-  },
+-  {
+-    "id": "carnivora_7485792",
+-    "sourcePageId": 7485792,
+-    "title": "икона для церкви немецкого типа",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Eglise_icone.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Eglise_icone.svg/960px-Eglise_icone.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "икона для церкви немецкого типа",
+-    "sourceDescription": "icone pour Église de type Allemand",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEglise_icone.svg"
+-  },
+  {
+    "id": "carnivora_77235554",
+    "sourcePageId": 77235554,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Male Northern Elephant Seals fighting for territory and mates, Piedras Blancas, San Simeon, California (USA).",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AElephant_seals_fighting.jpg"
+  },
+-  {
+-    "id": "carnivora_59732805",
+-    "sourcePageId": 59732805,
+-    "title": "Бесцветный эмодзи из проекта emojione",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Emojione_BW_1F505.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Emojione_BW_1F505.svg/960px-Emojione_BW_1F505.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бесцветный эмодзи из проекта emojione.",
+-    "sourceDescription": "A non-colored Emoji from emojione project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEmojione_BW_1F505.svg"
+-  },
+-  {
+-    "id": "carnivora_59733270",
+-    "sourcePageId": 59733270,
+-    "title": "Бесцветный эмодзи из проекта emojione",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Emojione_BW_1F6E3.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Emojione_BW_1F6E3.svg/960px-Emojione_BW_1F6E3.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бесцветный эмодзи из проекта emojione.",
+-    "sourceDescription": "A non-colored Emoji from emojione project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEmojione_BW_1F6E3.svg"
+-  },
+  {
+    "id": "carnivora_52745369",
+    "sourcePageId": 52745369,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "European otter ( Lutra lutra )",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEuropean_otter_02.jpg"
+  },
+-  {
+-    "id": "carnivora_8389475",
+-    "sourcePageId": 8389475,
+-    "title": "Иконка для завода",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Factory_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Factory_icon.svg/960px-Factory_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка для завода",
+-    "sourceDescription": "Icon for a factory",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFactory_icon.svg"
+-  },
+  {
+    "id": "carnivora_91854273",
+    "sourcePageId": 91854273,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Family of lions during the mating season in Masai Mara National Park",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFamily_of_lions_during_the_mating_season.jpg"
+  },
+-  {
+-    "id": "carnivora_64904118",
+-    "sourcePageId": 64904118,
+-    "title": "Ферма — иконка Noun Project из Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Farm_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Farm_-_The_Noun_Project.svg/960px-Farm_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Ферма — иконка Noun Project из Noun Project",
+-    "sourceDescription": "Farm - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFarm_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "carnivora_104101423",
+    "sourcePageId": 104101423,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "\"Fireworks Whippets\" at NAWRA 2008 Nationals and WWD. Roy, WA, USA.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFireworks_Whippets.jpg"
+  },
+-  {
+-    "id": "carnivora_32140074",
+-    "sourcePageId": 32140074,
+-    "title": "Иконка черной рыбы из проекта Noun Project",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Fish_icon_%28The_Noun_Project_27052%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Fish_icon_%28The_Noun_Project_27052%29.svg/960px-Fish_icon_%28The_Noun_Project_27052%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка черной рыбы из проекта Noun Project.",
+-    "sourceDescription": "Black fish icon from The Noun Project .",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFish_icon_%28The_Noun_Project_27052%29.svg"
+-  },
+-  {
+-    "id": "carnivora_121749378",
+-    "sourcePageId": 121749378,
+-    "title": "Высококонтрастный смайлик из проекта Fluent Emoji",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Fluent_Emoji_high_contrast_1fab7.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fluent_Emoji_high_contrast_1fab7.svg/960px-Fluent_Emoji_high_contrast_1fab7.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Высококонтрастный смайлик из проекта Fluent Emoji.",
+-    "sourceDescription": "A high contrast emoji from the Fluent Emoji project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFluent_Emoji_high_contrast_1fab7.svg"
+-  },
+  {
+    "id": "carnivora_131784658",
+    "sourcePageId": 131784658,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Mother grey seal ( Halichoerus grypus atlantica ) with her one-day-old pup, Horsey Beach , Norfolk, England.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFocas_grises_%28Halichoerus_grypus%29%2C_playa_de_Horsey%2C_Norfolk%2C_Inglaterra%2C_2022-11-20%2C_DD_11.jpg"
+  },
+-  {
+-    "id": "carnivora_71512593",
+-    "sourcePageId": 71512593,
+-    "title": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Font_Awesome_5_solid_microscope.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Font_Awesome_5_solid_microscope.svg/960px-Font_Awesome_5_solid_microscope.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки.",
+-    "sourceDescription": "A solid-weight icon from Font Awesome, a free web icon font.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFont_Awesome_5_solid_microscope.svg"
+-  },
+-  {
+-    "id": "carnivora_73684798",
+-    "sourcePageId": 73684798,
+-    "title": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Font_Awesome_5_solid_praying-hands.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Font_Awesome_5_solid_praying-hands.svg/960px-Font_Awesome_5_solid_praying-hands.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки.",
+-    "sourceDescription": "A solid-weight icon from Font Awesome, a free web icon font.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFont_Awesome_5_solid_praying-hands.svg"
+-  },
+-  {
+-    "id": "carnivora_3598398",
+-    "sourcePageId": 3598398,
+-    "title": "силуэт муравья",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Fourmi03.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Fourmi03.svg/960px-Fourmi03.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "силуэт муравья",
+-    "sourceDescription": "silhouette de fourmi",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFourmi03.svg"
+-  },
+-  {
+-    "id": "carnivora_34543959",
+-    "sourcePageId": 34543959,
+-    "title": "Значок интерьера для избранных фотографий",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/46/FP_Interior_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/FP_Interior_icon.svg/960px-FP_Interior_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок интерьера для избранных фотографий",
+-    "sourceDescription": "Icon Interior for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Interior_icon.svg"
+-  },
+-  {
+-    "id": "carnivora_34544003",
+-    "sourcePageId": 34544003,
+-    "title": "Значок гриба для избранных фотографий",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/FP_Mushroom_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/FP_Mushroom_icon.svg/960px-FP_Mushroom_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок гриба для избранных фотографий",
+-    "sourceDescription": "Mushroom icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Mushroom_icon.svg"
+-  },
+-  {
+-    "id": "carnivora_34544151",
+-    "sourcePageId": 34544151,
+-    "title": "Значок спутника для избранных фотографий",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/FP_Satellite_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/FP_Satellite_icon.svg/960px-FP_Satellite_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок спутника для избранных фотографий",
+-    "sourceDescription": "Satellite icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Satellite_icon.svg"
+-  },
+-  {
+-    "id": "carnivora_34544040",
+-    "sourcePageId": 34544040,
+-    "title": "Значок улитки для избранных изображений",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ed/FP_Snail_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/FP_Snail_icon.svg/960px-FP_Snail_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок улитки для избранных изображений",
+-    "sourceDescription": "Snail icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Snail_icon.svg"
+-  },
+  {
+    "id": "carnivora_30605",
+    "sourcePageId": 30605,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Galápagos sea lion female ( Zalophus wollebaeki ) suckling a newborn, Santa Fe Island, Galápagos National Park, Ecuador",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGal%C3%A1pagos_sea_lions%2C_Santa_Fe_Island_03.jpg"
+  },
+-  {
+-    "id": "carnivora_45892464",
+-    "sourcePageId": 45892464,
+-    "title": "Неопознанная Gazania, вероятно, садовый гибрид, который ни в какой степени...",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/Gazania_rigens_var._rigens_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Gazania_rigens_var._rigens_vector_icon.svg/960px-Gazania_rigens_var._rigens_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Неопознанная Gazania, вероятно, садовый гибрид, который ни в какой степени не похож на Gazania rigens (даже на G.rigida. Голова. Тасмания, Австралия).",
+-    "sourceDescription": "An unidentified Gazania , probably a garden hybrid, that does not resemble Gazania rigens (nor even G. rigida to any extent. Head . Tasmania, Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGazania_rigens_var._rigens_vector_icon.svg"
+-  },
+  {
+    "id": "carnivora_63938553",
+    "sourcePageId": 63938553,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "The grizzly bear ( Ursus arctos ssp .) is any North American subspecies of brown bear",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGrizzly_Bear_%28Ursus_arctos_ssp.%29.jpg"
+  },
+-  {
+-    "id": "carnivora_739800",
+-    "sourcePageId": 739800,
+-    "title": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/30/Gtk-go-down.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Gtk-go-down.svg/960px-Gtk-go-down.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2.",
+-    "sourceDescription": "Icon from Nuvola icon theme for KDE 3.x / GNOME 2.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGtk-go-down.svg"
+-  },
+-  {
+-    "id": "carnivora_739802",
+-    "sourcePageId": 739802,
+-    "title": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Gtk-go-up.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Gtk-go-up.svg/960px-Gtk-go-up.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2.",
+-    "sourceDescription": "Icon from Nuvola icon theme for KDE 3.x / GNOME 2.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGtk-go-up.svg"
+-  },
+  {
+    "id": "carnivora_151035927",
+    "sourcePageId": 151035927,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Jaguar ( Panthera onca palustris ) male, Three Brothers River, Mato Grosso, Pantanal, Brazil",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AJaguar_%28Panthera_onca_palustris%29_male_Three_Brothers_River_2.jpg"
+  },
+-  {
+-    "id": "carnivora_44656582",
+-    "sourcePageId": 44656582,
+-    "title": "Векторный портрет ягуара (Panthera onca) в зоологическом саду округа Милуоки...",
+-    "category": "carnivora",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Jaguar_head_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Jaguar_head_icon.svg/960px-Jaguar_head_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Векторный портрет ягуара (Panthera onca) в зоологическом саду округа Милуоки в Милуоки, штат Висконсин.",
+-    "sourceDescription": "Vector potrait of a Jaguar ( Panthera onca ) at the Milwaukee County Zoological Gardens in Milwaukee, Wisconsin .",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AJaguar_head_icon.svg"
+-  },
+  {
+    "id": "carnivora_1284882",
+    "sourcePageId": 1284882,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A beachcomber is touching a dead whale washed ashore at Ocean beach. The marks of great white sharks bites are seen at the rear of the whale. The scientists were not able to ID the whale , but the huge bites taken out of the whale that experts said were from great white sharks. .",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AA_beachcomber_is_touching_a_dead_whale_washed_ashore_at_Ocean_beach_edit_1.jpg"
+  },
+-  {
+-    "id": "mammals_67122448",
+-    "sourcePageId": 67122448,
+-    "title": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg/960px-Adults_%28469396%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Adults (469396) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdults_%28469396%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "mammals_148284902",
+    "sourcePageId": 148284902,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "An Agouti Foraging In Tulum, MX",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAgouti_Tulum_Take_2.jpg"
+  },
+-  {
+-    "id": "mammals_4835718",
+-    "sourcePageId": 4835718,
+-    "title": "Иконный силуэт самолета",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Airplane_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Airplane_silhouette.svg/960px-Airplane_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконный силуэт самолета.",
+-    "sourceDescription": "Icon-type silhouette of an airplane. (Mainly to be used in Userboxes) Used on WIkipedia as an airport location icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAirplane_silhouette.svg"
+-  },
+  {
+    "id": "mammals_22314301",
+    "sourcePageId": 22314301,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "The Alpine Marmot (Marmota marmota) is a species of marmot found in mountainous areas of central and southern Europe.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAlpenmurmeltier_Marmota_marmota_of_R%C3%A4tikon_5.JPG"
+  },
+-  {
+-    "id": "mammals_60125402",
+-    "sourcePageId": 60125402,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Android_Emoji_1f304.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Android_Emoji_1f304.svg/960px-Android_Emoji_1f304.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f304.svg"
+-  },
+-  {
+-    "id": "mammals_60124425",
+-    "sourcePageId": 60124425,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Android_Emoji_1f339.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Android_Emoji_1f339.svg/960px-Android_Emoji_1f339.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f339.svg"
+-  },
+-  {
+-    "id": "mammals_60125942",
+-    "sourcePageId": 60125942,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Android_Emoji_1f41a.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Android_Emoji_1f41a.svg/960px-Android_Emoji_1f41a.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f41a.svg"
+-  },
+-  {
+-    "id": "mammals_60125313",
+-    "sourcePageId": 60125313,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Android_Emoji_1f426.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Android_Emoji_1f426.svg/960px-Android_Emoji_1f426.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f426.svg"
+-  },
+  {
+    "id": "mammals_27096475",
+    "sourcePageId": 27096475,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Arctic Hare (Lepus arcticus) in Sachs Harbour, Banks Island, Canada",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArctic_Hare_%28Lepus_arcticus%29_02.jpg"
+  },
+-  {
+-    "id": "mammals_65118155",
+-    "sourcePageId": 65118155,
+-    "title": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Arts_and_Culture_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Arts_and_Culture_-_The_Noun_Project.svg/960px-Arts_and_Culture_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Arts and Culture - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArts_and_Culture_-_The_Noun_Project.svg"
+-  },
+-  {
+-    "id": "mammals_45929459",
+-    "sourcePageId": 45929459,
+-    "title": "Бамбуковая орхидея, Arundina graminifolia",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg/960px-Arundina_graminifolia_%285%29_1200_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бамбуковая орхидея, Arundina graminifolia.",
+-    "sourceDescription": "Bamboo orchid, Arundina graminifolia",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArundina_graminifolia_%285%29_1200_vector_icon.svg"
+-  },
+  {
+    "id": "mammals_83997417",
+    "sourcePageId": 83997417,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Three-quarter view of an Asian elephant ( Elephas maximus ) , female, walking in Tad Lo river at golden hour, Bolaven Plateau , Salavan Province , Laos .",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAsian_elephant_walking_in_Tad_Lo_river_at_golden_hour%2C_Bolaven_Plateau%2C_Laos.jpg"
+  },
+-  {
+-    "id": "mammals_44946303",
+-    "sourcePageId": 44946303,
+-    "title": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом...",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Australian_Pelican_Kioloa_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Australian_Pelican_Kioloa_silhouette.svg/960px-Australian_Pelican_Kioloa_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом Южном Уэльсе, Австралия.",
+-    "sourceDescription": "An Australian Pelican ( pelecanus conspicillatus ) at Kioloa beach in New South Wales , Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAustralian_Pelican_Kioloa_silhouette.svg"
+-  },
+  {
+    "id": "mammals_92267637",
+    "sourcePageId": 92267637,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Brown rat ( Rattus norvegicus ) also called Norway Rat or Common Rat, claiming abandoned food container in Mathias Baldwin Park, Philadelphia, Pennsylvania, USA.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABrown_Rat_%28Rattus_norvegicus%29_also_called_Norway_Rat_or_Common_Rat_-with_food_container_-_Mathias_Baldwin_Park%2C_Philadelphia%2C_Pennsylvania%2C_USA.jpg"
+  },
+-  {
+-    "id": "mammals_24126067",
+-    "sourcePageId": 24126067,
+-    "title": "Значок черной ошибки",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/Bug_icon_-_Noun_project_198.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Bug_icon_-_Noun_project_198.svg/960px-Bug_icon_-_Noun_project_198.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок черной ошибки.",
+-    "sourceDescription": "A black bug icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABug_icon_-_Noun_project_198.svg"
+-  },
+-  {
+-    "id": "mammals_12404322",
+-    "sourcePageId": 12404322,
+-    "title": "Силуэт Buteo jamaicensis",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Buteo_jamaicensis_2_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Buteo_jamaicensis_2_silhouette.svg/960px-Buteo_jamaicensis_2_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт Buteo jamaicensis",
+-    "sourceDescription": "Silhouette of Buteo jamaicensis",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AButeo_jamaicensis_2_silhouette.svg"
+-  },
+  {
+    "id": "mammals_12276123",
+    "sourcePageId": 12276123,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Capybaras ( Hydrochoerus hydrochaeris ) in the protected area of the Tietê River in São Paulo state, Brazil.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACapivara%28Hydrochoerus_hydrochaeris%29.jpg"
+  },
+-  {
+-    "id": "mammals_64904045",
+-    "sourcePageId": 64904045,
+-    "title": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Car_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Car_-_The_Noun_Project.svg/960px-Car_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "sourceDescription": "Car - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACar_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "mammals_44204277",
+    "sourcePageId": 44204277,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Chipmunk with stuffed cheeks in Prospect Park (Brooklyn, NY, USA)",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AChipmunk_with_stuffed_cheeks_in_Prospect_Park_%2805980%29.jpg"
+  },
+-  {
+-    "id": "mammals_44652223",
+-    "sourcePageId": 44652223,
+-    "title": "Взрослая красноклювая чайка в Мальборо, Новая Зеландия: Векторный силуэт",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg/960px-Chroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослая красноклювая чайка в Мальборо, Новая Зеландия: Векторный силуэт.",
+-    "sourceDescription": "An adult Red-billed Gull in Marlborough, New Zealand: Vector silhouette.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AChroicocephalus_scopulinus_-Marlborough%2C_New_Zealand_-adult-8_silhouette.svg"
+-  },
+-  {
+-    "id": "mammals_30579841",
+-    "sourcePageId": 30579841,
+-    "title": "Иконка города из The Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e0/City_icon_%28Noun_Project%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/City_icon_%28Noun_Project%29.svg/960px-City_icon_%28Noun_Project%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка города из The Noun Project.",
+-    "sourceDescription": "City icon from The Noun Project .",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACity_icon_%28Noun_Project%29.svg"
+-  },
+-  {
+-    "id": "mammals_68423062",
+-    "sourcePageId": 68423062,
+-    "title": "Прибрежный (8676) — значок The Noun Project.svg из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/20/Coastal_%288676%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Coastal_%288676%29_-_The_Noun_Project.svg/960px-Coastal_%288676%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Прибрежный (8676) — значок The Noun Project.svg из Noun Project.",
+-    "sourceDescription": "Coastal (8676) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACoastal_%288676%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "mammals_143528237",
+    "sourcePageId": 143528237,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Common wombat ( Vombatus ursinus tasmaniensis ) juvenile, Maria Island, TAS, Australia",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACommon_wombat_%28Vombatus_ursinus_tasmaniensis%29_juvenile_Maria_Island.jpg"
+  },
+-  {
+-    "id": "mammals_67122784",
+-    "sourcePageId": 67122784,
+-    "title": "Cougar (28783) — значок The Noun Project.svg из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Cougar_%2828783%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Cougar_%2828783%29_-_The_Noun_Project.svg/960px-Cougar_%2828783%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Cougar (28783) — значок The Noun Project.svg из Noun Project.",
+-    "sourceDescription": "Cougar (28783) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACougar_%2828783%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "mammals_1112551",
+    "sourcePageId": 1112551,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Male Drosophila melanogaster",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ADrosm3.svg"
+  },
+-  {
+-    "id": "mammals_41906299",
+-    "sourcePageId": 41906299,
+-    "title": "Силуэт утки",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Duck_on_Yeadon_Tarn_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Duck_on_Yeadon_Tarn_silhouette.svg/960px-Duck_on_Yeadon_Tarn_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт утки.",
+-    "sourceDescription": "Duck silhouette.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ADuck_on_Yeadon_Tarn_silhouette.svg"
+-  },
+  {
+    "id": "mammals_143656029",
+    "sourcePageId": 143656029,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Eastern quoll ( Dasyurus viverrinus ) fawn morph, Upper Esk Valley, Dorset, TAS, Australia",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEastern_quoll_%28Dasyurus_viverrinus%29_fawn_morph_Esk_Valley.jpg"
+  },
+-  {
+-    "id": "mammals_7485792",
+-    "sourcePageId": 7485792,
+-    "title": "икона для церкви немецкого типа",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Eglise_icone.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Eglise_icone.svg/960px-Eglise_icone.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "икона для церкви немецкого типа",
+-    "sourceDescription": "icone pour Église de type Allemand",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEglise_icone.svg"
+-  },
+  {
+    "id": "mammals_2192065",
+    "sourcePageId": 2192065,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Wild Asian elephants ( Elephas maximus maximus ) in Minneriya National Park, Sri Lanka. The elephant calf is suckling. White birds wait for insects to jump scared by the elephants and then catch them.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AElephas_maximus_maximus_-_01.jpg"
+  },
+-  {
+-    "id": "mammals_59732805",
+-    "sourcePageId": 59732805,
+-    "title": "Бесцветный эмодзи из проекта emojione",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Emojione_BW_1F505.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Emojione_BW_1F505.svg/960px-Emojione_BW_1F505.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бесцветный эмодзи из проекта emojione.",
+-    "sourceDescription": "A non-colored Emoji from emojione project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEmojione_BW_1F505.svg"
+-  },
+-  {
+-    "id": "mammals_59733270",
+-    "sourcePageId": 59733270,
+-    "title": "Бесцветный эмодзи из проекта emojione",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Emojione_BW_1F6E3.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Emojione_BW_1F6E3.svg/960px-Emojione_BW_1F6E3.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бесцветный эмодзи из проекта emojione.",
+-    "sourceDescription": "A non-colored Emoji from emojione project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEmojione_BW_1F6E3.svg"
+-  },
+  {
+    "id": "mammals_2653153",
+    "sourcePageId": 2653153,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "European souslik ( Spermophilus citellus ), Obrovisko, Slovakia",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AEuropean_souslik_%28Spermophilus_citellus%29_Obrovisko.jpg"
+  },
+-  {
+-    "id": "mammals_8389475",
+-    "sourcePageId": 8389475,
+-    "title": "Иконка для завода",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Factory_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Factory_icon.svg/960px-Factory_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка для завода",
+-    "sourceDescription": "Icon for a factory",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFactory_icon.svg"
+-  },
+-  {
+-    "id": "mammals_64904118",
+-    "sourcePageId": 64904118,
+-    "title": "Ферма — иконка Noun Project из Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Farm_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Farm_-_The_Noun_Project.svg/960px-Farm_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Ферма — иконка Noun Project из Noun Project",
+-    "sourceDescription": "Farm - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFarm_-_The_Noun_Project.svg"
+-  },
+-  {
+-    "id": "mammals_32140074",
+-    "sourcePageId": 32140074,
+-    "title": "Иконка черной рыбы из проекта Noun Project",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Fish_icon_%28The_Noun_Project_27052%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Fish_icon_%28The_Noun_Project_27052%29.svg/960px-Fish_icon_%28The_Noun_Project_27052%29.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка черной рыбы из проекта Noun Project.",
+-    "sourceDescription": "Black fish icon from The Noun Project .",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFish_icon_%28The_Noun_Project_27052%29.svg"
+-  },
+  {
+    "id": "mammals_65552228",
+    "sourcePageId": 65552228,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Flehmen response shown by an Andalusian stallion",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFlehmendes_Pferd_32_c.jpg"
+  },
+-  {
+-    "id": "mammals_121749378",
+-    "sourcePageId": 121749378,
+-    "title": "Высококонтрастный смайлик из проекта Fluent Emoji",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Fluent_Emoji_high_contrast_1fab7.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fluent_Emoji_high_contrast_1fab7.svg/960px-Fluent_Emoji_high_contrast_1fab7.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Высококонтрастный смайлик из проекта Fluent Emoji.",
+-    "sourceDescription": "A high contrast emoji from the Fluent Emoji project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFluent_Emoji_high_contrast_1fab7.svg"
+-  },
+-  {
+-    "id": "mammals_71512593",
+-    "sourcePageId": 71512593,
+-    "title": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Font_Awesome_5_solid_microscope.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Font_Awesome_5_solid_microscope.svg/960px-Font_Awesome_5_solid_microscope.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки.",
+-    "sourceDescription": "A solid-weight icon from Font Awesome, a free web icon font.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFont_Awesome_5_solid_microscope.svg"
+-  },
+-  {
+-    "id": "mammals_73684798",
+-    "sourcePageId": 73684798,
+-    "title": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Font_Awesome_5_solid_praying-hands.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Font_Awesome_5_solid_praying-hands.svg/960px-Font_Awesome_5_solid_praying-hands.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Твердая иконка из Font Awesome, бесплатного веб-шрифта-иконки.",
+-    "sourceDescription": "A solid-weight icon from Font Awesome, a free web icon font.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFont_Awesome_5_solid_praying-hands.svg"
+-  },
+  {
+    "id": "mammals_143782469",
+    "sourcePageId": 143782469,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Forester kangaroo ( Macropus giganteus tasmaniensis ), Upper Esk Valley, Dorset, TAS, Australia",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AForester_kangaroo_%28Macropus_giganteus_tasmaniensis%29_portrait_Esk_Valley.jpg"
+  },
+-  {
+-    "id": "mammals_3598398",
+-    "sourcePageId": 3598398,
+-    "title": "силуэт муравья",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/Fourmi03.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Fourmi03.svg/960px-Fourmi03.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "силуэт муравья",
+-    "sourceDescription": "silhouette de fourmi",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFourmi03.svg"
+-  },
+-  {
+-    "id": "mammals_34543959",
+-    "sourcePageId": 34543959,
+-    "title": "Значок интерьера для избранных фотографий",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/46/FP_Interior_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/FP_Interior_icon.svg/960px-FP_Interior_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок интерьера для избранных фотографий",
+-    "sourceDescription": "Icon Interior for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Interior_icon.svg"
+-  },
+-  {
+-    "id": "mammals_34544003",
+-    "sourcePageId": 34544003,
+-    "title": "Значок гриба для избранных фотографий",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b9/FP_Mushroom_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/FP_Mushroom_icon.svg/960px-FP_Mushroom_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок гриба для избранных фотографий",
+-    "sourceDescription": "Mushroom icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Mushroom_icon.svg"
+-  },
+-  {
+-    "id": "mammals_34544151",
+-    "sourcePageId": 34544151,
+-    "title": "Значок спутника для избранных фотографий",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/FP_Satellite_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/FP_Satellite_icon.svg/960px-FP_Satellite_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок спутника для избранных фотографий",
+-    "sourceDescription": "Satellite icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Satellite_icon.svg"
+-  },
+-  {
+-    "id": "mammals_34544040",
+-    "sourcePageId": 34544040,
+-    "title": "Значок улитки для избранных изображений",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ed/FP_Snail_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/FP_Snail_icon.svg/960px-FP_Snail_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок улитки для избранных изображений",
+-    "sourceDescription": "Snail icon for Featured Pictures",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AFP_Snail_icon.svg"
+-  },
+  {
+    "id": "mammals_61291906",
+    "sourcePageId": 61291906,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A fight between two Garranos",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGarranos_fight.jpg"
+  },
+-  {
+-    "id": "mammals_45892464",
+-    "sourcePageId": 45892464,
+-    "title": "Неопознанная Gazania, вероятно, садовый гибрид, который ни в какой степени...",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/Gazania_rigens_var._rigens_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Gazania_rigens_var._rigens_vector_icon.svg/960px-Gazania_rigens_var._rigens_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Неопознанная Gazania, вероятно, садовый гибрид, который ни в какой степени не похож на Gazania rigens (даже на G.rigida. Голова. Тасмания, Австралия).",
+-    "sourceDescription": "An unidentified Gazania , probably a garden hybrid, that does not resemble Gazania rigens (nor even G. rigida to any extent. Head . Tasmania, Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGazania_rigens_var._rigens_vector_icon.svg"
+-  },
+  {
+    "id": "mammals_1139584",
+    "sourcePageId": 1139584,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "A grey squirrel (Sciurus carolinensis), an invasive species to the United Kingdom, sitting on a tree branch in Stowe Gardens (Buckinghamshire, England, United Kingdom) with autumn foliage in the background.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGrey_Squirrel_Sciurus_Carolinensis_Autumn_Stowe_Gardens_2025_01.jpg"
+  },
+-  {
+-    "id": "mammals_739800",
+-    "sourcePageId": 739800,
+-    "title": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/30/Gtk-go-down.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Gtk-go-down.svg/960px-Gtk-go-down.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2.",
+-    "sourceDescription": "Icon from Nuvola icon theme for KDE 3.x / GNOME 2.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGtk-go-down.svg"
+-  },
+-  {
+-    "id": "mammals_739802",
+-    "sourcePageId": 739802,
+-    "title": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2",
+-    "category": "mammals",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Gtk-go-up.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Gtk-go-up.svg/960px-Gtk-go-up.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконка из темы значков Nuvola для KDE 3.x/GNOME 2.",
+-    "sourceDescription": "Icon from Nuvola icon theme for KDE 3.x / GNOME 2.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AGtk-go-up.svg"
+-  },
+  {
+    "id": "mammals_125559601",
+    "sourcePageId": 125559601,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Adenium obesum seed (length 1 cm (0.39 in)) with double pappus (length 8 cm (3.1 in)), black background. Uthandi, Chennai, India",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdenium_Seed_Pappus_Black_Uthandi_Aug21_D72_20862.jpg"
+  },
+-  {
+-    "id": "plants_67122448",
+-    "sourcePageId": 67122448,
+-    "title": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg/960px-Adults_%28469396%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Adults (469396) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdults_%28469396%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "plants_174151568",
+    "sourcePageId": 174151568,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Fallen conker from a Horse-chestnut Aesculus hippocastanum . Focus stack of 12 photos.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAfgevallen_kastanje_van_een_paardenkastanje_%28Aesculus%29_10-10-2020_%28d.j.b.%29_02.jpg"
+  },
+-  {
+-    "id": "plants_4835718",
+-    "sourcePageId": 4835718,
+-    "title": "Иконный силуэт самолета",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Airplane_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Airplane_silhouette.svg/960px-Airplane_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконный силуэт самолета.",
+-    "sourceDescription": "Icon-type silhouette of an airplane. (Mainly to be used in Userboxes) Used on WIkipedia as an airport location icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAirplane_silhouette.svg"
+-  },
+  {
+    "id": "plants_75702309",
+    "sourcePageId": 75702309,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Anchusa officinalis (Ljubljana, Slovenia), flower diameter 8-9 mm (0.31 - 0.35 inch). Focus stacking: 71 shots, step 1; Raynox 250 mounted on Olympus Zuiko 60 mm. Helicon B+C",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAnchusa_officinalis.jpg"
+  },
+-  {
+-    "id": "plants_60125402",
+-    "sourcePageId": 60125402,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Android_Emoji_1f304.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Android_Emoji_1f304.svg/960px-Android_Emoji_1f304.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f304.svg"
+-  },
+-  {
+-    "id": "plants_60124425",
+-    "sourcePageId": 60124425,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Android_Emoji_1f339.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Android_Emoji_1f339.svg/960px-Android_Emoji_1f339.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f339.svg"
+-  },
+-  {
+-    "id": "plants_60125942",
+-    "sourcePageId": 60125942,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Android_Emoji_1f41a.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Android_Emoji_1f41a.svg/960px-Android_Emoji_1f41a.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f41a.svg"
+-  },
+-  {
+-    "id": "plants_60125313",
+-    "sourcePageId": 60125313,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Android_Emoji_1f426.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Android_Emoji_1f426.svg/960px-Android_Emoji_1f426.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f426.svg"
+-  },
+  {
+    "id": "plants_87134498",
+    "sourcePageId": 87134498,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Areca trees with vanilla climbers near Agumbe, in Karnataka Western Ghats, India",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAreca_and_Vanilla_DSC_1306.jpg"
+  },
+-  {
+-    "id": "plants_65118155",
+-    "sourcePageId": 65118155,
+-    "title": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Arts_and_Culture_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Arts_and_Culture_-_The_Noun_Project.svg/960px-Arts_and_Culture_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Arts and Culture - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArts_and_Culture_-_The_Noun_Project.svg"
+-  },
+-  {
+-    "id": "plants_45929459",
+-    "sourcePageId": 45929459,
+-    "title": "Бамбуковая орхидея, Arundina graminifolia",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg/960px-Arundina_graminifolia_%285%29_1200_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бамбуковая орхидея, Arundina graminifolia.",
+-    "sourceDescription": "Bamboo orchid, Arundina graminifolia",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArundina_graminifolia_%285%29_1200_vector_icon.svg"
+-  },
+  {
+    "id": "plants_11934284",
+    "sourcePageId": 11934284,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Mangrove seedling ( Rhizophora sp.), Cairns's beach, Australia.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAustralia_Cairns_01.jpg"
+  },
+-  {
+-    "id": "plants_44946303",
+-    "sourcePageId": 44946303,
+-    "title": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом...",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Australian_Pelican_Kioloa_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Australian_Pelican_Kioloa_silhouette.svg/960px-Australian_Pelican_Kioloa_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом Южном Уэльсе, Австралия.",
+-    "sourceDescription": "An Australian Pelican ( pelecanus conspicillatus ) at Kioloa beach in New South Wales , Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAustralian_Pelican_Kioloa_silhouette.svg"
+-  },
+  {
+    "id": "plants_32176387",
+    "sourcePageId": 32176387,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Mouth of sporophyte of the moss Bryum capillare , showing the open peristome (comprising endostome and exostome) which controls spore release. The real-world diameter of the subject is about 1.1 mm. The image is a composite stack of about 200 original images.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABryum_capillare_peristome.jpg"
+  },
+-  {
+-    "id": "plants_24126067",
+-    "sourcePageId": 24126067,
+-    "title": "Значок черной ошибки",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/Bug_icon_-_Noun_project_198.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Bug_icon_-_Noun_project_198.svg/960px-Bug_icon_-_Noun_project_198.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок черной ошибки.",
+-    "sourceDescription": "A black bug icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABug_icon_-_Noun_project_198.svg"
+-  },
+  {
+    "id": "plants_128665017",
+    "sourcePageId": 128665017,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Close-up of a variegated crown vetch (Securigera varia) flower in a garden in Bamberg. Size about 3 cm.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABunten_Kronwicke_%28Securigera_varia%29_Bl%C3%BCte-20200626-RM-173640.jpg"
+  },
+-  {
+-    "id": "plants_12404322",
+-    "sourcePageId": 12404322,
+-    "title": "Силуэт Buteo jamaicensis",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Buteo_jamaicensis_2_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Buteo_jamaicensis_2_silhouette.svg/960px-Buteo_jamaicensis_2_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт Buteo jamaicensis",
+-    "sourceDescription": "Silhouette of Buteo jamaicensis",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AButeo_jamaicensis_2_silhouette.svg"
+-  },
+  {
+    "id": "plants_12276123",
+    "sourcePageId": 12276123,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "The 'Fiesta' cultivar is a decorative chili pepper.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACapsicum_annuum_var._Fiesta_-_MHNT.jpg"
+  },
+-  {
+-    "id": "plants_64904045",
+-    "sourcePageId": 64904045,
+-    "title": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "category": "plants",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Car_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Car_-_The_Noun_Project.svg/960px-Car_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "sourceDescription": "Car - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACar_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "plants_110597798",
+    "sourcePageId": 110597798,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Admiralty Arch during the blue hour, as viewed from the Mall in London, England.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdmiralty_Arch_at_Dusk%2C_London%2C_UK_-_Diliff.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_67122448",
+-    "sourcePageId": 67122448,
+-    "title": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Adults_%28469396%29_-_The_Noun_Project.svg/960px-Adults_%28469396%29_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Взрослые (469396) — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Adults (469396) - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAdults_%28469396%29_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "architecture_exteriors_70921195",
+    "sourcePageId": 70921195,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "The Agora and de l'Assut de l'Or Bridge - Part of the Arts and Science complex in Valencia Spain",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAgora_and_El_Puente_de_l%27Assut_de_l%27Or_Bridge.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_4835718",
+-    "sourcePageId": 4835718,
+-    "title": "Иконный силуэт самолета",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Airplane_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Airplane_silhouette.svg/960px-Airplane_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Иконный силуэт самолета.",
+-    "sourceDescription": "Icon-type silhouette of an airplane. (Mainly to be used in Userboxes) Used on WIkipedia as an airport location icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAirplane_silhouette.svg"
+-  },
+  {
+    "id": "architecture_exteriors_45676407",
+    "sourcePageId": 45676407,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "This striking low-angle shot captures the neoclassical majesty of Ancona’s War Memorial, designed by Guido Cirilli and inaugurated in 1932. THE INSCRIPTION - The photo highlights Giacomo Leopardi's touching dedication, \" Voi ch'offriste il petto \" ( You who offered your chest ), honoring those who fell during World War I. THE MATERIAL - The structure is built from Istrian stone, a durable limestone from across the Adriatic known for its brilliant white sheen and resistance to the salty sea air. HISTORICAL FACT - To satisfy the regime without compromising his vision, Cirilli tucked the required fasces into a graceful floral pattern. This subtle placement kept the iconography in the background, preserving the purity of the monument’s original meaning. COMPOSITION - The perspective emphasizes the austerity of the Doric order, contrasting the ivory stone against the deep blue sky to evoke a sense of timelessness and solemnity.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAncona_-_Monumento_ai_caduti_di_Ancona%2C_dettagli_-_GT_ver2_-_2025-09-11_21-09-15_001.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_60125402",
+-    "sourcePageId": 60125402,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Android_Emoji_1f304.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Android_Emoji_1f304.svg/960px-Android_Emoji_1f304.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f304.svg"
+-  },
+-  {
+-    "id": "architecture_exteriors_60124425",
+-    "sourcePageId": 60124425,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/39/Android_Emoji_1f339.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Android_Emoji_1f339.svg/960px-Android_Emoji_1f339.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f339.svg"
+-  },
+-  {
+-    "id": "architecture_exteriors_60125942",
+-    "sourcePageId": 60125942,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Android_Emoji_1f41a.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Android_Emoji_1f41a.svg/960px-Android_Emoji_1f41a.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f41a.svg"
+-  },
+-  {
+-    "id": "architecture_exteriors_60125313",
+-    "sourcePageId": 60125313,
+-    "title": "Цветной эмодзи из проекта Android",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Android_Emoji_1f426.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Android_Emoji_1f426.svg/960px-Android_Emoji_1f426.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Цветной эмодзи из проекта Android.",
+-    "sourceDescription": "A colored Emoji from Android project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAndroid_Emoji_1f426.svg"
+-  },
+  {
+    "id": "architecture_exteriors_62603941",
+    "sourcePageId": 62603941,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Art on Nubian house, Nagaa Suhayl Gharb, Egypt, drawn on a resident house.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArt_on_Nubian_house%2C_Nagaa_Suhayl_Gharb%2C_Egypt_%282%29.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_65118155",
+-    "sourcePageId": 65118155,
+-    "title": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Arts_and_Culture_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Arts_and_Culture_-_The_Noun_Project.svg/960px-Arts_and_Culture_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Искусство и культура — значок The Noun Project.svg из Noun Project",
+-    "sourceDescription": "Arts and Culture - The Noun Project.svg icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArts_and_Culture_-_The_Noun_Project.svg"
+-  },
+-  {
+-    "id": "architecture_exteriors_45929459",
+-    "sourcePageId": 45929459,
+-    "title": "Бамбуковая орхидея, Arundina graminifolia",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arundina_graminifolia_%285%29_1200_vector_icon.svg/960px-Arundina_graminifolia_%285%29_1200_vector_icon.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Бамбуковая орхидея, Arundina graminifolia.",
+-    "sourceDescription": "Bamboo orchid, Arundina graminifolia",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AArundina_graminifolia_%285%29_1200_vector_icon.svg"
+-  },
+  {
+    "id": "architecture_exteriors_73443868",
+    "sourcePageId": 73443868,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Auditorium of Tenerife, Santa Cruz de Tenerife, Spain",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAuditorio_de_Tenerife%2C_Santa_Cruz_de_Tenerife%2C_Espa%C3%B1a%2C_2012-12-15%2C_DD_17.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_44946303",
+-    "sourcePageId": 44946303,
+-    "title": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом...",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Australian_Pelican_Kioloa_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Australian_Pelican_Kioloa_silhouette.svg/960px-Australian_Pelican_Kioloa_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Австралийский пеликан (pelecanus conspicillatus) на пляже Киолоа в Новом Южном Уэльсе, Австралия.",
+-    "sourceDescription": "An Australian Pelican ( pelecanus conspicillatus ) at Kioloa beach in New South Wales , Australia.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AAustralian_Pelican_Kioloa_silhouette.svg"
+-  },
+  {
+    "id": "architecture_exteriors_123933333",
+    "sourcePageId": 123933333,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Music and Drama Theatre 'Buff' in Saint Petersburg",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABuff_Theatre_SPB_01.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_24126067",
+-    "sourcePageId": 24126067,
+-    "title": "Значок черной ошибки",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/Bug_icon_-_Noun_project_198.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Bug_icon_-_Noun_project_198.svg/960px-Bug_icon_-_Noun_project_198.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Значок черной ошибки.",
+-    "sourceDescription": "A black bug icon.",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABug_icon_-_Noun_project_198.svg"
+-  },
+  {
+    "id": "architecture_exteriors_36413466",
+    "sourcePageId": 36413466,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Burns Building, Lincoln University Campus, New Zealand",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ABurns_Building%2C_Lincoln_University_Campus%2C_New_Zealand_20.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_12404322",
+-    "sourcePageId": 12404322,
+-    "title": "Силуэт Buteo jamaicensis",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Buteo_jamaicensis_2_silhouette.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Buteo_jamaicensis_2_silhouette.svg/960px-Buteo_jamaicensis_2_silhouette.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Силуэт Buteo jamaicensis",
+-    "sourceDescription": "Silhouette of Buteo jamaicensis",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3AButeo_jamaicensis_2_silhouette.svg"
+-  },
+  {
+    "id": "architecture_exteriors_12276123",
+    "sourcePageId": 12276123,
+*** Update File: C:\Users\Roman\Desktop\Games\Puzzles\docs\data\puzzles.json
+    "sourceDescription": "Colorful houses in Wale Street , Cape Town , Western Cape , South Africa Bo-Kaap is a historic neighborhood above the center of Cape Town. It was established in the 18th century when the Dutch colonial administration built houses for enslaved people from Southeast Asia, India, and East Africa. Many of them were Muslims and later became known as “Cape Malays”. After their liberation in the 19th century, Bo-Kaap developed into a center of Islamic culture in the Cape. Mosques such as the Auwal Mosque from 1794 bear witness to this tradition. The colourfully painted houses, originally an expression of newly won freedom, now characterise the image of the neighbourhood. Despite gentrification, Bo-Kaap remains an important symbol of cultural heritage and resilience in South Africa.",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACape_Town_%28ZA%29%2C_Wale_Street_--_2024_--_3544.jpg"
+  },
+-  {
+-    "id": "architecture_exteriors_64904045",
+-    "sourcePageId": 64904045,
+-    "title": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "category": "architecture_exteriors",
+-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Car_-_The_Noun_Project.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+-    "thumbUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Car_-_The_Noun_Project.svg/960px-Car_-_The_Noun_Project.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+-    "description": "Автомобиль — иконка The Noun Project из Noun Project",
+-    "sourceDescription": "Car - The Noun Project icon from the Noun Project",
+-    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File%3ACar_-_The_Noun_Project.svg"
+-  },
+  {
+    "id": "architecture_exteriors_49011545",
+    "sourcePageId": 49011545,
+*** End Patch
