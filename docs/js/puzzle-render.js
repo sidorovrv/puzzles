@@ -25,6 +25,7 @@ const PuzzleRender = (() => {
   // Snap radius (px, in assembled-canvas coordinate space)
   const SNAP_RADIUS = 28;
   const TRAY_GESTURE_THRESHOLD = 10;
+  const TRAY_PULL_MAX_ANGLE = Math.PI / 4;
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -225,6 +226,14 @@ const PuzzleRender = (() => {
 
   function _clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+  }
+
+  function _isWithinTrayPullAngle(dx, dy) {
+    const upwardDistance = -dy;
+    if (upwardDistance < TRAY_GESTURE_THRESHOLD) return false;
+
+    const angleFromVertical = Math.atan2(Math.abs(dx), upwardDistance);
+    return angleFromVertical <= TRAY_PULL_MAX_ANGLE;
   }
 
   function _getPieceBounds(piece, currentX = piece.currentX, currentY = piece.currentY) {
@@ -664,22 +673,19 @@ const PuzzleRender = (() => {
     if (_trayGesture && !_dragging && e.pointerId === _trayGesture.pointerId) {
       const dx = e.clientX - _trayGesture.startClientX;
       const dy = e.clientY - _trayGesture.startClientY;
-      const absX = Math.abs(dx);
-      const absY = Math.abs(dy);
+      const distance = Math.hypot(dx, dy);
 
-      if (absX < TRAY_GESTURE_THRESHOLD && absY < TRAY_GESTURE_THRESHOLD) {
+      if (distance < TRAY_GESTURE_THRESHOLD) {
         return;
       }
 
-      if (-dy >= TRAY_GESTURE_THRESHOLD && -dy >= absX) {
+      if (_isWithinTrayPullAngle(dx, dy)) {
         e.preventDefault();
         _startTrayDrag(_trayGesture, e);
         return;
       }
 
-      if (absX > -dy || dy > 0) {
-        _trayGesture = null;
-      }
+      _trayGesture = null;
     }
 
     if (!_dragging) return;
