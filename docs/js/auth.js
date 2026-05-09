@@ -1,18 +1,5 @@
-/**
- * auth.js — PIN setup, PIN verification, SHA-256 hashing, lockout logic.
- * All UI text in Russian.
- */
+// auth.js — removed (no authentication required)
 
-const Auth = (() => {
-  const MAX_ATTEMPTS = 10;
-  const LOCKOUT_MS   = 30_000; // 30 seconds
-
-  // SHA-256 via Web Crypto API
-  async function hashPIN(pin) {
-    const buf = new TextEncoder().encode(pin + 'fp-salt-v1');
-    const digest = await crypto.subtle.digest('SHA-256', buf);
-    return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
-  }
 
   // ── Lockout state (persisted so it survives page reload) ──
   function getLockout() {

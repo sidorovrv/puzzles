@@ -1,7 +1,7 @@
-[
+п»ї[
   {
     "id": "nature_mountains",
-    "title": "Маттерхорн",
+    "title": "РњР°С‚С‚РµСЂС…РѕСЂРЅ",
     "category": "nature",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matterhorn_sunset_2016_%28Unsplash%29.jpg/800px-Matterhorn_sunset_2016_%28Unsplash%29.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matterhorn_sunset_2016_%28Unsplash%29.jpg/400px-Matterhorn_sunset_2016_%28Unsplash%29.jpg",
@@ -10,7 +10,7 @@
   },
   {
     "id": "nature_forest",
-    "title": "Шотландское ущелье",
+    "title": "РЁРѕС‚Р»Р°РЅРґСЃРєРѕРµ СѓС‰РµР»СЊРµ",
     "category": "nature",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Glencoe_Lochan_reflections_3_20211022.jpg/800px-Glencoe_Lochan_reflections_3_20211022.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Glencoe_Lochan_reflections_3_20211022.jpg/400px-Glencoe_Lochan_reflections_3_20211022.jpg",
@@ -19,7 +19,7 @@
   },
   {
     "id": "nature_ocean",
-    "title": "Морские скалы",
+    "title": "РњРѕСЂСЃРєРёРµ СЃРєР°Р»С‹",
     "category": "nature",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Sydney_%28AU%29%2C_Coastal_Cliff_Walk_--_2019_--_2326.jpg/800px-Sydney_%28AU%29%2C_Coastal_Cliff_Walk_--_2019_--_2326.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Sydney_%28AU%29%2C_Coastal_Cliff_Walk_--_2019_--_2326.jpg/400px-Sydney_%28AU%29%2C_Coastal_Cliff_Walk_--_2019_--_2326.jpg",
@@ -28,7 +28,7 @@
   },
   {
     "id": "nature_sunset",
-    "title": "Закат на рисовых полях",
+    "title": "Р—Р°РєР°С‚ РЅР° СЂРёСЃРѕРІС‹С… РїРѕР»СЏС…",
     "category": "nature",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Colorful_sky_with_orange_clouds_reflecting_in_the_water_of_a_paddy_field%2C_at_sunset%2C_Vang_Vieng%2C_Laos.jpg/800px-Colorful_sky_with_orange_clouds_reflecting_in_the_water_of_a_paddy_field%2C_at_sunset%2C_Vang_Vieng%2C_Laos.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Colorful_sky_with_orange_clouds_reflecting_in_the_water_of_a_paddy_field%2C_at_sunset%2C_Vang_Vieng%2C_Laos.jpg/400px-Colorful_sky_with_orange_clouds_reflecting_in_the_water_of_a_paddy_field%2C_at_sunset%2C_Vang_Vieng%2C_Laos.jpg",
@@ -37,7 +37,7 @@
   },
   {
     "id": "nature_waterfall",
-    "title": "Водопад Сельяландсфосс",
+    "title": "Р’РѕРґРѕРїР°Рґ РЎРµР»СЊСЏР»Р°РЅРґСЃС„РѕСЃСЃ",
     "category": "nature",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_189-191_HDR.JPG/800px-Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_189-191_HDR.JPG",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_189-191_HDR.JPG/400px-Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_189-191_HDR.JPG",
@@ -46,7 +46,7 @@
   },
   {
     "id": "animals_cat",
-    "title": "Рыжий кот",
+    "title": "Р С‹Р¶РёР№ РєРѕС‚",
     "category": "animals",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Orange_Tabby_Cat_sitting_on_a_couch.jpg/800px-Orange_Tabby_Cat_sitting_on_a_couch.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Orange_Tabby_Cat_sitting_on_a_couch.jpg/400px-Orange_Tabby_Cat_sitting_on_a_couch.jpg",
@@ -55,7 +55,7 @@
   },
   {
     "id": "animals_dog",
-    "title": "Золотистый ретривер",
+    "title": "Р—РѕР»РѕС‚РёСЃС‚С‹Р№ СЂРµС‚СЂРёРІРµСЂ",
     "category": "animals",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/3/31/Golden-retriever-dog-1362597631o6g.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/3/31/Golden-retriever-dog-1362597631o6g.jpg",
@@ -64,7 +64,7 @@
   },
   {
     "id": "animals_fox",
-    "title": "Лиса у реки",
+    "title": "Р›РёСЃР° Сѓ СЂРµРєРё",
     "category": "animals",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Red_Fox_drinking_from_a_lake_in_Gennevilliers%2C_France.jpg/800px-Red_Fox_drinking_from_a_lake_in_Gennevilliers%2C_France.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Red_Fox_drinking_from_a_lake_in_Gennevilliers%2C_France.jpg/400px-Red_Fox_drinking_from_a_lake_in_Gennevilliers%2C_France.jpg",
@@ -73,7 +73,7 @@
   },
   {
     "id": "animals_owl",
-    "title": "Серая неясыть",
+    "title": "РЎРµСЂР°СЏ РЅРµСЏСЃС‹С‚СЊ",
     "category": "animals",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Tawny_Owl_perched_on_a_tree.jpg/800px-Tawny_Owl_perched_on_a_tree.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Tawny_Owl_perched_on_a_tree.jpg/400px-Tawny_Owl_perched_on_a_tree.jpg",
@@ -82,7 +82,7 @@
   },
   {
     "id": "animals_bear",
-    "title": "Белый медведь",
+    "title": "Р‘РµР»С‹Р№ РјРµРґРІРµРґСЊ",
     "category": "animals",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Polar-bear-arctic-wildlife-snow-53425.jpg/800px-Polar-bear-arctic-wildlife-snow-53425.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Polar-bear-arctic-wildlife-snow-53425.jpg/400px-Polar-bear-arctic-wildlife-snow-53425.jpg",
@@ -91,7 +91,7 @@
   },
   {
     "id": "landmarks_eiffel",
-    "title": "Эйфелева башня",
+    "title": "Р­Р№С„РµР»РµРІР° Р±Р°С€РЅСЏ",
     "category": "landmarks",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Paris_-_The_Eiffel_Tower_in_spring_-_2307.jpg/800px-Paris_-_The_Eiffel_Tower_in_spring_-_2307.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Paris_-_The_Eiffel_Tower_in_spring_-_2307.jpg/400px-Paris_-_The_Eiffel_Tower_in_spring_-_2307.jpg",
@@ -100,7 +100,7 @@
   },
   {
     "id": "landmarks_kremlin",
-    "title": "Кремль ночью",
+    "title": "РљСЂРµРјР»СЊ РЅРѕС‡СЊСЋ",
     "category": "landmarks",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Russia-2007-Moscow-Kremlin_Senate_at_night.jpg/800px-Russia-2007-Moscow-Kremlin_Senate_at_night.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Russia-2007-Moscow-Kremlin_Senate_at_night.jpg/400px-Russia-2007-Moscow-Kremlin_Senate_at_night.jpg",
@@ -109,7 +109,7 @@
   },
   {
     "id": "landmarks_colosseum",
-    "title": "Колизей",
+    "title": "РљРѕР»РёР·РµР№",
     "category": "landmarks",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/800px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/400px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg",
@@ -118,7 +118,7 @@
   },
   {
     "id": "landmarks_greatwall",
-    "title": "Великая стена",
+    "title": "Р’РµР»РёРєР°СЏ СЃС‚РµРЅР°",
     "category": "landmarks",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/20090529_Great_Wall_8185.jpg/800px-20090529_Great_Wall_8185.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/20090529_Great_Wall_8185.jpg/400px-20090529_Great_Wall_8185.jpg",
@@ -127,7 +127,7 @@
   },
   {
     "id": "landmarks_tajmahal",
-    "title": "Тадж-Махал",
+    "title": "РўР°РґР¶-РњР°С…Р°Р»",
     "category": "landmarks",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/El_Taj_Mahal-Agra_India0023.JPG/800px-El_Taj_Mahal-Agra_India0023.JPG",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/El_Taj_Mahal-Agra_India0023.JPG/400px-El_Taj_Mahal-Agra_India0023.JPG",
@@ -136,7 +136,7 @@
   },
   {
     "id": "food_pizza",
-    "title": "Пицца Маргарита",
+    "title": "РџРёС†С†Р° РњР°СЂРіР°СЂРёС‚Р°",
     "category": "food",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pizza_Margherita_in_Naples_2015.JPG/800px-Pizza_Margherita_in_Naples_2015.JPG",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Pizza_Margherita_in_Naples_2015.JPG/400px-Pizza_Margherita_in_Naples_2015.JPG",
@@ -145,7 +145,7 @@
   },
   {
     "id": "food_fruit",
-    "title": "Корзина фруктов",
+    "title": "РљРѕСЂР·РёРЅР° С„СЂСѓРєС‚РѕРІ",
     "category": "food",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Colorful_assortment_of_fresh_fruits_arranged_in_a_bowl_with_natural_light_highlighting_their_vibrant_colors.jpg/800px-Colorful_assortment_of_fresh_fruits_arranged_in_a_bowl_with_natural_light_highlighting_their_vibrant_colors.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Colorful_assortment_of_fresh_fruits_arranged_in_a_bowl_with_natural_light_highlighting_their_vibrant_colors.jpg/400px-Colorful_assortment_of_fresh_fruits_arranged_in_a_bowl_with_natural_light_highlighting_their_vibrant_colors.jpg",
@@ -154,7 +154,7 @@
   },
   {
     "id": "food_coffee",
-    "title": "Латте-арт",
+    "title": "Р›Р°С‚С‚Рµ-Р°СЂС‚",
     "category": "food",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg/800px-Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg/400px-Hearts_in_latte_art%2C_Krak%C3%B3w%2C_Poland%2C_2023.jpg",
@@ -163,7 +163,7 @@
   },
   {
     "id": "food_cake",
-    "title": "Праздничный торт",
+    "title": "РџСЂР°Р·РґРЅРёС‡РЅС‹Р№ С‚РѕСЂС‚",
     "category": "food",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Birthday_cake_%286183445658%29.jpg/800px-Birthday_cake_%286183445658%29.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Birthday_cake_%286183445658%29.jpg/400px-Birthday_cake_%286183445658%29.jpg",
@@ -172,7 +172,7 @@
   },
   {
     "id": "food_sushi",
-    "title": "Суши",
+    "title": "РЎСѓС€Рё",
     "category": "food",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sushi_platter_with_omelette%2C_cooked_salmon%2C_kani_and_cucumber_sushi.jpg/800px-Sushi_platter_with_omelette%2C_cooked_salmon%2C_kani_and_cucumber_sushi.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Sushi_platter_with_omelette%2C_cooked_salmon%2C_kani_and_cucumber_sushi.jpg/400px-Sushi_platter_with_omelette%2C_cooked_salmon%2C_kani_and_cucumber_sushi.jpg",
@@ -181,7 +181,7 @@
   },
   {
     "id": "objects_flowers",
-    "title": "Весенний букет",
+    "title": "Р’РµСЃРµРЅРЅРёР№ Р±СѓРєРµС‚",
     "category": "objects",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Bunter_Fr%C3%BChlingsstrau%C3%9F_Colorful_Spring_Bouquet_%28207270593%29.jpeg/800px-Bunter_Fr%C3%BChlingsstrau%C3%9F_Colorful_Spring_Bouquet_%28207270593%29.jpeg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Bunter_Fr%C3%BChlingsstrau%C3%9F_Colorful_Spring_Bouquet_%28207270593%29.jpeg/400px-Bunter_Fr%C3%BChlingsstrau%C3%9F_Colorful_Spring_Bouquet_%28207270593%29.jpeg",
@@ -190,7 +190,7 @@
   },
   {
     "id": "objects_books",
-    "title": "Стопка книг",
+    "title": "РЎС‚РѕРїРєР° РєРЅРёРі",
     "category": "objects",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Books_in_a_stack_%28a_stack_of_books%29_-_Flickr_-_austinevan.jpg/800px-Books_in_a_stack_%28a_stack_of_books%29_-_Flickr_-_austinevan.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Books_in_a_stack_%28a_stack_of_books%29_-_Flickr_-_austinevan.jpg/400px-Books_in_a_stack_%28a_stack_of_books%29_-_Flickr_-_austinevan.jpg",
@@ -199,7 +199,7 @@
   },
   {
     "id": "objects_pencils",
-    "title": "Цветные карандаши",
+    "title": "Р¦РІРµС‚РЅС‹Рµ РєР°СЂР°РЅРґР°С€Рё",
     "category": "objects",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Coloured_colored_pencils_%282016-05-02_Michael_Gaylard_www.mgaylard.co.uk_Flickr_Gallery_of_Things_-_Art_at_Home_2025%29_-_Coluring_Pencils.jpg/800px-Coloured_colored_pencils_%282016-05-02_Michael_Gaylard_www.mgaylard.co.uk_Flickr_Gallery_of_Things_-_Art_at_Home_2025%29_-_Coluring_Pencils.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Coloured_colored_pencils_%282016-05-02_Michael_Gaylard_www.mgaylard.co.uk_Flickr_Gallery_of_Things_-_Art_at_Home_2025%29_-_Coluring_Pencils.jpg/400px-Coloured_colored_pencils_%282016-05-02_Michael_Gaylard_www.mgaylard.co.uk_Flickr_Gallery_of_Things_-_Art_at_Home_2025%29_-_Coluring_Pencils.jpg",
@@ -208,7 +208,7 @@
   },
   {
     "id": "objects_camera",
-    "title": "Старые фотоаппараты",
+    "title": "РЎС‚Р°СЂС‹Рµ С„РѕС‚РѕР°РїРїР°СЂР°С‚С‹",
     "category": "objects",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Classic_cameras_P1010945-IH_%289153338694%29.jpg/800px-Classic_cameras_P1010945-IH_%289153338694%29.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Classic_cameras_P1010945-IH_%289153338694%29.jpg/400px-Classic_cameras_P1010945-IH_%289153338694%29.jpg",
@@ -217,7 +217,7 @@
   },
   {
     "id": "objects_ceramics",
-    "title": "Яркие кружки",
+    "title": "РЇСЂРєРёРµ РєСЂСѓР¶РєРё",
     "category": "objects",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Bunte_Tassen_Auswahl.jpg/800px-Bunte_Tassen_Auswahl.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Bunte_Tassen_Auswahl.jpg/400px-Bunte_Tassen_Auswahl.jpg",
@@ -226,7 +226,7 @@
   },
   {
     "id": "art_shishkin",
-    "title": "Шишкин — Утро в сосновом лесу",
+    "title": "РЁРёС€РєРёРЅ вЂ” РЈС‚СЂРѕ РІ СЃРѕСЃРЅРѕРІРѕРј Р»РµСЃСѓ",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Utro_v_sosnovom_lesu.jpg/800px-Utro_v_sosnovom_lesu.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Utro_v_sosnovom_lesu.jpg/400px-Utro_v_sosnovom_lesu.jpg",
@@ -235,7 +235,7 @@
   },
   {
     "id": "art_levitan",
-    "title": "Левитан — Над вечным покоем",
+    "title": "Р›РµРІРёС‚Р°РЅ вЂ” РќР°Рґ РІРµС‡РЅС‹Рј РїРѕРєРѕРµРј",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/%D0%9D%D0%B0%D0%B4_%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC_%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC.jpg/800px-%D0%9D%D0%B0%D0%B4_%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC_%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/%D0%9D%D0%B0%D0%B4_%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC_%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC.jpg/400px-%D0%9D%D0%B0%D0%B4_%D0%B2%D0%B5%D1%87%D0%BD%D1%8B%D0%BC_%D0%BF%D0%BE%D0%BA%D0%BE%D0%B5%D0%BC.jpg",
@@ -244,7 +244,7 @@
   },
   {
     "id": "art_aivazovsky",
-    "title": "Айвазовский — Девятый вал",
+    "title": "РђР№РІР°Р·РѕРІСЃРєРёР№ вЂ” Р”РµРІСЏС‚С‹Р№ РІР°Р»",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hovhannes_Aivazovsky_-_The_Ninth_Wave_-_Google_Art_Project.jpg/800px-Hovhannes_Aivazovsky_-_The_Ninth_Wave_-_Google_Art_Project.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hovhannes_Aivazovsky_-_The_Ninth_Wave_-_Google_Art_Project.jpg/400px-Hovhannes_Aivazovsky_-_The_Ninth_Wave_-_Google_Art_Project.jpg",
@@ -253,7 +253,7 @@
   },
   {
     "id": "art_repin",
-    "title": "Репин — Бурлаки на Волге",
+    "title": "Р РµРїРёРЅ вЂ” Р‘СѓСЂР»Р°РєРё РЅР° Р’РѕР»РіРµ",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Ilia_Efimovich_Repin_%281844-1930%29_-_Volga_Boatmen_%281870-1873%29.jpg/800px-Ilia_Efimovich_Repin_%281844-1930%29_-_Volga_Boatmen_%281870-1873%29.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Ilia_Efimovich_Repin_%281844-1930%29_-_Volga_Boatmen_%281870-1873%29.jpg/400px-Ilia_Efimovich_Repin_%281844-1930%29_-_Volga_Boatmen_%281870-1873%29.jpg",
@@ -262,7 +262,7 @@
   },
   {
     "id": "art_surikov",
-    "title": "Суриков — Боярыня Морозова",
+    "title": "РЎСѓСЂРёРєРѕРІ вЂ” Р‘РѕСЏСЂС‹РЅСЏ РњРѕСЂРѕР·РѕРІР°",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Vasily_Surikov_-_%D0%91%D0%BE%D1%8F%D1%80%D1%8B%D0%BD%D1%8F_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0_-_Google_Art_Project.jpg/800px-Vasily_Surikov_-_%D0%91%D0%BE%D1%8F%D1%80%D1%8B%D0%BD%D1%8F_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0_-_Google_Art_Project.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Vasily_Surikov_-_%D0%91%D0%BE%D1%8F%D1%80%D1%8B%D0%BD%D1%8F_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0_-_Google_Art_Project.jpg/400px-Vasily_Surikov_-_%D0%91%D0%BE%D1%8F%D1%80%D1%8B%D0%BD%D1%8F_%D0%9C%D0%BE%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0_-_Google_Art_Project.jpg",
@@ -271,7 +271,7 @@
   },
   {
     "id": "art_vasnetsov",
-    "title": "Васнецов — Богатыри",
+    "title": "Р’Р°СЃРЅРµС†РѕРІ вЂ” Р‘РѕРіР°С‚С‹СЂРё",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Die_drei_Bogatyr.jpg/800px-Die_drei_Bogatyr.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Die_drei_Bogatyr.jpg/400px-Die_drei_Bogatyr.jpg",
@@ -280,7 +280,7 @@
   },
   {
     "id": "art_serov",
-    "title": "Серов — Девочка с персиками",
+    "title": "РЎРµСЂРѕРІ вЂ” Р”РµРІРѕС‡РєР° СЃ РїРµСЂСЃРёРєР°РјРё",
     "category": "art",
     "file":  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Valentin_Serov_-_%D0%94%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B0_%D1%81_%D0%BF%D0%B5%D1%80%D1%81%D0%B8%D0%BA%D0%B0%D0%BC%D0%B8._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%92.%D0%A1.%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg/800px-Valentin_Serov_-_%D0%94%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B0_%D1%81_%D0%BF%D0%B5%D1%80%D1%81%D0%B8%D0%BA%D0%B0%D0%BC%D0%B8._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%92.%D0%A1.%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg",
     "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Valentin_Serov_-_%D0%94%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B0_%D1%81_%D0%BF%D0%B5%D1%80%D1%81%D0%B8%D0%BA%D0%B0%D0%BC%D0%B8._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%92.%D0%A1.%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg/400px-Valentin_Serov_-_%D0%94%D0%B5%D0%B2%D0%BE%D1%87%D0%BA%D0%B0_%D1%81_%D0%BF%D0%B5%D1%80%D1%81%D0%B8%D0%BA%D0%B0%D0%BC%D0%B8._%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%92.%D0%A1.%D0%9C%D0%B0%D0%BC%D0%BE%D0%BD%D1%82%D0%BE%D0%B2%D0%BE%D0%B9_-_Google_Art_Project.jpg",

@@ -1,11 +1,8 @@
 /**
  * storage.js — localStorage + IndexedDB wrappers
- * All keys are prefixed with 'fp_' (family puzzles).
  */
 
 const Storage = (() => {
-  // ── localStorage helpers ─────────────────────────
-
   function lsGet(key, fallback = null) {
     try {
       const v = localStorage.getItem('fp_' + key);
@@ -20,40 +17,6 @@ const Storage = (() => {
     } catch (e) {
       console.warn('localStorage write failed:', e);
     }
-  }
-
-  function lsDel(key) {
-    localStorage.removeItem('fp_' + key);
-  }
-
-  // ── Profile helpers ──────────────────────────────
-
-  function getProfile() {
-    return lsGet('profile', null);
-  }
-
-  function saveProfile(profile) {
-    lsSet('profile', profile);
-  }
-
-  function getCoins() {
-    return lsGet('coins', 0);
-  }
-
-  function setCoins(n) {
-    lsSet('coins', n);
-  }
-
-  function addCoins(n) {
-    setCoins(getCoins() + n);
-  }
-
-  function getStreak() {
-    return lsGet('streak', { count: 0, lastDate: null });
-  }
-
-  function setStreak(data) {
-    lsSet('streak', data);
   }
 
   function getProgress(puzzleId, difficulty) {
@@ -73,23 +36,6 @@ const Storage = (() => {
       }
     }
     return result;
-  }
-
-  function getUnlocked() {
-    return lsGet('unlocked', []);
-  }
-
-  function unlockPuzzle(puzzleId) {
-    const list = getUnlocked();
-    if (!list.includes(puzzleId)) {
-      list.push(puzzleId);
-      lsSet('unlocked', list);
-    }
-  }
-
-  function isUnlocked(puzzleId, puzzle) {
-    if (!puzzle.unlockCost || puzzle.unlockCost === 0) return true;
-    return getUnlocked().includes(puzzleId);
   }
 
   // ── IndexedDB for large puzzle states ────────────
@@ -144,62 +90,8 @@ const Storage = (() => {
     });
   }
 
-  // ── Export / Import ──────────────────────────────
-
-  async function exportAll() {
-    const progress = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith('fp_')) {
-        try { progress[k] = JSON.parse(localStorage.getItem(k)); } catch { /* skip */ }
-      }
-    }
-
-    // Also include IndexedDB states
-    const db = await openDB();
-    const states = await new Promise((resolve, reject) => {
-      const tx = db.transaction('puzzle-states', 'readonly');
-      const req = tx.objectStore('puzzle-states').getAll();
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-
-    return { ls: progress, idb: states, exportedAt: Date.now() };
-  }
-
-  async function importAll(data) {
-    if (!data || typeof data !== 'object') throw new Error('Неверный формат файла');
-
-    // Restore localStorage
-    if (data.ls) {
-      for (const [k, v] of Object.entries(data.ls)) {
-        if (k.startsWith('fp_')) {
-          localStorage.setItem(k, JSON.stringify(v));
-        }
-      }
-    }
-
-    // Restore IndexedDB
-    if (Array.isArray(data.idb) && data.idb.length > 0) {
-      const db = await openDB();
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction('puzzle-states', 'readwrite');
-        const store = tx.objectStore('puzzle-states');
-        data.idb.forEach(item => store.put(item));
-        tx.oncomplete = resolve;
-        tx.onerror = () => reject(tx.error);
-      });
-    }
-  }
-
   return {
-    lsGet, lsSet, lsDel,
-    getProfile, saveProfile,
-    getCoins, setCoins, addCoins,
-    getStreak, setStreak,
     getProgress, setProgress, getAllProgress,
-    getUnlocked, unlockPuzzle, isUnlocked,
     savePuzzleState, loadPuzzleState, deletePuzzleState,
-    exportAll, importAll,
   };
 })();

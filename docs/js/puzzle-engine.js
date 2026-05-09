@@ -147,7 +147,7 @@ function generatePieces(puzzleId, difficulty, canvasW, canvasH) {
 
 function renderPieceToCanvas(piece, srcImg, displayW, displayH) {
   const BLEED = Math.min(piece.pieceW, piece.pieceH) * 0.25;
-  const oc = new OffscreenCanvas
+  const oc = typeof OffscreenCanvas !== 'undefined'
     ? new OffscreenCanvas(piece.pieceW + BLEED * 2, piece.pieceH + BLEED * 2)
     : (() => { const c = document.createElement('canvas'); c.width = piece.pieceW + BLEED * 2; c.height = piece.pieceH + BLEED * 2; return c; })();
 

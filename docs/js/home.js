@@ -1,13 +1,11 @@
-/**
- * home.js — Puzzle browser: categories, grid, progress badges, difficulty modal,
- * settings, install banner, gamification display.
- * All UI text in Russian.
+﻿/**
+ * home.js — Puzzle browser: categories, grid, progress badges, difficulty modal.
  */
 
 const DIFFICULTIES = [64, 100, 144, 225, 400];
 
 const CATEGORIES = [
-  { id: 'all',       label: 'Все пазлы',   icon: '🔷' },
+  { id: 'all',       label: 'Все',         icon: '🔷' },
   { id: 'nature',    label: 'Природа',     icon: '🌿' },
   { id: 'animals',   label: 'Животные',    icon: '🐾' },
   { id: 'landmarks', label: 'Архитектура', icon: '🗼' },
@@ -22,24 +20,17 @@ let _activePuzzle = null;
 let _activeCategory = 'all';
 
 async function initHome() {
-  // Load puzzles
   const resp = await fetch('data/puzzles.json');
   _puzzles = await resp.json();
 
-  renderGrid('main-grid', _puzzles.slice(0, 12));
   renderCategoriesSidebar();
   renderCategoriesGrid('all');
   renderMyPuzzles();
 
-  // Update coin display
-  updateCoinDisplay();
-
-  // Tab switching
   document.querySelectorAll('.bottom-nav__tab').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
 
-  // Difficulty modal
   document.getElementById('modal-cancel').addEventListener('click', closeModal);
   document.getElementById('modal-start').addEventListener('click', startPuzzle);
   document.getElementById('difficulty-row').addEventListener('click', e => {
@@ -48,37 +39,6 @@ async function initHome() {
     _selectedDiff = parseInt(btn.dataset.diff);
     updateDiffButtons();
   });
-
-  // Settings
-  document.getElementById('btn-settings').addEventListener('click', openSettings);
-  document.getElementById('settings-close').addEventListener('click', closeSettings);
-  document.getElementById('btn-export').addEventListener('click', doExport);
-  document.getElementById('btn-import').addEventListener('click', () => document.getElementById('import-file-input').click());
-  document.getElementById('import-file-input').addEventListener('change', doImport);
-  document.getElementById('btn-reset-pin').addEventListener('click', showResetPin);
-
-  // Trophy (streak)
-  document.getElementById('btn-trophy').addEventListener('click', showStreak);
-
-  // Install banner
-  showInstallBannerIfNeeded();
-  document.getElementById('install-banner-close').addEventListener('click', () => {
-    document.getElementById('install-banner').classList.add('hidden');
-    Storage.lsSet('install_banner_dismissed', true);
-  });
-
-  // Settings username
-  const profile = Storage.getProfile();
-  if (profile) {
-    document.getElementById('settings-username').textContent = `Вы вошли как: ${profile.name}`;
-  }
-}
-
-// ── Coin display ──────────────────────────────────────────────────────────────
-
-function updateCoinDisplay() {
-  const el = document.getElementById('coin-count');
-  if (el) el.textContent = Storage.getCoins().toLocaleString('ru-RU');
 }
 
 // ── Tabs ──────────────────────────────────────────────────────────────────────
@@ -93,8 +53,7 @@ function switchTab(tabId) {
   const btn = document.querySelector(`.bottom-nav__tab[data-tab="${tabId}"]`);
   if (btn) btn.classList.add('active');
 
-  const titles = { main: 'Главная', categories: 'Категории', my: 'Мои пазлы' };
-  document.getElementById('top-bar-title').textContent = titles[tabId] || '';
+  if (tabId === 'my') renderMyPuzzles();
 }
 
 // ── Grid rendering ────────────────────────────────────────────────────────────
@@ -114,24 +73,15 @@ function renderGrid(containerId, puzzleList) {
 function puzzleCardHTML(p) {
   const prog = Storage.getProgress(p.id, _selectedDiff);
   const pct  = prog ? Math.round((prog.lockedCount / prog.totalPieces) * 100) : null;
-  const unlocked = Storage.isUnlocked(p.id, p);
-  const coins = Storage.getCoins();
-  const canUnlock = !unlocked && coins >= p.unlockCost;
 
   let badge = '';
   if (pct !== null && pct < 100) badge = `<div class="puzzle-card__badge">${pct}%</div>`;
   if (pct === 100) badge = `<div class="puzzle-card__badge puzzle-card__badge--gold">⭐</div>`;
 
-  let lock = '';
-  if (!unlocked) {
-    lock = `<div class="puzzle-card__lock">🔒</div>`;
-  }
-
   return `
     <div class="puzzle-card" data-puzzle-id="${p.id}">
       ${p.thumb ? `<img src="${p.thumb}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
       ${badge}
-      ${lock}
     </div>
   `;
 }
@@ -151,7 +101,6 @@ function renderCategoriesSidebar() {
   sidebar.querySelectorAll('.category-item').forEach(btn => {
     btn.addEventListener('click', () => {
       _activeCategory = btn.dataset.cat;
-      // update active state
       sidebar.querySelectorAll('.category-item').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderCategoriesGrid(_activeCategory);
@@ -201,25 +150,6 @@ function openModal(puzzle) {
 
   renderDiffButtons();
   updateDiffButtons();
-  updateModalReward();
-
-  // Handle unlock requirement
-  const unlocked = Storage.isUnlocked(puzzle.id, puzzle);
-  const startBtn = document.getElementById('modal-start');
-  if (!unlocked) {
-    const coins = Storage.getCoins();
-    if (coins >= puzzle.unlockCost) {
-      startBtn.textContent = `Разблокировать за 🪙 ${puzzle.unlockCost.toLocaleString('ru-RU')}`;
-      startBtn.disabled = false;
-    } else {
-      startBtn.textContent = `Нужно 🪙 ${puzzle.unlockCost.toLocaleString('ru-RU')}`;
-      startBtn.disabled = true;
-    }
-  } else {
-    startBtn.textContent = 'Начать';
-    startBtn.disabled = false;
-  }
-
   document.getElementById('difficulty-modal').classList.remove('hidden');
 }
 
@@ -241,108 +171,13 @@ function updateDiffButtons() {
   document.querySelectorAll('.diff-btn').forEach(btn => {
     btn.classList.toggle('active', parseInt(btn.dataset.diff) === _selectedDiff);
   });
-  updateModalReward();
-}
-
-function updateModalReward() {
-  if (!_activePuzzle) return;
-  const reward = _activePuzzle.coinReward[String(_selectedDiff)] || 0;
-  document.getElementById('modal-reward').textContent = reward.toLocaleString('ru-RU');
 }
 
 function startPuzzle() {
   const puzzle = _activePuzzle;
   if (!puzzle) return;
-  _activePuzzle = null; // prevent double-fire on rapid taps
-
-  // Unlock if needed
-  const unlocked = Storage.isUnlocked(puzzle.id, puzzle);
-  if (!unlocked) {
-    const coins = Storage.getCoins();
-    if (coins >= puzzle.unlockCost) {
-      Storage.addCoins(-puzzle.unlockCost);
-      Storage.unlockPuzzle(puzzle.id);
-      updateCoinDisplay();
-    } else {
-      _activePuzzle = puzzle; // restore so modal stays valid
-      return;
-    }
-  }
-
+  _activePuzzle = null;
   const diff = _selectedDiff;
   closeModal();
   window.location.href = `puzzle.html?id=${puzzle.id}&diff=${diff}`;
-}
-
-// ── Settings ──────────────────────────────────────────────────────────────────
-
-function openSettings() {
-  document.getElementById('settings-modal').classList.remove('hidden');
-}
-function closeSettings() {
-  document.getElementById('settings-modal').classList.add('hidden');
-}
-
-async function doExport() {
-  try {
-    const data = await Storage.exportAll();
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
-    a.href = url;
-    a.download = `puzzles-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  } catch (e) {
-    alert('Ошибка экспорта: ' + e.message);
-  }
-}
-
-async function doImport(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    await Storage.importAll(data);
-    alert('Прогресс успешно восстановлен! Перезагрузите приложение.');
-    location.reload();
-  } catch (err) {
-    alert('Ошибка импорта: ' + err.message);
-  }
-  e.target.value = '';
-}
-
-function showResetPin() {
-  closeSettings();
-  Auth.deauthenticate();
-  // Redirect to PIN screen in "change PIN" mode — for simplicity, force re-setup
-  Storage.lsDel('profile');
-  window.location.href = 'index.html';
-}
-
-function showStreak() {
-  const streak = Storage.getStreak();
-  const msg = streak.count > 0
-    ? `Текущая серия: ${streak.count} ${dayWord(streak.count)} подряд! 🔥`
-    : 'У вас пока нет серии. Сыграйте сегодня!';
-  alert(msg);
-}
-
-function dayWord(n) {
-  if (n % 10 === 1 && n % 100 !== 11) return 'день';
-  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return 'дня';
-  return 'дней';
-}
-
-// ── Install banner ────────────────────────────────────────────────────────────
-
-function showInstallBannerIfNeeded() {
-  const dismissed = Storage.lsGet('install_banner_dismissed', false);
-  const isStandalone = window.navigator.standalone === true ||
-    window.matchMedia('(display-mode: standalone)').matches;
-
-  if (!isStandalone && !dismissed) {
-    document.getElementById('install-banner').classList.remove('hidden');
-  }
 }

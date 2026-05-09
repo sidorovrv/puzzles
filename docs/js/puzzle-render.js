@@ -5,11 +5,6 @@
  */
 
 (async function() {
-  // ── Guard: auth ──────────────────────────────────
-  if (!Auth.isAuthenticated()) {
-    window.location.href = 'index.html';
-    return;
-  }
 
   // ── Parse URL params ─────────────────────────────
   const params   = new URLSearchParams(location.search);
@@ -125,6 +120,11 @@
 
   const BLEED = Math.min(PUZZLE_W / cols, PUZZLE_H / rows) * 0.25;
 
+  // Declare drag state here so renderAll() can safely reference it
+  let _dragging  = null;
+  let _dragOffX  = 0;
+  let _dragOffY  = 0;
+
   function renderAll() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -181,10 +181,6 @@
   updateProgress();
 
   // ── Drag & drop (pointer events) ──────────────────
-
-  let _dragging  = null;
-  let _dragOffX  = 0;
-  let _dragOffY  = 0;
 
   canvas.addEventListener('pointerdown', onDown);
   canvas.addEventListener('pointermove', onMove);
@@ -305,12 +301,7 @@
 
   function checkCompletion() {
     if (pieces.every(p => p.locked)) {
-      const reward = puzzleMeta.coinReward[String(difficulty)] || 0;
-      Storage.addCoins(reward);
-      updateDailyStreak();
       Storage.deletePuzzleState(puzzleId, difficulty);
-
-      document.getElementById('completion-reward').textContent = `+${reward.toLocaleString('ru-RU')} монет`;
       document.getElementById('completion-overlay').classList.remove('hidden');
       startConfetti();
     }
@@ -320,17 +311,6 @@
     window.location.href = 'home.html';
   });
 
-  // ── Streak update ──────────────────────────────────
-
-  function updateDailyStreak() {
-    const today = new Date().toISOString().slice(0, 10);
-    const streak = Storage.getStreak();
-    if (streak.lastDate === today) return; // already counted today
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-    streak.count = streak.lastDate === yesterday ? streak.count + 1 : 1;
-    streak.lastDate = today;
-    Storage.setStreak(streak);
-  }
 
   // ── Hint ──────────────────────────────────────────
 
