@@ -1,4 +1,4 @@
-const CACHE_NAME = 'puzzles-v1';
+const CACHE_NAME = 'puzzles-v2';
 
 // All assets to pre-cache on install
 const PRE_CACHE = [

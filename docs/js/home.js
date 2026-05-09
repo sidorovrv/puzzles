@@ -26,7 +26,6 @@ async function initHome() {
   const resp = await fetch('data/puzzles.json');
   _puzzles = await resp.json();
 
-  renderFeatured();
   renderGrid('main-grid', _puzzles.slice(0, 12));
   renderCategoriesSidebar();
   renderCategoriesGrid('all');
@@ -98,39 +97,6 @@ function switchTab(tabId) {
   document.getElementById('top-bar-title').textContent = titles[tabId] || '';
 }
 
-// ── Featured row ──────────────────────────────────────────────────────────────
-
-function renderFeatured() {
-  const row = document.getElementById('featured-row');
-  if (!row) return;
-
-  const daily = getDailyPuzzle();
-
-  row.innerHTML = `
-    <div class="featured-card featured-card--daily" data-puzzle-id="${daily.id}">
-      <div class="featured-card__label">Пазл дня</div>
-      <div class="featured-card__title">${formatDate()}</div>
-      <img class="featured-card__thumb" src="${daily.thumb}" alt="${daily.title}" onerror="this.style.display='none'">
-    </div>
-    <div class="featured-card featured-card--collection">
-      <div class="featured-card__label">Коллекция</div>
-      <div class="featured-card__title">Природа</div>
-    </div>
-  `;
-
-  row.querySelector('[data-puzzle-id]').addEventListener('click', () => openModal(daily));
-}
-
-function formatDate() {
-  return new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
-}
-
-function getDailyPuzzle() {
-  const free = _puzzles.filter(p => p.unlockCost === 0);
-  const dayIndex = Math.floor(Date.now() / 86400000) % free.length;
-  return free[dayIndex];
-}
-
 // ── Grid rendering ────────────────────────────────────────────────────────────
 
 function renderGrid(containerId, puzzleList) {
@@ -163,7 +129,7 @@ function puzzleCardHTML(p) {
 
   return `
     <div class="puzzle-card" data-puzzle-id="${p.id}">
-      <img src="${p.thumb}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">
+      ${p.thumb ? `<img src="${p.thumb}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
       ${badge}
       ${lock}
     </div>
@@ -222,10 +188,15 @@ function openModal(puzzle) {
   _selectedDiff = 144;
 
   const imgEl = document.getElementById('modal-img');
-  imgEl.style.display = '';
-  imgEl.onerror = () => { imgEl.style.display = 'none'; };
-  imgEl.src = puzzle.file;
-  imgEl.alt = puzzle.title;
+  if (puzzle.file) {
+    imgEl.style.display = '';
+    imgEl.onerror = () => { imgEl.style.display = 'none'; };
+    imgEl.src = puzzle.file;
+    imgEl.alt = puzzle.title;
+  } else {
+    imgEl.style.display = 'none';
+    imgEl.src = '';
+  }
   document.getElementById('modal-puzzle-title').textContent = puzzle.title;
 
   renderDiffButtons();
@@ -280,26 +251,27 @@ function updateModalReward() {
 }
 
 function startPuzzle() {
-  if (!_activePuzzle) return;
+  const puzzle = _activePuzzle;
+  if (!puzzle) return;
+  _activePuzzle = null; // prevent double-fire on rapid taps
 
   // Unlock if needed
-  const unlocked = Storage.isUnlocked(_activePuzzle.id, _activePuzzle);
+  const unlocked = Storage.isUnlocked(puzzle.id, puzzle);
   if (!unlocked) {
     const coins = Storage.getCoins();
-    if (coins >= _activePuzzle.unlockCost) {
-      Storage.addCoins(-_activePuzzle.unlockCost);
-      Storage.unlockPuzzle(_activePuzzle.id);
+    if (coins >= puzzle.unlockCost) {
+      Storage.addCoins(-puzzle.unlockCost);
+      Storage.unlockPuzzle(puzzle.id);
       updateCoinDisplay();
     } else {
-      return; // button should be disabled, but guard anyway
+      _activePuzzle = puzzle; // restore so modal stays valid
+      return;
     }
   }
 
-  const id   = _activePuzzle.id;
   const diff = _selectedDiff;
   closeModal();
-  const url = `puzzle.html?id=${id}&diff=${diff}`;
-  window.location.href = url;
+  window.location.href = `puzzle.html?id=${puzzle.id}&diff=${diff}`;
 }
 
 // ── Settings ──────────────────────────────────────────────────────────────────
