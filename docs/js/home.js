@@ -1,183 +1,266 @@
-﻿/**
- * home.js — Puzzle browser: categories, grid, progress badges, difficulty modal.
+/**
+ * home.js — Category sidebar, image grid, difficulty modal
  */
 
-const DIFFICULTIES = [64, 100, 144, 225, 400];
+'use strict';
 
-const CATEGORIES = [
-  { id: 'all',       label: 'Все',         icon: '🔷' },
-  { id: 'nature',    label: 'Природа',     icon: '🌿' },
-  { id: 'animals',   label: 'Животные',    icon: '🐾' },
-  { id: 'landmarks', label: 'Архитектура', icon: '🗼' },
-  { id: 'food',      label: 'Еда',         icon: '🍕' },
-  { id: 'objects',   label: 'Предметы',    icon: '📷' },
-  { id: 'art',       label: 'Живопись',    icon: '🖼️' },
-];
+const Home = (() => {
+  let _puzzles = [];         // full puzzles.json array
+  let _currentCategory = null;
+  let _modalPuzzle = null;
+  let _selectedCount = 24;
 
-let _puzzles = [];
-let _selectedDiff = 144;
-let _activePuzzle = null;
-let _activeCategory = 'all';
+  const CATEGORY_LABELS = {
+    nature: 'Природа',
+    animals: 'Животные',
+    landmarks: 'Достопримечательности',
+    food: 'Еда',
+    objects: 'Предметы',
+  };
 
-async function initHome() {
-  const resp = await fetch('data/puzzles.json');
-  _puzzles = await resp.json();
+  // ── Init ────────────────────────────────────────────
 
-  renderCategoriesSidebar();
-  renderCategoriesGrid('all');
-  renderMyPuzzles();
-
-  document.querySelectorAll('.bottom-nav__tab').forEach(btn => {
-    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-  });
-
-  document.getElementById('modal-cancel').addEventListener('click', closeModal);
-  document.getElementById('modal-start').addEventListener('click', startPuzzle);
-  document.getElementById('difficulty-row').addEventListener('click', e => {
-    const btn = e.target.closest('.diff-btn');
-    if (!btn) return;
-    _selectedDiff = parseInt(btn.dataset.diff);
-    updateDiffButtons();
-  });
-}
-
-// ── Tabs ──────────────────────────────────────────────────────────────────────
-
-function switchTab(tabId) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-  document.querySelectorAll('.bottom-nav__tab').forEach(b => b.classList.remove('active'));
-
-  const panel = document.getElementById(`tab-${tabId}`);
-  if (panel) panel.classList.remove('hidden');
-
-  const btn = document.querySelector(`.bottom-nav__tab[data-tab="${tabId}"]`);
-  if (btn) btn.classList.add('active');
-
-  if (tabId === 'my') renderMyPuzzles();
-}
-
-// ── Grid rendering ────────────────────────────────────────────────────────────
-
-function renderGrid(containerId, puzzleList) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = puzzleList.map(p => puzzleCardHTML(p)).join('');
-  el.querySelectorAll('.puzzle-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const p = _puzzles.find(x => x.id === card.dataset.puzzleId);
-      if (p) openModal(p);
-    });
-  });
-}
-
-function puzzleCardHTML(p) {
-  const prog = Storage.getProgress(p.id, _selectedDiff);
-  const pct  = prog ? Math.round((prog.lockedCount / prog.totalPieces) * 100) : null;
-
-  let badge = '';
-  if (pct !== null && pct < 100) badge = `<div class="puzzle-card__badge">${pct}%</div>`;
-  if (pct === 100) badge = `<div class="puzzle-card__badge puzzle-card__badge--gold">⭐</div>`;
-
-  return `
-    <div class="puzzle-card" data-puzzle-id="${p.id}">
-      ${p.thumb ? `<img src="${p.thumb}" alt="${p.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
-      ${badge}
-    </div>
-  `;
-}
-
-// ── Categories ────────────────────────────────────────────────────────────────
-
-function renderCategoriesSidebar() {
-  const sidebar = document.getElementById('categories-sidebar');
-  if (!sidebar) return;
-  sidebar.innerHTML = CATEGORIES.map(c => `
-    <button class="category-item${c.id === _activeCategory ? ' active' : ''}" data-cat="${c.id}">
-      <span class="category-item__icon">${c.icon}</span>
-      <span>${c.label}</span>
-    </button>
-  `).join('');
-
-  sidebar.querySelectorAll('.category-item').forEach(btn => {
-    btn.addEventListener('click', () => {
-      _activeCategory = btn.dataset.cat;
-      sidebar.querySelectorAll('.category-item').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderCategoriesGrid(_activeCategory);
-    });
-  });
-}
-
-function renderCategoriesGrid(category) {
-  const filtered = category === 'all' ? _puzzles : _puzzles.filter(p => p.category === category);
-  renderGrid('categories-grid', filtered);
-}
-
-// ── My Puzzles ────────────────────────────────────────────────────────────────
-
-function renderMyPuzzles() {
-  const allProgress = Storage.getAllProgress();
-  const startedIds = new Set(allProgress.map(s => s.puzzleId));
-  const started = _puzzles.filter(p => startedIds.has(p.id));
-
-  const empty = document.getElementById('my-empty');
-  if (started.length === 0) {
-    if (empty) empty.classList.remove('hidden');
-    renderGrid('my-grid', []);
-  } else {
-    if (empty) empty.classList.add('hidden');
-    renderGrid('my-grid', started);
+  function init(puzzles) {
+    _puzzles = puzzles;
+    _buildSidebar();
+    _bindModal();
+    // Show first category by default
+    const firstCat = _uniqueCategories()[0];
+    if (firstCat) selectCategory(firstCat);
   }
-}
 
-// ── Difficulty modal ──────────────────────────────────────────────────────────
+  // ── Sidebar ─────────────────────────────────────────
 
-function openModal(puzzle) {
-  _activePuzzle = puzzle;
-  _selectedDiff = 144;
-
-  const imgEl = document.getElementById('modal-img');
-  if (puzzle.file) {
-    imgEl.style.display = '';
-    imgEl.onerror = () => { imgEl.style.display = 'none'; };
-    imgEl.src = puzzle.file;
-    imgEl.alt = puzzle.title;
-  } else {
-    imgEl.style.display = 'none';
-    imgEl.src = '';
+  function _uniqueCategories() {
+    return [...new Set(_puzzles.map(p => p.category))];
   }
-  document.getElementById('modal-puzzle-title').textContent = puzzle.title;
 
-  renderDiffButtons();
-  updateDiffButtons();
-  document.getElementById('difficulty-modal').classList.remove('hidden');
-}
+  function _buildSidebar() {
+    const nav = document.getElementById('sidebar-nav');
+    nav.innerHTML = '';
 
-function closeModal() {
-  document.getElementById('difficulty-modal').classList.add('hidden');
-  _activePuzzle = null;
-}
+    _uniqueCategories().forEach(cat => {
+      const item = document.createElement('div');
+      item.className = 'nav-item';
+      item.dataset.category = cat;
+      item.textContent = CATEGORY_LABELS[cat] || cat;
+      item.addEventListener('click', () => selectCategory(cat));
+      nav.appendChild(item);
+    });
 
-function renderDiffButtons() {
-  const row = document.getElementById('difficulty-row');
-  row.innerHTML = DIFFICULTIES.map(d => `
-    <button class="diff-btn${d === _selectedDiff ? ' active' : ''}" data-diff="${d}">
-      ${d}<span>шт.</span>
-    </button>
-  `).join('');
-}
+    // Divider + Мои пазлы
+    const divider = document.createElement('div');
+    divider.className = 'nav-divider';
+    nav.appendChild(divider);
 
-function updateDiffButtons() {
-  document.querySelectorAll('.diff-btn').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.dataset.diff) === _selectedDiff);
-  });
-}
+    const myItem = document.createElement('div');
+    myItem.id = 'my-puzzles-item';
+    myItem.className = 'nav-item';
+    myItem.textContent = 'Мои пазлы';
+    myItem.addEventListener('click', () => selectMyPuzzles());
+    nav.appendChild(myItem);
 
-function startPuzzle() {
-  const puzzle = _activePuzzle;
-  if (!puzzle) return;
-  _activePuzzle = null;
-  const diff = _selectedDiff;
-  closeModal();
-  window.location.href = `puzzle.html?id=${puzzle.id}&diff=${diff}`;
-}
+    _refreshMyPuzzlesVisibility();
+  }
+
+  function _refreshMyPuzzlesVisibility() {
+    const el = document.getElementById('my-puzzles-item');
+    if (!el) return;
+    const hasSaves = Storage.getAllSaves().length > 0;
+    el.classList.toggle('visible', hasSaves);
+  }
+
+  function _setActiveNav(key) {
+    document.querySelectorAll('.nav-item').forEach(el => {
+      const isActive = (el.dataset.category === key) ||
+                       (key === '__my' && el.id === 'my-puzzles-item');
+      el.classList.toggle('active', isActive);
+    });
+  }
+
+  // ── Category selection ───────────────────────────────
+
+  function selectCategory(cat) {
+    _currentCategory = cat;
+    _setActiveNav(cat);
+    document.getElementById('home-category-title').textContent =
+      CATEGORY_LABELS[cat] || cat;
+    const filtered = _puzzles.filter(p => p.category === cat);
+    _renderGrid(filtered);
+  }
+
+  function selectMyPuzzles() {
+    _currentCategory = '__my';
+    _setActiveNav('__my');
+    document.getElementById('home-category-title').textContent = 'Мои пазлы';
+    const saves = Storage.getAllSaves();
+    const savedIds = new Set(saves.map(s => s.puzzleId));
+    const myPuzzles = _puzzles.filter(p => savedIds.has(p.id));
+    _renderGrid(myPuzzles, true);
+  }
+
+  // ── Card Grid ────────────────────────────────────────
+
+  function _renderGrid(puzzles, forMyPuzzles = false) {
+    const grid = document.getElementById('card-grid');
+    grid.innerHTML = '';
+
+    if (puzzles.length === 0) {
+      grid.innerHTML = '<p style="color:var(--color-text-secondary);grid-column:1/-1">Нет пазлов</p>';
+      return;
+    }
+
+    puzzles.forEach(puzzle => {
+      const card = _buildCard(puzzle, forMyPuzzles);
+      grid.appendChild(card);
+    });
+  }
+
+  function _buildCard(puzzle, forMyPuzzles) {
+    // Find best save for this puzzle (most recent / most progress)
+    const saves = Storage.getAllSaves().filter(s => s.puzzleId === puzzle.id);
+    const bestSave = saves.length
+      ? saves.reduce((a, b) => (a.lockedCount > b.lockedCount ? a : b))
+      : null;
+
+    const card = document.createElement('div');
+    card.className = 'puzzle-card';
+    card.addEventListener('click', () => openDifficultyModal(puzzle));
+
+    const img = document.createElement('img');
+    img.src = puzzle.thumbUrl;
+    img.alt = puzzle.title;
+    img.loading = 'lazy';
+    card.appendChild(img);
+
+    if (bestSave) {
+      if (bestSave.completed) {
+        const star = document.createElement('div');
+        star.className = 'star-badge';
+        star.textContent = '⭐';
+        card.appendChild(star);
+      } else {
+        const pct = Math.round((bestSave.lockedCount / bestSave.pieceCount) * 100);
+        const star = document.createElement('div');
+        star.className = 'star-badge';
+        star.style.fontSize = '0.65rem';
+        star.style.color = '#fff';
+        star.textContent = `${pct}%`;
+        card.appendChild(star);
+      }
+    }
+
+    const body = document.createElement('div');
+    body.className = 'puzzle-card-body';
+
+    const title = document.createElement('div');
+    title.className = 'puzzle-card-title';
+    title.textContent = puzzle.title;
+    body.appendChild(title);
+
+    if (bestSave && !bestSave.completed) {
+      const pct = Math.round((bestSave.lockedCount / bestSave.pieceCount) * 100);
+      const wrap = document.createElement('div');
+      wrap.className = 'progress-bar-wrap';
+      const fill = document.createElement('div');
+      fill.className = 'progress-bar-fill';
+      fill.style.width = pct + '%';
+      wrap.appendChild(fill);
+      body.appendChild(wrap);
+
+      const lbl = document.createElement('div');
+      lbl.className = 'progress-label';
+      lbl.textContent = `${bestSave.lockedCount} / ${bestSave.pieceCount} фр.`;
+      body.appendChild(lbl);
+    }
+
+    card.appendChild(body);
+    return card;
+  }
+
+  // ── Difficulty Modal ─────────────────────────────────
+
+  function openDifficultyModal(puzzle) {
+    _modalPuzzle = puzzle;
+    _selectedCount = 24;
+
+    document.getElementById('modal-preview-img').src = puzzle.thumbUrl;
+    document.getElementById('modal-title').textContent = puzzle.title;
+
+    _updateModalButtons();
+
+    document.getElementById('modal-overlay').classList.add('active');
+  }
+
+  function _updateModalButtons() {
+    const counts = [24, 64, 100, 144];
+    const btns = document.querySelectorAll('.piece-count-btn');
+
+    btns.forEach(btn => {
+      const count = parseInt(btn.dataset.count, 10);
+      btn.classList.toggle('selected', count === _selectedCount);
+    });
+
+    // Show save info for selected count
+    const save = Storage.loadState(_modalPuzzle.id, _selectedCount);
+    const infoEl = document.getElementById('modal-save-info');
+    const startBtn = document.getElementById('modal-start-btn');
+
+    if (save) {
+      if (save.completed) {
+        infoEl.textContent = `Завершён за ${Storage.formatTime(save.elapsedSeconds)}`;
+        startBtn.textContent = 'Начать заново';
+      } else {
+        infoEl.textContent = `Время: ${Storage.formatTime(save.elapsedSeconds)} · ${save.lockedCount} / ${save.pieceCount} фр.`;
+        startBtn.textContent = 'Продолжить';
+      }
+    } else {
+      infoEl.textContent = '';
+      startBtn.textContent = 'Начать';
+    }
+  }
+
+  function _bindModal() {
+    document.getElementById('modal-close-btn').addEventListener('click', _closeModal);
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-overlay')) _closeModal();
+    });
+
+    document.querySelectorAll('.piece-count-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _selectedCount = parseInt(btn.dataset.count, 10);
+        _updateModalButtons();
+      });
+    });
+
+    document.getElementById('modal-start-btn').addEventListener('click', () => {
+      if (!_modalPuzzle) return;
+      _closeModal();
+      App.showPuzzle(_modalPuzzle.id, _selectedCount);
+    });
+  }
+
+  function _closeModal() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    _modalPuzzle = null;
+  }
+
+  // Called after a save occurs so sidebar updates
+  function refreshAfterSave() {
+    _refreshMyPuzzlesVisibility();
+    // If currently on My Puzzles, re-render it
+    if (_currentCategory === '__my') selectMyPuzzles();
+  }
+
+  // Called when returning to home — re-render current view to pick up new save data
+  function refreshCurrentView() {
+    _refreshMyPuzzlesVisibility();
+    if (_currentCategory === '__my') {
+      selectMyPuzzles();
+    } else if (_currentCategory) {
+      selectCategory(_currentCategory);
+    }
+  }
+
+  return { init, selectCategory, selectMyPuzzles, openDifficultyModal, refreshAfterSave, refreshCurrentView };
+})();

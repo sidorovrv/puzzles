@@ -1,413 +1,452 @@
 /**
- * puzzle-render.js — Canvas rendering loop, touch/pointer drag, snap logic,
- *                    auto-save, completion detection.
- * All UI text in Russian.
+ * puzzle-render.js — Canvas rendering, drag/drop, snap, confetti, hint
  */
 
-(async function() {
+'use strict';
 
-  // ── Parse URL params ─────────────────────────────
-  const params   = new URLSearchParams(location.search);
-  const puzzleId = params.get('id');
-  const difficulty = parseInt(params.get('diff') || '144');
+const PuzzleRender = (() => {
+  // ── State ────────────────────────────────────────────
+  let _puzzleId    = null;
+  let _pieceCount  = null;
+  let _pieces      = [];
+  let _pieceCanvases = []; // offscreen canvas per piece (index = piece.id)
+  let _img         = null;
+  let _cols        = 0;
+  let _rows        = 0;
+  let _cellW       = 0;
+  let _cellH       = 0;
+  let _seed        = 0;
+  let _startedAt   = 0;
+  let _elapsedSeconds = 0;
+  let _timerInterval  = null;
 
-  if (!puzzleId) { window.location.href = 'home.html'; return; }
+  // Snap radius (px, in assembled-canvas coordinate space)
+  const SNAP_RADIUS = 28;
 
-  // ── Load puzzle metadata ──────────────────────────
-  const resp    = await fetch('data/puzzles.json');
-  const allPuzzles = await resp.json();
-  const puzzleMeta = allPuzzles.find(p => p.id === puzzleId);
-  if (!puzzleMeta) { window.location.href = 'home.html'; return; }
+  // Canvas elements
+  let _assembledCanvas = null;
+  let _floatCanvas     = null;
+  let _assembledCtx    = null;
+  let _floatCtx        = null;
+  let _canvasW         = 0;
+  let _canvasH         = 0;
 
-  document.getElementById('puzzle-title').textContent =
-    `${puzzleMeta.title} (${difficulty} шт.)`;
+  // Drag state
+  let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
+  let _rafId     = null;
 
-  // ── Canvas setup ──────────────────────────────────
-  const wrapper = document.getElementById('canvas-wrapper');
-  const canvas  = document.getElementById('puzzle-canvas');
-  const ctx     = canvas.getContext('2d');
+  // ── Public: start ────────────────────────────────────
+  /**
+   * @param {string} puzzleId
+   * @param {number} pieceCount
+   * @param {HTMLImageElement} img
+   * @param {Object|null} savedState
+   */
+  function start(puzzleId, pieceCount, img, savedState) {
+    _puzzleId   = puzzleId;
+    _pieceCount = pieceCount;
+    _img        = img;
 
-  function resizeCanvas() {
-    canvas.width  = wrapper.clientWidth;
-    canvas.height = wrapper.clientHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', () => { resizeCanvas(); renderAll(); });
+    const { cols, rows } = PuzzleEngine.gridDims(pieceCount);
+    _cols = cols;
+    _rows = rows;
 
-  // ── Load image ────────────────────────────────────
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.src = puzzleMeta.file;
-  await new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
+    _setupCanvases();
 
-  // Compute puzzle display area (centred, 4:3 aspect)
-  const PUZZLE_W = Math.min(canvas.width  * 0.55, 720);
-  const PUZZLE_H = Math.min(canvas.height * 0.75, PUZZLE_W * 0.75);
-  const PUZZLE_X = (canvas.width  - PUZZLE_W) / 2;
-  const PUZZLE_Y = (canvas.height - PUZZLE_H) / 2;
+    // Compute cell size in displayed pixels (fit image into canvas)
+    const ratio = Math.min(_canvasW / img.naturalWidth, _canvasH / img.naturalHeight);
+    const imgW = img.naturalWidth  * ratio;
+    const imgH = img.naturalHeight * ratio;
+    _cellW = imgW / cols;
+    _cellH = imgH / rows;
 
-  // ── Generate or restore pieces ────────────────────
-  const { cols, rows } = PuzzleEngine.GRID_DIMS[difficulty];
-  const totalPieces = cols * rows;
-  const SNAP_RADIUS = Math.min(PUZZLE_W / cols, PUZZLE_H / rows) * 0.45;
+    // Seed & PRNG
+    _seed = PuzzleEngine.hashSeed(puzzleId, pieceCount);
+    const rng = PuzzleEngine.mulberry32(_seed);
 
-  let pieces;
-  const savedState = await Storage.loadPuzzleState(puzzleId, difficulty);
+    // Generate pieces
+    _pieces = PuzzleEngine.generatePieces(cols, rows, rng, _cellW, _cellH);
 
-  if (savedState && savedState.pieces && savedState.pieces.length === totalPieces) {
-    // Restore
-    pieces = PuzzleEngine.generatePieces(puzzleId, difficulty, PUZZLE_W, PUZZLE_H);
-    savedState.pieces.forEach((sp, i) => {
-      pieces[i].currentX = sp.x;
-      pieces[i].currentY = sp.y;
-      pieces[i].locked   = sp.locked;
-    });
-  } else {
-    // Fresh start — scatter all pieces
-    pieces = PuzzleEngine.generatePieces(puzzleId, difficulty, PUZZLE_W, PUZZLE_H);
-    // Offset scatter positions so they appear around the canvas, not the assembled area
-    pieces.forEach(p => {
-      if (!p.locked) {
-        // Random position in "scatter zone" outside the puzzle area
-        p.currentX = Math.random() * canvas.width;
-        p.currentY = Math.random() * canvas.height;
-      }
-    });
-  }
-
-  // Pre-render piece canvases
-  const pieceCanvases = pieces.map(p =>
-    PuzzleEngine.renderPieceToCanvas(p, img, PUZZLE_W, PUZZLE_H)
-  );
-
-  // ── Tray ──────────────────────────────────────────
-  const tray    = document.getElementById('piece-tray');
-  let _selectedTrayIdx = -1;
-
-  function buildTray() {
-    tray.innerHTML = '';
-    pieces.forEach((p, i) => {
-      if (p.locked) return;
-      const div = document.createElement('div');
-      div.className = 'tray-piece';
-      div.dataset.idx = i;
-      const pc = pieceCanvases[i];
-      // Draw piece thumbnail
-      const tCanvas = document.createElement('canvas');
-      tCanvas.width  = 80;
-      tCanvas.height = 80;
-      const tc = tCanvas.getContext('2d');
-      const scale = Math.min(80 / pc.width, 80 / pc.height);
-      const tw = pc.width * scale;
-      const th = pc.height * scale;
-      tc.drawImage(pc, (80 - tw)/2, (80 - th)/2, tw, th);
-      div.appendChild(tCanvas);
-      div.addEventListener('click', () => selectTrayPiece(i));
-      tray.appendChild(div);
-    });
-  }
-
-  function selectTrayPiece(idx) {
-    _selectedTrayIdx = idx;
-    tray.querySelectorAll('.tray-piece').forEach(el => {
-      el.classList.toggle('selected', parseInt(el.dataset.idx) === idx);
-    });
-  }
-
-  buildTray();
-
-  // ── Rendering ─────────────────────────────────────
-
-  const BLEED = Math.min(PUZZLE_W / cols, PUZZLE_H / rows) * 0.25;
-
-  // Declare drag state here so renderAll() can safely reference it
-  let _dragging  = null;
-  let _dragOffX  = 0;
-  let _dragOffY  = 0;
-
-  function renderAll() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw puzzle area border
-    ctx.save();
-    ctx.strokeStyle = 'rgba(0,0,0,0.12)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([8, 6]);
-    ctx.strokeRect(PUZZLE_X, PUZZLE_Y, PUZZLE_W, PUZZLE_H);
-    ctx.restore();
-
-    // Draw all pieces (locked first, then free on top)
-    const sorted = [...pieces].sort((a, b) => (a.locked ? -1 : 1) - (b.locked ? -1 : 1));
-    sorted.forEach(p => {
-      if (p === _dragging) return; // drawn last
-      drawPiece(p, false);
+    // Correct positions are centered on the canvas
+    const offsetX = (_canvasW - imgW) / 2;
+    const offsetY = (_canvasH - imgH) / 2;
+    _pieces.forEach(p => {
+      p.correctX += offsetX;
+      p.correctY += offsetY;
     });
 
-    // Draw dragging piece on top
-    if (_dragging) drawPiece(_dragging, true);
-  }
+    // Build piece image canvases
+    _pieceCanvases = _pieces.map(p =>
+      PuzzleEngine.clipPieceImage(img, p, _cellW, _cellH, imgW, imgH)
+    );
 
-  function drawPiece(p, highlighted) {
-    const pc = pieceCanvases[p.id];
-    let dx, dy;
-
-    if (p.locked) {
-      dx = PUZZLE_X + p.correctX - BLEED;
-      dy = PUZZLE_Y + p.correctY - BLEED;
+    if (savedState) {
+      _restoreState(savedState);
+      _startedAt      = savedState.startedAt;
+      _elapsedSeconds = savedState.elapsedSeconds;
     } else {
-      dx = p.currentX - BLEED;
-      dy = p.currentY - BLEED;
+      PuzzleEngine.scatterPieces(_pieces, rng);
+      _startedAt      = Math.floor(Date.now() / 1000);
+      _elapsedSeconds = 0;
+      _autoSave();
     }
 
-    if (highlighted) {
-      ctx.save();
-      ctx.shadowColor = '#4CAF50';
-      ctx.shadowBlur  = 16;
-    }
-    ctx.drawImage(pc, dx, dy);
-    if (highlighted) ctx.restore();
+    _rebuildAssembledCanvas();
+    _populateTray();
+    _bindEvents();
+    _startTimer();
+    _tick();
   }
 
-  renderAll();
+  // ── Canvas setup ─────────────────────────────────────
+  function _setupCanvases() {
+    _assembledCanvas = document.getElementById('assembled-canvas');
+    _floatCanvas     = document.getElementById('float-canvas');
+    const area       = document.getElementById('canvas-area');
 
-  // ── Progress bar ──────────────────────────────────
+    const w = area.clientWidth;
+    const h = area.clientHeight;
+    _canvasW = w;
+    _canvasH = h;
 
-  function updateProgress() {
-    const locked = pieces.filter(p => p.locked).length;
-    const pct = (locked / totalPieces) * 100;
-    document.getElementById('progress-bar').style.width = pct + '%';
-    Storage.setProgress(puzzleId, difficulty, { puzzleId, difficulty, lockedCount: locked, totalPieces });
+    [_assembledCanvas, _floatCanvas].forEach(c => {
+      c.width  = w;
+      c.height = h;
+      c.style.width  = w + 'px';
+      c.style.height = h + 'px';
+    });
+
+    _assembledCtx = _assembledCanvas.getContext('2d');
+    _floatCtx     = _floatCanvas.getContext('2d');
   }
-  updateProgress();
 
-  // ── Drag & drop (pointer events) ──────────────────
+  // ── Restore saved state ──────────────────────────────
+  function _restoreState(state) {
+    state.pieces.forEach(saved => {
+      const p = _pieces[saved.id];
+      if (!p) return;
+      p.currentX = saved.x;
+      p.currentY = saved.y;
+      p.locked   = saved.locked;
+      if (p.locked) p.trayIndex = -1; // not in tray
+    });
+    // Assign tray indices for unlocked pieces
+    const unlocked = _pieces.filter(p => !p.locked);
+    unlocked.forEach((p, i) => { if (p.trayIndex === undefined || p.trayIndex === -1) p.trayIndex = i; });
+  }
 
-  canvas.addEventListener('pointerdown', onDown);
-  canvas.addEventListener('pointermove', onMove);
-  canvas.addEventListener('pointerup',   onUp);
-  canvas.addEventListener('pointercancel', onUp);
+  // ── Assembled canvas rebuild ─────────────────────────
+  function _rebuildAssembledCanvas() {
+    _assembledCtx.clearRect(0, 0, _canvasW, _canvasH);
+    _pieces.filter(p => p.locked).forEach(p => _drawLockedPiece(p));
+  }
 
-  function getCanvasPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-      x: (e.clientX - rect.left) * (canvas.width  / rect.width),
-      y: (e.clientY - rect.top)  * (canvas.height / rect.height),
+  function _drawLockedPiece(piece) {
+    const pc = _pieceCanvases[piece.id];
+    if (!pc) return;
+    _assembledCtx.drawImage(
+      pc,
+      Math.round(piece.correctX - piece.ox),
+      Math.round(piece.correctY - piece.oy)
+    );
+  }
+
+  // ── Piece tray ───────────────────────────────────────
+  function _populateTray() {
+    const tray = document.getElementById('piece-tray');
+    tray.innerHTML = '';
+
+    const trayH = tray.clientHeight || 120;
+    const displaySize = Math.min(trayH - 16, 90);
+
+    // Sort unlocked pieces by trayIndex
+    const unlocked = _pieces.filter(p => !p.locked)
+      .sort((a, b) => a.trayIndex - b.trayIndex);
+
+    unlocked.forEach(piece => {
+      const pc = _pieceCanvases[piece.id];
+      const trayCanvas = document.createElement('canvas');
+      const scale = displaySize / Math.max(pc.width, pc.height);
+      trayCanvas.width  = Math.round(pc.width  * scale);
+      trayCanvas.height = Math.round(pc.height * scale);
+      trayCanvas.className = 'tray-piece';
+      trayCanvas.dataset.pieceId = piece.id;
+      const tc = trayCanvas.getContext('2d');
+      tc.drawImage(pc, 0, 0, trayCanvas.width, trayCanvas.height);
+
+      // Store scale for hit-testing
+      trayCanvas._pieceScale = scale;
+
+      tray.appendChild(trayCanvas);
+    });
+  }
+
+  // ── Timer ────────────────────────────────────────────
+  function _startTimer() {
+    if (_timerInterval) clearInterval(_timerInterval);
+    _timerInterval = setInterval(() => { _elapsedSeconds++; }, 1000);
+  }
+
+  // ── Event binding ────────────────────────────────────
+  function _bindEvents() {
+    // Canvas pointer events (for pieces already on the canvas — locked pieces are immovable)
+    _floatCanvas.addEventListener('pointerdown', _onCanvasPointerDown);
+
+    // Tray pointer events
+    document.getElementById('piece-tray').addEventListener('pointerdown', _onTrayPointerDown);
+
+    // Global pointer move / up
+    window.addEventListener('pointermove', _onPointerMove);
+    window.addEventListener('pointerup',   _onPointerUp);
+
+    // Toolbar buttons
+    document.getElementById('back-btn').addEventListener('click', _onBack);
+    document.getElementById('hint-btn').addEventListener('click', _onHint);
+  }
+
+  function _unbindEvents() {
+    _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
+    document.getElementById('piece-tray').removeEventListener('pointerdown', _onTrayPointerDown);
+    window.removeEventListener('pointermove', _onPointerMove);
+    window.removeEventListener('pointerup',   _onPointerUp);
+    document.getElementById('back-btn').removeEventListener('click', _onBack);
+    document.getElementById('hint-btn').removeEventListener('click', _onHint);
+  }
+
+  // ── Pointer handlers ─────────────────────────────────
+  function _onTrayPointerDown(e) {
+    const el = e.target.closest('.tray-piece');
+    if (!el) return;
+    e.preventDefault();
+
+    const pieceId = parseInt(el.dataset.pieceId, 10);
+    const piece   = _pieces[pieceId];
+    if (!piece || piece.locked) return;
+
+    const rect = el.getBoundingClientRect();
+    const canvasRect = _floatCanvas.getBoundingClientRect();
+
+    // Place piece onto float canvas at a sensible starting position
+    piece.currentX = rect.left - canvasRect.left + piece.ox;
+    piece.currentY = rect.top  - canvasRect.top  + piece.oy;
+
+    // Remove from tray DOM (it will be shown on float canvas while dragging)
+    el.remove();
+
+    _dragging = {
+      piece,
+      fromTray: true,
+      offsetX: (e.clientX - rect.left) * (piece.canvasW / rect.width)  - piece.ox,
+      offsetY: (e.clientY - rect.top)  * (piece.canvasH / rect.height) - piece.oy,
     };
+    _floatCanvas.setPointerCapture(e.pointerId);
   }
 
-  function onDown(e) {
+  function _onCanvasPointerDown(e) {
     e.preventDefault();
-    const { x, y } = getCanvasPos(e);
+    const canvasRect = _floatCanvas.getBoundingClientRect();
+    const mx = e.clientX - canvasRect.left;
+    const my = e.clientY - canvasRect.top;
 
-    // If a tray piece is selected, place it on canvas
-    if (_selectedTrayIdx >= 0) {
-      const p = pieces[_selectedTrayIdx];
-      if (p && !p.locked) {
-        p.currentX = x;
-        p.currentY = y;
-        _dragging  = p;
-        _dragOffX  = 0;
-        _dragOffY  = 0;
-        _selectedTrayIdx = -1;
-        tray.querySelectorAll('.tray-piece').forEach(el => el.classList.remove('selected'));
-        canvas.setPointerCapture(e.pointerId);
-        renderAll();
-        return;
+    // Find topmost unlocked piece hit by pointer (reverse order = top piece first)
+    const hit = _findPieceAt(mx, my);
+    if (!hit) return;
+
+    _dragging = {
+      piece: hit,
+      fromTray: false,
+      offsetX: mx - hit.currentX,
+      offsetY: my - hit.currentY,
+    };
+    _floatCanvas.setPointerCapture(e.pointerId);
+  }
+
+  function _findPieceAt(mx, my) {
+    const unlocked = _pieces.filter(p => !p.locked);
+    for (let i = unlocked.length - 1; i >= 0; i--) {
+      const p  = unlocked[i];
+      const px = p.currentX - p.ox;
+      const py = p.currentY - p.oy;
+      if (mx >= px && mx <= px + p.canvasW && my >= py && my <= py + p.canvasH) {
+        return p;
       }
-    }
-
-    // Otherwise pick up piece from canvas
-    const hit = hitTest(x, y);
-    if (hit) {
-      _dragging = hit;
-      _dragOffX = x - hit.currentX;
-      _dragOffY = y - hit.currentY;
-      canvas.setPointerCapture(e.pointerId);
-    }
-  }
-
-  function onMove(e) {
-    if (!_dragging) return;
-    e.preventDefault();
-    const { x, y } = getCanvasPos(e);
-    _dragging.currentX = x - _dragOffX;
-    _dragging.currentY = y - _dragOffY;
-    renderAll();
-  }
-
-  function onUp(e) {
-    if (!_dragging) return;
-    e.preventDefault();
-    trySnap(_dragging);
-    _dragging = null;
-    renderAll();
-    buildTray();
-    updateProgress();
-    scheduleAutoSave();
-    checkCompletion();
-  }
-
-  function hitTest(x, y) {
-    // Search from top (last rendered) to bottom; skip locked pieces
-    for (let i = pieces.length - 1; i >= 0; i--) {
-      const p = pieces[i];
-      if (p.locked) continue;
-      const BLEED2 = BLEED;
-      const px = p.currentX - BLEED2;
-      const py = p.currentY - BLEED2;
-      const pw = pieceCanvases[p.id].width;
-      const ph = pieceCanvases[p.id].height;
-      if (x >= px && x <= px + pw && y >= py && y <= py + ph) return p;
     }
     return null;
   }
 
-  // ── Snap logic ────────────────────────────────────
+  function _onPointerMove(e) {
+    if (!_dragging) return;
+    const canvasRect = _floatCanvas.getBoundingClientRect();
+    const mx = e.clientX - canvasRect.left;
+    const my = e.clientY - canvasRect.top;
+    _dragging.piece.currentX = mx - _dragging.offsetX;
+    _dragging.piece.currentY = my - _dragging.offsetY;
+  }
 
-  function trySnap(p) {
-    const targetX = PUZZLE_X + p.correctX;
-    const targetY = PUZZLE_Y + p.correctY;
-    const dx = p.currentX - targetX;
-    const dy = p.currentY - targetY;
-    const dist = Math.sqrt(dx*dx + dy*dy);
+  function _onPointerUp(e) {
+    if (!_dragging) return;
+    const piece = _dragging.piece;
+    const fromTray = _dragging.fromTray;
+    _dragging = null;
 
-    if (dist < SNAP_RADIUS) {
-      p.locked = true;
-      playSnapSound();
+    // Check snap
+    const dx = piece.currentX - piece.correctX;
+    const dy = piece.currentY - piece.correctY;
+    if (Math.sqrt(dx * dx + dy * dy) < SNAP_RADIUS) {
+      _snapPiece(piece);
+    } else {
+      // Return to tray if from tray and not snapped, or keep on canvas
+      if (fromTray) {
+        // Keep on canvas — user placed it; it will be draggable from canvas now
+      }
+      // Just leave at currentX/Y on canvas
     }
   }
 
-  // ── Auto-save ──────────────────────────────────────
+  function _snapPiece(piece) {
+    piece.currentX = piece.correctX;
+    piece.currentY = piece.correctY;
+    piece.locked   = true;
 
-  let _saveTimer = null;
-  function scheduleAutoSave() {
-    clearTimeout(_saveTimer);
-    _saveTimer = setTimeout(saveState, 30_000);
-  }
-  setInterval(saveState, 30_000);
+    // Draw onto assembled canvas
+    _drawLockedPiece(piece);
 
-  function saveState() {
-    const state = {
-      key: `${puzzleId}_${difficulty}`,
-      puzzleId,
-      difficulty,
-      savedAt: Date.now(),
-      pieces: pieces.map(p => ({ id: p.id, x: p.currentX, y: p.currentY, locked: p.locked })),
-    };
-    Storage.savePuzzleState(puzzleId, difficulty, state);
-  }
+    // Remove from tray DOM if it happens to still be there
+    const trayEl = document.querySelector(`[data-piece-id="${piece.id}"]`);
+    if (trayEl) trayEl.remove();
 
-  // ── Completion ────────────────────────────────────
+    _autoSave();
+    Home.refreshAfterSave();
 
-  function checkCompletion() {
-    if (pieces.every(p => p.locked)) {
-      Storage.deletePuzzleState(puzzleId, difficulty);
-      document.getElementById('completion-overlay').classList.remove('hidden');
-      startConfetti();
+    // Check completion
+    if (_pieces.every(p => p.locked)) {
+      _onComplete();
     }
   }
 
-  document.getElementById('btn-completion-home').addEventListener('click', () => {
-    window.location.href = 'home.html';
-  });
+  // ── Draw loop ────────────────────────────────────────
+  function _tick() {
+    _floatCtx.clearRect(0, 0, _canvasW, _canvasH);
 
+    _pieces.filter(p => !p.locked).forEach(p => {
+      const pc = _pieceCanvases[p.id];
+      if (!pc) return;
+      _floatCtx.drawImage(
+        pc,
+        Math.round(p.currentX - p.ox),
+        Math.round(p.currentY - p.oy)
+      );
+    });
 
-  // ── Hint ──────────────────────────────────────────
-
-  const hintOverlay = document.getElementById('hint-overlay');
-  hintOverlay.style.backgroundImage = `url('${puzzleMeta.file}')`;
-  let _hintTimer = null;
-
-  document.getElementById('btn-hint').addEventListener('click', () => {
-    hintOverlay.classList.remove('hidden');
-    clearTimeout(_hintTimer);
-    _hintTimer = setTimeout(() => hintOverlay.classList.add('hidden'), 3000);
-  });
-
-  // ── Zoom ─────────────────────────────────────────
-  // Simple scale transform on canvas context
-
-  let _zoom = 1.0;
-  const ZOOM_MIN = 0.5;
-  const ZOOM_MAX = 2.5;
-  const ZOOM_STEP = 0.2;
-
-  document.getElementById('btn-zoom-in').addEventListener('click', () => {
-    _zoom = Math.min(ZOOM_MAX, _zoom + ZOOM_STEP);
-    canvas.style.transform = `scale(${_zoom})`;
-    canvas.style.transformOrigin = 'top left';
-  });
-  document.getElementById('btn-zoom-out').addEventListener('click', () => {
-    _zoom = Math.max(ZOOM_MIN, _zoom - ZOOM_STEP);
-    canvas.style.transform = `scale(${_zoom})`;
-    canvas.style.transformOrigin = 'top left';
-  });
-
-  // ── Back button ────────────────────────────────────
-
-  document.getElementById('btn-back').addEventListener('click', () => {
-    saveState();
-    window.location.href = 'home.html';
-  });
-
-  // ── Snap sound ────────────────────────────────────
-
-  let _snapAudioCtx = null;
-  function playSnapSound() {
-    try {
-      if (!_snapAudioCtx) _snapAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const ctx2 = _snapAudioCtx;
-      const osc = ctx2.createOscillator();
-      const gain = ctx2.createGain();
-      osc.connect(gain);
-      gain.connect(ctx2.destination);
-      osc.frequency.setValueAtTime(880, ctx2.currentTime);
-      gain.gain.setValueAtTime(0.15, ctx2.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx2.currentTime + 0.12);
-      osc.start(ctx2.currentTime);
-      osc.stop(ctx2.currentTime + 0.12);
-    } catch { /* audio not critical */ }
+    _rafId = requestAnimationFrame(_tick);
   }
 
-  // ── Confetti ──────────────────────────────────────
+  // ── Hint ─────────────────────────────────────────────
+  function _onHint() {
+    const overlay = document.getElementById('hint-overlay');
+    const hintImg = document.getElementById('hint-img');
+    hintImg.src = _img.src;
+    overlay.classList.add('active');
+    setTimeout(() => {
+      overlay.classList.remove('active');
+    }, 3000);
+  }
 
-  function startConfetti() {
-    const cc = document.getElementById('confetti-canvas');
-    cc.width  = window.innerWidth;
-    cc.height = window.innerHeight;
-    const cx  = cc.getContext('2d');
+  // ── Back ─────────────────────────────────────────────
+  function _onBack() {
+    _autoSave();
+    _stop();
+    App.showHome();
+  }
 
-    const particles = Array.from({ length: 120 }, () => ({
-      x: Math.random() * cc.width,
-      y: -20,
-      vx: (Math.random() - 0.5) * 4,
+  // ── Completion ───────────────────────────────────────
+  function _onComplete() {
+    _autoSave(true);
+    _startConfetti();
+  }
+
+  // ── Auto-save ────────────────────────────────────────
+  function _autoSave(completed = false) {
+    Storage.saveState(_puzzleId, _pieceCount, {
+      seed: _seed,
+      startedAt: _startedAt,
+      elapsedSeconds: _elapsedSeconds,
+      lockedCount: _pieces.filter(p => p.locked).length,
+      completed,
+      pieces: _pieces.map(p => ({
+        id: p.id,
+        x: p.currentX,
+        y: p.currentY,
+        locked: p.locked,
+      })),
+    });
+  }
+
+  // ── Confetti ─────────────────────────────────────────
+  function _startConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    canvas.width  = _canvasW;
+    canvas.height = _canvasH;
+    canvas.style.display = 'block';
+    const ctx    = canvas.getContext('2d');
+    const COLORS = ['#4CAF50','#FFD700','#FF5722','#2196F3','#E91E63','#9C27B0','#00BCD4'];
+    const N      = 120;
+
+    const particles = Array.from({ length: N }, () => ({
+      x: Math.random() * _canvasW,
+      y: Math.random() * _canvasH * -0.5,
+      w: 6 + Math.random() * 8,
+      h: 6 + Math.random() * 8,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      vx: (Math.random() - 0.5) * 3,
       vy: 2 + Math.random() * 4,
-      color: ['#4CAF50','#FFC107','#2196F3','#E91E63','#FF5722'][Math.floor(Math.random()*5)],
-      size: 8 + Math.random() * 8,
-      spin: (Math.random() - 0.5) * 0.2,
       angle: Math.random() * Math.PI * 2,
+      va: (Math.random() - 0.5) * 0.15,
     }));
 
-    let frame = 0;
-    function draw() {
-      cx.clearRect(0, 0, cc.width, cc.height);
+    const start = performance.now();
+    const DURATION = 2800;
+
+    function frame(now) {
+      const elapsed = now - start;
+      ctx.clearRect(0, 0, _canvasW, _canvasH);
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-        p.angle += p.spin;
-        p.vy += 0.08;
-        cx.save();
-        cx.translate(p.x, p.y);
-        cx.rotate(p.angle);
-        cx.fillStyle = p.color;
-        cx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
-        cx.restore();
+        p.angle += p.va;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
       });
-      frame++;
-      if (frame < 180) requestAnimationFrame(draw);
-      else cx.clearRect(0, 0, cc.width, cc.height);
+      if (elapsed < DURATION) {
+        requestAnimationFrame(frame);
+      } else {
+        ctx.clearRect(0, 0, _canvasW, _canvasH);
+        canvas.style.display = 'none';
+      }
     }
-    draw();
+    requestAnimationFrame(frame);
   }
 
+  // ── Stop / cleanup ───────────────────────────────────
+  function stop() {
+    if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; }
+    if (_timerInterval) { clearInterval(_timerInterval); _timerInterval = null; }
+    _unbindEvents();
+
+    // Clear canvases
+    if (_assembledCtx) _assembledCtx.clearRect(0, 0, _canvasW, _canvasH);
+    if (_floatCtx)     _floatCtx.clearRect(0, 0, _canvasW, _canvasH);
+    document.getElementById('piece-tray').innerHTML = '';
+    document.getElementById('hint-overlay').classList.remove('active');
+
+    _pieces = [];
+    _pieceCanvases = [];
+    _dragging = null;
+  }
+
+  return { start, stop };
 })();

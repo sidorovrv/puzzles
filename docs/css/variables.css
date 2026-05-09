@@ -1,34 +1,26 @@
 :root {
-  /* Brand */
-  --color-primary: #4CAF50;
-  --color-primary-dark: #388E3C;
-  --color-primary-light: #A5D6A7;
-
-  /* Surfaces */
+  /* Colors */
   --color-bg: #f5f5f7;
   --color-surface: #ffffff;
-  --color-surface-2: #f0f0f2;
-  --color-border: #e0e0e0;
-
-  /* Text */
-  --color-text: #1a1a1a;
-  --color-text-secondary: #666666;
-  --color-text-on-primary: #ffffff;
-
-  /* Accent */
-  --color-coin: #FFC107;
-  --color-lock: #9E9E9E;
-  --color-danger: #E53935;
+  --color-border: #d1d1d6;
+  --color-primary: #4CAF50;
+  --color-primary-dark: #388E3C;
+  --color-primary-light: #C8E6C9;
+  --color-text: #1c1c1e;
+  --color-text-secondary: #6e6e73;
   --color-gold: #FFD700;
-
-  /* Layout */
-  --nav-height: 68px;
-  --top-bar-height: 56px;
-  --tray-height: 110px;
-  --border-radius-sm: 8px;
-  --border-radius-md: 16px;
-  --border-radius-lg: 24px;
-  --border-radius-xl: 32px;
+  --color-gold-dark: #FFA000;
+  --color-overlay-bg: rgba(0, 0, 0, 0.55);
+  --color-sidebar-bg: #1e1e2e;
+  --color-sidebar-text: #e0e0e0;
+  --color-sidebar-active-bg: #4CAF50;
+  --color-sidebar-active-text: #ffffff;
+  --color-sidebar-hover-bg: rgba(255, 255, 255, 0.08);
+  --color-progress-bg: #e0e0e0;
+  --color-progress-fill: #4CAF50;
+  --color-tray-bg: #2a2a3a;
+  --color-toolbar-bg: #2a2a3a;
+  --color-toolbar-text: #f0f0f0;
 
   /* Spacing */
   --space-xs: 4px;
@@ -37,15 +29,19 @@
   --space-lg: 24px;
   --space-xl: 32px;
 
-  /* Shadow */
-  --shadow-card: 0 2px 8px rgba(0,0,0,0.10);
-  --shadow-modal: 0 8px 32px rgba(0,0,0,0.18);
+  /* Sizing */
+  --sidebar-width: 220px;
+  --toolbar-height: 52px;
+  --tray-height: 120px;
+  --modal-max-width: 480px;
 
-  /* Font */
-  --font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-  --font-size-sm: 13px;
-  --font-size-base: 16px;
-  --font-size-lg: 20px;
-  --font-size-xl: 26px;
-  --font-size-xxl: 34px;
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-normal: 220ms ease;
 }

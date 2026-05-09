@@ -1,155 +1,127 @@
-/* ── Puzzle page layout ───────────────────────────── */
-.puzzle-page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  background: #e8e8e8;
+/* ── Puzzle View ────────────────────────────────────── */
+#puzzle-view {
+  background: #1a1a2a;
+  color: var(--color-toolbar-text);
 }
 
-.puzzle-top-bar {
-  flex-shrink: 0;
-  height: var(--top-bar-height);
-  background: var(--color-surface);
+/* ── Toolbar ────────────────────────────────────────── */
+#puzzle-toolbar {
   display: flex;
   align-items: center;
+  height: var(--toolbar-height);
   padding: 0 var(--space-md);
+  background: var(--color-toolbar-bg);
   gap: var(--space-md);
-  border-bottom: 1px solid var(--color-border);
-  z-index: 10;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.puzzle-top-bar__back {
-  width: 40px; height: 40px;
-  border: none; background: none;
-  font-size: 24px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  color: var(--color-text);
+#back-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--color-toolbar-text);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background var(--transition-fast);
 }
-.puzzle-top-bar__back:active { background: var(--color-surface-2); }
 
-.puzzle-top-bar__title {
+#back-btn:hover { background: rgba(255,255,255,0.1); }
+
+#puzzle-title-label {
   flex: 1;
-  font-size: var(--font-size-base);
+  font-size: 0.95rem;
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.puzzle-top-bar__actions {
-  display: flex;
-  gap: var(--space-xs);
+#hint-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--color-toolbar-text);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background var(--transition-fast);
 }
 
-.puzzle-top-bar__btn {
-  width: 40px; height: 40px;
-  border: none; background: none;
-  font-size: 22px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  color: var(--color-text);
-}
-.puzzle-top-bar__btn:active { background: var(--color-surface-2); }
+#hint-btn:hover { background: rgba(255,255,255,0.1); }
 
-/* ── Canvas area ──────────────────────────────────── */
-.puzzle-canvas-wrapper {
+/* ── Canvas Area ────────────────────────────────────── */
+#canvas-area {
   flex: 1;
   position: relative;
   overflow: hidden;
   touch-action: none;
 }
 
-#puzzle-canvas {
-  display: block;
-  cursor: default;
+#assembled-canvas,
+#float-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  touch-action: none;
 }
 
 /* Hint overlay */
-.hint-overlay {
+#hint-overlay {
   position: absolute;
   inset: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.4;
+  display: none;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  transition: opacity 0.3s;
+  z-index: 10;
 }
-.hint-overlay.hidden { opacity: 0; }
 
-/* ── Piece tray ───────────────────────────────────── */
-.piece-tray {
-  flex-shrink: 0;
+#hint-overlay.active { display: flex; }
+
+#hint-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  display: none;
+}
+
+/* ── Piece Tray ─────────────────────────────────────── */
+#piece-tray {
   height: var(--tray-height);
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
+  background: var(--color-tray-bg);
+  border-top: 1px solid rgba(255,255,255,0.08);
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 0 var(--space-md);
   overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--space-sm) var(--space-sm);
+  gap: var(--space-sm);
+  flex-shrink: 0;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  touch-action: pan-x;
+  scroll-snap-type: x proximity;
 }
-.piece-tray::-webkit-scrollbar { display: none; }
+
+#piece-tray::-webkit-scrollbar { height: 4px; }
+#piece-tray::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
 .tray-piece {
   flex-shrink: 0;
-  width: 80px;
-  height: 80px;
-  border-radius: var(--border-radius-sm);
-  cursor: pointer;
-  border: 3px solid transparent;
-  transition: border-color 0.12s;
-  position: relative;
-  overflow: hidden;
-  background: var(--color-surface-2);
-}
-.tray-piece canvas {
-  width: 100%; height: 100%;
+  cursor: grab;
+  border-radius: var(--radius-sm);
+  touch-action: none;
   display: block;
 }
-.tray-piece.selected {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
-}
 
-/* ── Progress bar ─────────────────────────────────── */
-.progress-bar-wrap {
-  height: 4px;
-  background: var(--color-border);
-  position: relative;
-  flex-shrink: 0;
-}
-.progress-bar-fill {
-  height: 100%;
-  background: var(--color-primary);
-  transition: width 0.4s ease;
-}
-
-/* ── Completion overlay ───────────────────────────── */
-.completion-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: var(--space-lg);
-}
-.completion-overlay.hidden { display: none; }
-
-.completion-card {
-  background: var(--color-surface);
-  border-radius: var(--border-radius-xl);
-  padding: var(--space-xl);
-  text-align: center;
-  max-width: 360px;
-  width: 90%;
-  box-shadow: var(--shadow-modal);
-}
-.completion-card__emoji { font-size: 56px; margin-bottom: var(--space-md); }
-.completion-card__title { font-size: var(--font-size-xl); font-weight: 800; margin-bottom: var(--space-sm); }
-.completion-card__reward { font-size: var(--font-size-lg); color: var(--color-coin); font-weight: 700; margin-bottom: var(--space-lg); }
+.tray-piece:active { cursor: grabbing; }
