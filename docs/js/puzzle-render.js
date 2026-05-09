@@ -246,7 +246,7 @@ const PuzzleRender = (() => {
 
     const el = _getDebugLogElement();
     if (el) {
-      el.textContent = '';
+      el.value = '';
     }
   }
 
@@ -261,7 +261,7 @@ const PuzzleRender = (() => {
       _debugLogEntries.shift();
     }
 
-    el.textContent = _debugLogEntries.join('\n');
+    el.value = _debugLogEntries.join('\n');
   }
 
   function _logDragMove(message) {
@@ -783,12 +783,13 @@ const PuzzleRender = (() => {
     return null;
   }
 
-  function _beginTrayGesture(piece, rect, inputId, clientX, clientY) {
+  function _beginTrayGesture(piece, rect, inputId, clientX, clientY, sourceEl = null) {
     _trayGesture = {
       piece,
       originTrayIndex: piece.trayIndex,
       inputId,
       rect,
+      sourceEl,
       startClientX: clientX,
       startClientY: clientY,
     };
@@ -864,6 +865,10 @@ const PuzzleRender = (() => {
       _snapPiece(piece);
     } else {
       _logDebug(`drop board p${piece.id} @ ${Math.round(piece.currentX)},${Math.round(piece.currentY)}`);
+      if (fromTray) {
+        _normalizeTrayIndices();
+        _populateTray();
+      }
       _autoSave(_pieces.every(candidate => candidate.locked));
       Home.refreshAfterSave();
     }
@@ -908,7 +913,8 @@ const PuzzleRender = (() => {
       pieceEl.getBoundingClientRect(),
       touch.identifier,
       touch.clientX,
-      touch.clientY
+      touch.clientY,
+      pieceEl
     );
   }
 
@@ -1109,11 +1115,12 @@ const PuzzleRender = (() => {
       piece,
       originTrayIndex: piece.trayIndex,
       rect,
+      sourceEl: el,
     }, e);
   }
 
   function _startTrayDrag(gesture, event) {
-    const { piece, originTrayIndex, rect } = gesture;
+    const { piece, originTrayIndex, rect, sourceEl = null } = gesture;
     const canvasRect = _canvasRect || _floatCanvas.getBoundingClientRect();
 
     piece.currentX = rect.left - canvasRect.left + piece.ox;
@@ -1121,8 +1128,10 @@ const PuzzleRender = (() => {
     piece.location = 'board';
     piece.trayIndex = -1;
 
-    _normalizeTrayIndices();
-    _populateTray();
+    if (sourceEl) {
+      sourceEl.style.visibility = 'hidden';
+      sourceEl.style.pointerEvents = 'none';
+    }
 
     _dragging = {
       piece,
@@ -1201,6 +1210,9 @@ const PuzzleRender = (() => {
     // Remove from tray DOM if it happens to still be there
     const trayEl = document.querySelector(`[data-piece-id="${piece.id}"]`);
     if (trayEl) trayEl.remove();
+
+    _normalizeTrayIndices();
+    _populateTray();
 
     _autoSave();
     Home.refreshAfterSave();
