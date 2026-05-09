@@ -137,7 +137,7 @@
   padding: 12px 10px;
   gap: var(--space-sm);
   flex-shrink: 0;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 #piece-tray-viewport {
@@ -148,6 +148,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  touch-action: none;
 }
 
 #piece-tray-track {
@@ -157,6 +158,7 @@
   align-items: center;
   gap: 12px;
   overflow: hidden;
+  touch-action: none;
 }
 
 .tray-page-btn {
@@ -190,7 +192,7 @@
   flex-shrink: 0;
   cursor: grab;
   border-radius: var(--radius-sm);
-  touch-action: manipulation;
+  touch-action: none;
   display: block;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.28));
   opacity: 0.98;

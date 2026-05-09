@@ -830,6 +830,7 @@ const PuzzleRender = (() => {
     const piece = _pieces[pieceId];
     if (!piece || piece.locked) return;
 
+    event.preventDefault();
     _refreshLayoutRects();
     _activeTouchId = touch.identifier;
     _beginTrayGesture(
@@ -849,6 +850,7 @@ const PuzzleRender = (() => {
     if (!touch) return;
 
     if (_trayGesture && !_dragging) {
+      event.preventDefault();
       const dx = touch.clientX - _trayGesture.startClientX;
       const dy = touch.clientY - _trayGesture.startClientY;
       const distance = Math.hypot(dx, dy);
@@ -857,7 +859,6 @@ const PuzzleRender = (() => {
         return;
       }
 
-      event.preventDefault();
       _startTrayDrag(_trayGesture, {
         clientX: touch.clientX,
         clientY: touch.clientY,
