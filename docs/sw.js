@@ -1,4 +1,5 @@
-const SHELL_CACHE = 'puzzle-shell-v1';
+const SHELL_VERSION = '20260509-1';
+const SHELL_CACHE = 'puzzle-shell-' + SHELL_VERSION;
 const IMAGE_CACHE = 'puzzle-images-v1';
 
 const SHELL_ASSETS = [

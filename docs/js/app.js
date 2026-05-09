@@ -11,7 +11,7 @@ const App = (() => {
   async function init() {
     // Register Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(err => {
+      navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(err => {
         console.warn('SW registration failed:', err);
       });
     }

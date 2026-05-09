@@ -235,8 +235,10 @@ const Home = (() => {
 
     document.getElementById('modal-start-btn').addEventListener('click', () => {
       if (!_modalPuzzle) return;
+      const puzzleId = _modalPuzzle.id;
+      const count    = _selectedCount;
       _closeModal();
-      App.showPuzzle(_modalPuzzle.id, _selectedCount);
+      App.showPuzzle(puzzleId, count);
     });
   }
 
