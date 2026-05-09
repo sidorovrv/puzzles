@@ -26,6 +26,7 @@ const PuzzleRender = (() => {
   const SNAP_RADIUS = 28;
   const TRAY_GESTURE_THRESHOLD = 10;
   const TRAY_PULL_MAX_ANGLE = Math.PI / 4;
+  const TRAY_SCROLL_MAX_ANGLE = Math.PI / 6;
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -234,6 +235,21 @@ const PuzzleRender = (() => {
 
     const angleFromVertical = Math.atan2(Math.abs(dx), upwardDistance);
     return angleFromVertical <= TRAY_PULL_MAX_ANGLE;
+  }
+
+  function _isClearlyHorizontalTrayScroll(dx, dy) {
+    const horizontalDistance = Math.abs(dx);
+    if (horizontalDistance < TRAY_GESTURE_THRESHOLD) return false;
+
+    const angleFromHorizontal = Math.atan2(Math.abs(dy), horizontalDistance);
+    return angleFromHorizontal <= TRAY_SCROLL_MAX_ANGLE;
+  }
+
+  function _updateTrayScroll(dx) {
+    if (!_trayGesture || !_trayGesture.captureEl) return;
+
+    _trayGesture.captureEl.scrollLeft = _trayGesture.trayScrollLeft - dx;
+    _trayRect = _trayGesture.captureEl.getBoundingClientRect();
   }
 
   function _getPieceBounds(piece, currentX = piece.currentX, currentY = piece.currentY) {
@@ -580,6 +596,7 @@ const PuzzleRender = (() => {
       _trayGesture = {
         captureEl: tray,
         piece,
+        mode: 'pending',
         originTrayIndex,
         pointerId: e.pointerId,
         rect,
@@ -587,6 +604,14 @@ const PuzzleRender = (() => {
         startClientY: e.clientY,
         trayScrollLeft,
       };
+
+      if (tray && typeof tray.setPointerCapture === 'function') {
+        try {
+          tray.setPointerCapture(e.pointerId);
+        } catch (err) {
+          // Ignore browsers that reject capture here.
+        }
+      }
       return;
     }
 
@@ -675,6 +700,12 @@ const PuzzleRender = (() => {
       const dy = e.clientY - _trayGesture.startClientY;
       const distance = Math.hypot(dx, dy);
 
+      if (_trayGesture.mode === 'scrolling') {
+        e.preventDefault();
+        _updateTrayScroll(dx);
+        return;
+      }
+
       if (distance < TRAY_GESTURE_THRESHOLD) {
         return;
       }
@@ -685,7 +716,13 @@ const PuzzleRender = (() => {
         return;
       }
 
-      _trayGesture = null;
+      if (_isClearlyHorizontalTrayScroll(dx, dy)) {
+        e.preventDefault();
+        _trayGesture.mode = 'scrolling';
+        _updateTrayScroll(dx);
+      }
+
+      return;
     }
 
     if (!_dragging) return;

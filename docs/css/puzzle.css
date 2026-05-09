@@ -142,7 +142,7 @@
   flex-shrink: 0;
   cursor: grab;
   border-radius: var(--radius-sm);
-  touch-action: pan-x;
+  touch-action: none;
   display: block;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.28));
   opacity: 0.98;
