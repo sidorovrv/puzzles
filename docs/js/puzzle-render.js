@@ -27,6 +27,7 @@ const PuzzleRender = (() => {
   const TRAY_GESTURE_THRESHOLD = 10;
   const TRAY_SCROLL_RATIO = 3;
   const TRAY_SCROLL_WINDOW_MS = 500;
+  const SUPPORTS_POINTER_EVENTS = typeof window !== 'undefined' && 'PointerEvent' in window;
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -52,6 +53,7 @@ const PuzzleRender = (() => {
   // Drag state
   let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
   let _trayGesture = null;
+  let _activeTouchId = null;
   let _rafId     = null;
   let _resizeRafId = null;
 
@@ -551,18 +553,183 @@ const PuzzleRender = (() => {
     _timerInterval = setInterval(() => { _elapsedSeconds++; }, 1000);
   }
 
+  function _closestByClass(target, className, root) {
+    let element = target;
+
+    while (element && element !== root) {
+      if (element.nodeType === 1 && element.classList && element.classList.contains(className)) {
+        return element;
+      }
+
+      element = element.parentNode;
+    }
+
+    if (element && element.nodeType === 1 && element.classList && element.classList.contains(className)) {
+      return element;
+    }
+
+    return null;
+  }
+
+  function _normalizeLegacyInput(event, pointerType, pointerId, clientX, clientY, target) {
+    return {
+      target: target || event.target,
+      clientX,
+      clientY,
+      pointerId,
+      pointerType,
+      preventDefault() {
+        event.preventDefault();
+      },
+    };
+  }
+
+  function _findTouchById(touchList, identifier) {
+    if (!touchList) return null;
+
+    for (let index = 0; index < touchList.length; index++) {
+      if (touchList[index].identifier === identifier) {
+        return touchList[index];
+      }
+    }
+
+    return null;
+  }
+
+  function _dispatchTouchStart(event, downHandler) {
+    if (_activeTouchId !== null) return;
+
+    const touch = event.changedTouches && event.changedTouches[0];
+    if (!touch) return;
+
+    downHandler(_normalizeLegacyInput(
+      event,
+      'touch',
+      touch.identifier,
+      touch.clientX,
+      touch.clientY,
+      event.target
+    ));
+
+    if (_dragging || _trayGesture) {
+      _activeTouchId = touch.identifier;
+    }
+  }
+
+  function _onCanvasTouchStart(event) {
+    _dispatchTouchStart(event, _onCanvasPointerDown);
+  }
+
+  function _onTrayTouchStart(event) {
+    _dispatchTouchStart(event, _onTrayPointerDown);
+  }
+
+  function _onTouchMove(event) {
+    if (_activeTouchId === null) return;
+
+    const touch = _findTouchById(event.touches, _activeTouchId) ||
+      _findTouchById(event.changedTouches, _activeTouchId);
+    if (!touch) return;
+
+    _onPointerMove(_normalizeLegacyInput(
+      event,
+      'touch',
+      touch.identifier,
+      touch.clientX,
+      touch.clientY,
+      event.target
+    ));
+  }
+
+  function _onTouchEnd(event) {
+    if (_activeTouchId === null) return;
+
+    const touch = _findTouchById(event.changedTouches, _activeTouchId);
+    if (!touch) return;
+
+    _onPointerUp(_normalizeLegacyInput(
+      event,
+      'touch',
+      touch.identifier,
+      touch.clientX,
+      touch.clientY,
+      event.target
+    ));
+    _activeTouchId = null;
+  }
+
+  function _onCanvasMouseDown(event) {
+    _onCanvasPointerDown(_normalizeLegacyInput(
+      event,
+      'mouse',
+      1,
+      event.clientX,
+      event.clientY,
+      event.target
+    ));
+  }
+
+  function _onTrayMouseDown(event) {
+    _onTrayPointerDown(_normalizeLegacyInput(
+      event,
+      'mouse',
+      1,
+      event.clientX,
+      event.clientY,
+      event.target
+    ));
+  }
+
+  function _onMouseMove(event) {
+    _onPointerMove(_normalizeLegacyInput(
+      event,
+      'mouse',
+      1,
+      event.clientX,
+      event.clientY,
+      event.target
+    ));
+  }
+
+  function _onMouseUp(event) {
+    _onPointerUp(_normalizeLegacyInput(
+      event,
+      'mouse',
+      1,
+      event.clientX,
+      event.clientY,
+      event.target
+    ));
+  }
+
   // ── Event binding ────────────────────────────────────
   function _bindEvents() {
+    const tray = document.getElementById('piece-tray');
+
     // Canvas pointer events (for pieces already on the canvas — locked pieces are immovable)
-    _floatCanvas.addEventListener('pointerdown', _onCanvasPointerDown);
+    if (SUPPORTS_POINTER_EVENTS) {
+      _floatCanvas.addEventListener('pointerdown', _onCanvasPointerDown);
 
-    // Tray pointer events
-    document.getElementById('piece-tray').addEventListener('pointerdown', _onTrayPointerDown);
+      // Tray pointer events
+      if (tray) tray.addEventListener('pointerdown', _onTrayPointerDown);
 
-    // Global pointer move / up
-    window.addEventListener('pointermove', _onPointerMove);
-    window.addEventListener('pointerup',   _onPointerUp);
-    window.addEventListener('pointercancel', _onPointerUp);
+      // Global pointer move / up
+      window.addEventListener('pointermove', _onPointerMove);
+      window.addEventListener('pointerup', _onPointerUp);
+      window.addEventListener('pointercancel', _onPointerUp);
+    } else {
+      _floatCanvas.addEventListener('touchstart', _onCanvasTouchStart, false);
+      if (tray) tray.addEventListener('touchstart', _onTrayTouchStart, false);
+      window.addEventListener('touchmove', _onTouchMove, false);
+      window.addEventListener('touchend', _onTouchEnd, false);
+      window.addEventListener('touchcancel', _onTouchEnd, false);
+
+      _floatCanvas.addEventListener('mousedown', _onCanvasMouseDown);
+      if (tray) tray.addEventListener('mousedown', _onTrayMouseDown);
+      window.addEventListener('mousemove', _onMouseMove);
+      window.addEventListener('mouseup', _onMouseUp);
+    }
+
     window.addEventListener('resize', _onResize);
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', _onResize);
@@ -575,12 +742,28 @@ const PuzzleRender = (() => {
 
   function _unbindEvents() {
     if (!_floatCanvas) return; // never started — nothing was bound
-    _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
     const tray = document.getElementById('piece-tray');
-    if (tray) tray.removeEventListener('pointerdown', _onTrayPointerDown);
-    window.removeEventListener('pointermove', _onPointerMove);
-    window.removeEventListener('pointerup',   _onPointerUp);
-    window.removeEventListener('pointercancel', _onPointerUp);
+
+    if (SUPPORTS_POINTER_EVENTS) {
+      _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
+      if (tray) tray.removeEventListener('pointerdown', _onTrayPointerDown);
+      window.removeEventListener('pointermove', _onPointerMove);
+      window.removeEventListener('pointerup', _onPointerUp);
+      window.removeEventListener('pointercancel', _onPointerUp);
+    } else {
+      _floatCanvas.removeEventListener('touchstart', _onCanvasTouchStart, false);
+      if (tray) tray.removeEventListener('touchstart', _onTrayTouchStart, false);
+      window.removeEventListener('touchmove', _onTouchMove, false);
+      window.removeEventListener('touchend', _onTouchEnd, false);
+      window.removeEventListener('touchcancel', _onTouchEnd, false);
+
+      _floatCanvas.removeEventListener('mousedown', _onCanvasMouseDown);
+      if (tray) tray.removeEventListener('mousedown', _onTrayMouseDown);
+      window.removeEventListener('mousemove', _onMouseMove);
+      window.removeEventListener('mouseup', _onMouseUp);
+    }
+
+    _activeTouchId = null;
     window.removeEventListener('resize', _onResize);
     if (window.visualViewport) {
       window.visualViewport.removeEventListener('resize', _onResize);
@@ -616,7 +799,8 @@ const PuzzleRender = (() => {
 
   // ── Pointer handlers ─────────────────────────────────
   function _onTrayPointerDown(e) {
-    const el = e.target.closest('.tray-piece');
+    const tray = document.getElementById('piece-tray');
+    const el = _closestByClass(e.target, 'tray-piece', tray);
     if (!el) return;
     _refreshLayoutRects();
 
@@ -624,7 +808,6 @@ const PuzzleRender = (() => {
     const piece   = _pieces[pieceId];
     if (!piece || piece.locked) return;
 
-    const tray = document.getElementById('piece-tray');
     const trayScrollLeft = tray ? tray.scrollLeft : 0;
     const originTrayIndex = piece.trayIndex;
     const rect = el.getBoundingClientRect();
@@ -715,7 +898,14 @@ const PuzzleRender = (() => {
       offsetX: mx - hit.currentX,
       offsetY: my - hit.currentY,
     };
-    _floatCanvas.setPointerCapture(e.pointerId);
+
+    if (typeof _floatCanvas.setPointerCapture === 'function' && e.pointerId != null) {
+      try {
+        _floatCanvas.setPointerCapture(e.pointerId);
+      } catch (err) {
+        // Ignore browsers that reject capture here.
+      }
+    }
   }
 
   function _findPieceAt(mx, my) {

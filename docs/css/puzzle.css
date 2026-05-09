@@ -80,7 +80,10 @@
 
 #drag-canvas {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   pointer-events: none;
   touch-action: none;
   z-index: 15;
@@ -89,7 +92,10 @@
 /* Hint overlay */
 #hint-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: none;
   align-items: center;
   justify-content: center;
@@ -110,7 +116,10 @@
 /* Confetti canvas */
 #confetti-canvas {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   pointer-events: none;
   z-index: 20;
   display: none;

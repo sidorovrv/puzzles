@@ -1,0 +1,3 @@
+- Older iPad Safari needs fallbacks for CSS `aspect-ratio` and `inset`; prefer explicit wrappers and `top/right/bottom/left` on core UI surfaces.
+- Puzzle interactions cannot rely on Pointer Events alone; keep the touch fallback in `docs/js/puzzle-render.js` when changing drag logic.
+- Asset query versions in `docs/index.html` are used to bust cached CSS/JS after compatibility fixes.

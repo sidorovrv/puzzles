@@ -26,6 +26,39 @@ const Home = (() => {
     objects: 'Предметы',
   };
 
+  function _contains(items, value) {
+    return items.indexOf(value) !== -1;
+  }
+
+  function _setClassState(element, className, enabled) {
+    if (!element) return;
+
+    if (enabled) {
+      element.classList.add(className);
+      return;
+    }
+
+    element.classList.remove(className);
+  }
+
+  function _closestByClass(target, className, root) {
+    let element = target;
+
+    while (element && element !== root) {
+      if (element.nodeType === 1 && element.classList && element.classList.contains(className)) {
+        return element;
+      }
+
+      element = element.parentNode;
+    }
+
+    if (element && element.nodeType === 1 && element.classList && element.classList.contains(className)) {
+      return element;
+    }
+
+    return null;
+  }
+
   // ── Init ────────────────────────────────────────────
 
   function init(puzzles) {
@@ -76,14 +109,14 @@ const Home = (() => {
     const el = document.getElementById('my-puzzles-item');
     if (!el) return;
     const hasSaves = Storage.getAllSaves().length > 0;
-    el.classList.toggle('visible', hasSaves);
+    _setClassState(el, 'visible', hasSaves);
   }
 
   function _setActiveNav(key) {
     document.querySelectorAll('.nav-item').forEach(el => {
       const isActive = (el.dataset.category === key) ||
                        (key === '__my' && el.id === 'my-puzzles-item');
-      el.classList.toggle('active', isActive);
+      _setClassState(el, 'active', isActive);
     });
   }
 
@@ -184,7 +217,7 @@ const Home = (() => {
     const counts = [...STANDARD_PIECE_COUNTS];
 
     _savedCountsForPuzzle(puzzle).forEach(count => {
-      if (!counts.includes(count)) {
+      if (!_contains(counts, count)) {
         counts.push(count);
       }
     });
@@ -206,7 +239,7 @@ const Home = (() => {
       btn.dataset.count = count;
       btn.textContent = String(count);
 
-      if (!STANDARD_PIECE_COUNTS.includes(count)) {
+      if (!_contains(STANDARD_PIECE_COUNTS, count)) {
         btn.title = 'Старый формат сохранения';
       }
 
@@ -222,11 +255,17 @@ const Home = (() => {
     card.className = 'puzzle-card';
     card.addEventListener('click', () => openDifficultyModal(puzzle));
 
+    const media = document.createElement('div');
+    media.className = 'puzzle-card-media';
+
     const img = document.createElement('img');
     img.src = puzzle.thumbUrl;
     img.alt = puzzle.description || puzzle.title;
-    img.loading = 'lazy';
-    card.appendChild(img);
+    if ('loading' in img) {
+      img.loading = 'lazy';
+    }
+    media.appendChild(img);
+    card.appendChild(media);
 
     if (bestSave) {
       if (bestSave.completed) {
@@ -278,7 +317,7 @@ const Home = (() => {
   function openDifficultyModal(puzzle) {
     _modalPuzzle = puzzle;
     const preferredSave = _preferredSaveForPuzzle(puzzle);
-    _selectedCount = preferredSave && STANDARD_PIECE_COUNTS.includes(preferredSave.pieceCount)
+    _selectedCount = preferredSave && _contains(STANDARD_PIECE_COUNTS, preferredSave.pieceCount)
       ? preferredSave.pieceCount
       : STANDARD_PIECE_COUNTS[0];
 
@@ -295,13 +334,13 @@ const Home = (() => {
     const counts = _difficultyCountsForPuzzle(_modalPuzzle);
     const btns = document.querySelectorAll('.piece-count-btn');
 
-    if (!counts.includes(_selectedCount)) {
+    if (!_contains(counts, _selectedCount)) {
       _selectedCount = counts[0] || STANDARD_PIECE_COUNTS[0];
     }
 
     btns.forEach(btn => {
       const count = parseInt(btn.dataset.count, 10);
-      btn.classList.toggle('selected', count === _selectedCount);
+      _setClassState(btn, 'selected', count === _selectedCount);
     });
 
     // Show save info for selected count
@@ -330,7 +369,8 @@ const Home = (() => {
     });
 
     document.getElementById('modal-piece-buttons').addEventListener('click', e => {
-      const btn = e.target.closest('.piece-count-btn');
+      const container = document.getElementById('modal-piece-buttons');
+      const btn = _closestByClass(e.target, 'piece-count-btn', container);
       if (!btn) return;
       _selectedCount = parseInt(btn.dataset.count, 10);
       _updateModalButtons();

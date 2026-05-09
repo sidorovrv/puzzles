@@ -98,7 +98,10 @@ html, body {
 
 #home-view, #puzzle-view {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
 }
 
@@ -157,9 +160,22 @@ html, body {
 
 .puzzle-card:active { transform: scale(0.97); }
 
-.puzzle-card img {
+.puzzle-card-media {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  padding-top: 100%;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+.puzzle-card-media img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -220,7 +236,10 @@ html, body {
 #modal-overlay {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: var(--color-overlay-bg);
   z-index: 100;
   align-items: center;
@@ -254,9 +273,22 @@ html, body {
   line-height: 1;
 }
 
-#modal-preview-img {
+#modal-preview-frame {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  padding-top: 100%;
+  overflow: hidden;
+  background: var(--color-border);
+}
+
+#modal-preview-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;

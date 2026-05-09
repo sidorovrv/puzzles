@@ -122,7 +122,12 @@ const App = (() => {
     const app = document.getElementById('app');
     if (!app) return;
 
-    app.classList.toggle('playing-puzzle', mode === 'puzzle');
+    if (mode === 'puzzle') {
+      app.classList.add('playing-puzzle');
+      return;
+    }
+
+    app.classList.remove('playing-puzzle');
   }
 
   // ── View: Home ───────────────────────────────────────
