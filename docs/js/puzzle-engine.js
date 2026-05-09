@@ -92,11 +92,13 @@ const PuzzleEngine = (() => {
    * @param {number} cols
    * @param {number} rows
    * @param {Function} rng
-   * @param {number} cellW  width of one cell in image coords
-   * @param {number} cellH  height of one cell in image coords
+   * @param {number} cellW  width of one cell in board coords
+   * @param {number} cellH  height of one cell in board coords
+   * @param {number} imageCellW  width of one cell in source-image coords
+   * @param {number} imageCellH  height of one cell in source-image coords
    * @returns {Object[]} pieces
    */
-  function generatePieces(cols, rows, rng, cellW, cellH) {
+  function generatePieces(cols, rows, rng, cellW, cellH, imageCellW = cellW, imageCellH = cellH) {
     const edgeMap = buildEdgeMap(cols, rows, rng);
     const pieces = [];
     let id = 0;
@@ -112,8 +114,8 @@ const PuzzleEngine = (() => {
           id,
           col: c,
           row: r,
-          imageX: c * cellW,
-          imageY: r * cellH,
+          imageX: c * imageCellW,
+          imageY: r * imageCellH,
           correctX: c * cellW,
           correctY: r * cellH,
           currentX: 0,
@@ -154,25 +156,48 @@ const PuzzleEngine = (() => {
    * Draw one puzzle piece (with tab shape) onto an offscreen canvas.
    * Returns the canvas.
    *
-   * @param {HTMLImageElement} img  - full puzzle image
+   * @param {CanvasImageSource} img  - full puzzle image
    * @param {Object} piece
    * @param {number} cellW  - piece width in destination pixels
    * @param {number} cellH  - piece height in destination pixels
-   * @param {number} imgW   - full image display width
-   * @param {number} imgH   - full image display height
+   * @param {Object} renderOptions
    * @returns {HTMLCanvasElement}
    */
-  function clipPieceImage(img, piece, cellW, cellH, imgW, imgH) {
+  function clipPieceImage(img, piece, cellW, cellH, renderOptions = {}) {
     const TAB_SIZE = Math.min(cellW, cellH) * 0.22; // protrusion length
     const canvasW = cellW + BLEED * 2 + TAB_SIZE * 2;
     const canvasH = cellH + BLEED * 2 + TAB_SIZE * 2;
-    const imageX = Number.isFinite(piece.imageX) ? piece.imageX : piece.correctX;
-    const imageY = Number.isFinite(piece.imageY) ? piece.imageY : piece.correctY;
+    const imageX = Number.isFinite(piece.imageX) ? piece.imageX : 0;
+    const imageY = Number.isFinite(piece.imageY) ? piece.imageY : 0;
+    const sourceImageW = img.naturalWidth || img.width || 1;
+    const sourceImageH = img.naturalHeight || img.height || 1;
+    const sourceX = Number.isFinite(renderOptions.sourceX) ? renderOptions.sourceX : 0;
+    const sourceY = Number.isFinite(renderOptions.sourceY) ? renderOptions.sourceY : 0;
+    const sourceW = Number.isFinite(renderOptions.sourceWidth) && renderOptions.sourceWidth > 0
+      ? renderOptions.sourceWidth
+      : sourceImageW;
+    const sourceH = Number.isFinite(renderOptions.sourceHeight) && renderOptions.sourceHeight > 0
+      ? renderOptions.sourceHeight
+      : sourceImageH;
+    const displayW = Number.isFinite(renderOptions.displayWidth) && renderOptions.displayWidth > 0
+      ? renderOptions.displayWidth
+      : sourceW;
+    const displayH = Number.isFinite(renderOptions.displayHeight) && renderOptions.displayHeight > 0
+      ? renderOptions.displayHeight
+      : sourceH;
+    const dpr = Number.isFinite(renderOptions.dpr) && renderOptions.dpr > 0
+      ? renderOptions.dpr
+      : Math.max(1, window.devicePixelRatio || 1);
+    const scaleX = displayW / sourceW;
+    const scaleY = displayH / sourceH;
 
     const offscreen = document.createElement('canvas');
-    offscreen.width  = Math.ceil(canvasW);
-    offscreen.height = Math.ceil(canvasH);
+    offscreen.width  = Math.max(1, Math.ceil(canvasW * dpr));
+    offscreen.height = Math.max(1, Math.ceil(canvasH * dpr));
     const ctx = offscreen.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
 
     // Origin inside offscreen where (0,0) of the cell sits
     const ox = BLEED + TAB_SIZE;
@@ -188,10 +213,10 @@ const PuzzleEngine = (() => {
     // the same coordinate space used by piece geometry, independent of canvas offsets.
     ctx.drawImage(
       img,
-      ox - imageX,
-      oy - imageY,
-      imgW,
-      imgH
+      ox - (sourceX + imageX) * scaleX,
+      oy - (sourceY + imageY) * scaleY,
+      sourceImageW * scaleX,
+      sourceImageH * scaleY
     );
 
     // Thin border
@@ -205,8 +230,10 @@ const PuzzleEngine = (() => {
     ctx.restore();
 
     // Store rendering metadata on the piece
-    piece.canvasW = offscreen.width;
-    piece.canvasH = offscreen.height;
+    piece.canvasW = canvasW;
+    piece.canvasH = canvasH;
+    piece.canvasPixelW = offscreen.width;
+    piece.canvasPixelH = offscreen.height;
     piece.ox = ox; // offset from canvas corner to piece cell origin
     piece.oy = oy;
 

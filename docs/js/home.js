@@ -9,7 +9,8 @@ const Home = (() => {
   let _categoryPuzzles = new Map();
   let _currentCategory = null;
   let _modalPuzzle = null;
-  let _selectedCount = 24;
+  let _selectedCount = 25;
+  const STANDARD_PIECE_COUNTS = [25, 64, 100, 144];
 
   const CATEGORY_LABELS = {
     nature: 'Природа',
@@ -169,6 +170,50 @@ const Home = (() => {
     });
   }
 
+  function _savedCountsForPuzzle(puzzle) {
+    const storagePuzzleId = Storage.getPuzzleStorageId(puzzle);
+    return [...new Set(
+      Storage.getAllSaves()
+        .filter(save => save.storagePuzzleId === storagePuzzleId)
+        .map(save => save.pieceCount)
+        .filter(count => Number.isInteger(count) && count > 0)
+    )];
+  }
+
+  function _difficultyCountsForPuzzle(puzzle) {
+    const counts = [...STANDARD_PIECE_COUNTS];
+
+    _savedCountsForPuzzle(puzzle).forEach(count => {
+      if (!counts.includes(count)) {
+        counts.push(count);
+      }
+    });
+
+    return counts;
+  }
+
+  function _renderDifficultyButtons() {
+    const container = document.getElementById('modal-piece-buttons');
+    if (!container || !_modalPuzzle) return;
+
+    const counts = _difficultyCountsForPuzzle(_modalPuzzle);
+    container.innerHTML = '';
+
+    counts.forEach(count => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'piece-count-btn';
+      btn.dataset.count = count;
+      btn.textContent = String(count);
+
+      if (!STANDARD_PIECE_COUNTS.includes(count)) {
+        btn.title = 'Старый формат сохранения';
+      }
+
+      container.appendChild(btn);
+    });
+  }
+
   function _buildCard(puzzle, forMyPuzzles) {
     // Find best save for this puzzle (most recent / most progress)
     const bestSave = _preferredSaveForPuzzle(puzzle);
@@ -233,19 +278,26 @@ const Home = (() => {
   function openDifficultyModal(puzzle) {
     _modalPuzzle = puzzle;
     const preferredSave = _preferredSaveForPuzzle(puzzle);
-    _selectedCount = preferredSave ? preferredSave.pieceCount : 24;
+    _selectedCount = preferredSave && STANDARD_PIECE_COUNTS.includes(preferredSave.pieceCount)
+      ? preferredSave.pieceCount
+      : STANDARD_PIECE_COUNTS[0];
 
     document.getElementById('modal-preview-img').src = puzzle.thumbUrl;
     document.getElementById('modal-title').textContent = puzzle.description || puzzle.title;
 
+    _renderDifficultyButtons();
     _updateModalButtons();
 
     document.getElementById('modal-overlay').classList.add('active');
   }
 
   function _updateModalButtons() {
-    const counts = [24, 64, 100, 144];
+    const counts = _difficultyCountsForPuzzle(_modalPuzzle);
     const btns = document.querySelectorAll('.piece-count-btn');
+
+    if (!counts.includes(_selectedCount)) {
+      _selectedCount = counts[0] || STANDARD_PIECE_COUNTS[0];
+    }
 
     btns.forEach(btn => {
       const count = parseInt(btn.dataset.count, 10);
@@ -277,11 +329,11 @@ const Home = (() => {
       if (e.target === document.getElementById('modal-overlay')) _closeModal();
     });
 
-    document.querySelectorAll('.piece-count-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        _selectedCount = parseInt(btn.dataset.count, 10);
-        _updateModalButtons();
-      });
+    document.getElementById('modal-piece-buttons').addEventListener('click', e => {
+      const btn = e.target.closest('.piece-count-btn');
+      if (!btn) return;
+      _selectedCount = parseInt(btn.dataset.count, 10);
+      _updateModalButtons();
     });
 
     document.getElementById('modal-start-btn').addEventListener('click', () => {

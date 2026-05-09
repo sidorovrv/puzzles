@@ -24,6 +24,7 @@ const PuzzleRender = (() => {
 
   // Snap radius (px, in assembled-canvas coordinate space)
   const SNAP_RADIUS = 28;
+  const TRAY_GESTURE_THRESHOLD = 10;
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -42,9 +43,11 @@ const PuzzleRender = (() => {
   let _trayRect        = null;
   let _dragOffsetX     = 0;
   let _dragOffsetY     = 0;
+  let _pixelRatio      = 1;
 
   // Drag state
   let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
+  let _trayGesture = null;
   let _rafId     = null;
   let _resizeRafId = null;
 
@@ -62,10 +65,12 @@ const PuzzleRender = (() => {
     _pieceCount = pieceCount;
     _img = img;
 
-    const imageAspectRatio = img.naturalWidth > 0 && img.naturalHeight > 0
-      ? img.naturalWidth / img.naturalHeight
-      : 1;
-    const { cols, rows } = PuzzleEngine.gridDims(pieceCount, imageAspectRatio);
+    const naturalWidth = img.naturalWidth || img.width || 1;
+    const naturalHeight = img.naturalHeight || img.height || 1;
+    const sourceSize = Math.max(1, Math.min(naturalWidth, naturalHeight));
+    const sourceX = Math.max(0, (naturalWidth - sourceSize) / 2);
+    const sourceY = Math.max(0, (naturalHeight - sourceSize) / 2);
+    const { cols, rows } = PuzzleEngine.gridDims(pieceCount, 1);
     _cols = cols;
     _rows = rows;
 
@@ -75,11 +80,13 @@ const PuzzleRender = (() => {
     const stagePadding = Math.max(24, Math.min(56, Math.min(_canvasW, _canvasH) * 0.05));
     const availableW = Math.max(_canvasW - stagePadding * 2, 160);
     const availableH = Math.max(_canvasH - stagePadding * 2, 160);
-    const ratio = Math.min(availableW / img.naturalWidth, availableH / img.naturalHeight);
-    const imgW = img.naturalWidth  * ratio;
-    const imgH = img.naturalHeight * ratio;
+    const ratio = Math.min(availableW / sourceSize, availableH / sourceSize);
+    const imgW = sourceSize * ratio;
+    const imgH = sourceSize * ratio;
     _cellW = imgW / cols;
     _cellH = imgH / rows;
+    const sourceCellW = sourceSize / cols;
+    const sourceCellH = sourceSize / rows;
 
     // Seed & PRNG
     _seed = Number.isFinite(savedState && savedState.seed)
@@ -88,7 +95,7 @@ const PuzzleRender = (() => {
     const rng = PuzzleEngine.mulberry32(_seed);
 
     // Generate pieces
-    _pieces = PuzzleEngine.generatePieces(cols, rows, rng, _cellW, _cellH);
+    _pieces = PuzzleEngine.generatePieces(cols, rows, rng, _cellW, _cellH, sourceCellW, sourceCellH);
 
     // Correct positions are centered on the canvas
     const offsetX = (_canvasW - imgW) / 2;
@@ -107,7 +114,15 @@ const PuzzleRender = (() => {
 
     // Build piece image canvases
     _pieceCanvases = _pieces.map(p =>
-      PuzzleEngine.clipPieceImage(img, p, _cellW, _cellH, imgW, imgH)
+      PuzzleEngine.clipPieceImage(img, p, _cellW, _cellH, {
+        sourceX,
+        sourceY,
+        sourceWidth: sourceSize,
+        sourceHeight: sourceSize,
+        displayWidth: imgW,
+        displayHeight: imgH,
+        dpr: _pixelRatio,
+      })
     );
 
     _pieces.forEach((piece, index) => {
@@ -147,25 +162,15 @@ const PuzzleRender = (() => {
     const h = area.clientHeight;
     _canvasW = w;
     _canvasH = h;
+    _pixelRatio = _getPixelRatio();
 
-    [_assembledCanvas, _floatCanvas].forEach(c => {
-      c.width  = w;
-      c.height = h;
-      c.style.width  = w + 'px';
-      c.style.height = h + 'px';
-    });
-
-    _assembledCtx = _assembledCanvas.getContext('2d');
-    _floatCtx     = _floatCanvas.getContext('2d');
+    _assembledCtx = _resizeCanvas(_assembledCanvas, w, h);
+    _floatCtx = _resizeCanvas(_floatCanvas, w, h);
 
     if (_dragCanvas && puzzleView) {
       _dragCanvasW = puzzleView.clientWidth;
       _dragCanvasH = puzzleView.clientHeight;
-      _dragCanvas.width = _dragCanvasW;
-      _dragCanvas.height = _dragCanvasH;
-      _dragCanvas.style.width = _dragCanvasW + 'px';
-      _dragCanvas.style.height = _dragCanvasH + 'px';
-      _dragCtx = _dragCanvas.getContext('2d');
+      _dragCtx = _resizeCanvas(_dragCanvas, _dragCanvasW, _dragCanvasH);
     } else {
       _dragCanvasW = 0;
       _dragCanvasH = 0;
@@ -192,10 +197,47 @@ const PuzzleRender = (() => {
     }
   }
 
+  function _getPixelRatio() {
+    const dpr = window.devicePixelRatio || 1;
+    return Number.isFinite(dpr) && dpr > 0 ? dpr : 1;
+  }
+
+  function _resizeCanvas(canvas, cssWidth, cssHeight) {
+    if (!canvas) return null;
+
+    canvas.width = Math.max(1, Math.round(cssWidth * _pixelRatio));
+    canvas.height = Math.max(1, Math.round(cssHeight * _pixelRatio));
+    canvas.style.width = cssWidth + 'px';
+    canvas.style.height = cssHeight + 'px';
+
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(_pixelRatio, 0, 0, _pixelRatio, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    return ctx;
+  }
+
   function _clearDragLayer() {
     if (_dragCtx) {
       _dragCtx.clearRect(0, 0, _dragCanvasW, _dragCanvasH);
     }
+  }
+
+  function _drawPieceCanvas(ctx, piece, x, y, width = piece.canvasW, height = piece.canvasH) {
+    const pc = _pieceCanvases[piece.id];
+    if (!pc || !ctx) return;
+
+    ctx.drawImage(
+      pc,
+      0,
+      0,
+      pc.width,
+      pc.height,
+      Math.round(x),
+      Math.round(y),
+      width,
+      height
+    );
   }
 
   function _pointInRect(clientX, clientY, rect) {
@@ -340,30 +382,10 @@ const PuzzleRender = (() => {
     if (!_assembledCtx || !_boardBounds) return;
 
     const { x, y, width, height } = _boardBounds;
-    const radius = Math.max(16, Math.min(28, Math.min(width, height) * 0.06));
 
     _assembledCtx.save();
-    _assembledCtx.shadowColor = 'rgba(0, 0, 0, 0.24)';
-    _assembledCtx.shadowBlur = 24;
-    _assembledCtx.shadowOffsetY = 10;
-    _traceRoundedRect(_assembledCtx, x, y, width, height, radius);
-    _assembledCtx.fillStyle = 'rgba(230, 236, 242, 0.9)';
-    _assembledCtx.fill();
-
-    _assembledCtx.shadowColor = 'transparent';
-    _assembledCtx.shadowBlur = 0;
-    _assembledCtx.shadowOffsetY = 0;
-    _assembledCtx.setLineDash([]);
-    _assembledCtx.lineWidth = 4;
-    _assembledCtx.strokeStyle = 'rgba(122, 136, 151, 1)';
-    _traceRoundedRect(_assembledCtx, x, y, width, height, radius);
-    _assembledCtx.stroke();
-
-    _assembledCtx.setLineDash([12, 8]);
-    _assembledCtx.lineWidth = 2;
-    _assembledCtx.strokeStyle = 'rgba(76, 175, 80, 0.6)';
-    _traceRoundedRect(_assembledCtx, x, y, width, height, radius);
-    _assembledCtx.stroke();
+    _assembledCtx.fillStyle = '#eceff2';
+    _assembledCtx.fillRect(x, y, width, height);
     _assembledCtx.restore();
   }
 
@@ -384,12 +406,11 @@ const PuzzleRender = (() => {
   }
 
   function _drawLockedPiece(piece) {
-    const pc = _pieceCanvases[piece.id];
-    if (!pc) return;
-    _assembledCtx.drawImage(
-      pc,
-      Math.round(piece.correctX - piece.ox),
-      Math.round(piece.correctY - piece.oy)
+    _drawPieceCanvas(
+      _assembledCtx,
+      piece,
+      piece.correctX - piece.ox,
+      piece.correctY - piece.oy
     );
   }
 
@@ -410,14 +431,15 @@ const PuzzleRender = (() => {
 
     unlocked.forEach(piece => {
       const pc = _pieceCanvases[piece.id];
+      if (!pc) return;
       const trayCanvas = document.createElement('canvas');
-      const scale = displaySize / Math.max(pc.width, pc.height);
-      trayCanvas.width  = Math.round(pc.width  * scale);
-      trayCanvas.height = Math.round(pc.height * scale);
+      const scale = displaySize / Math.max(piece.canvasW, piece.canvasH);
+      const trayWidth = Math.max(1, Math.round(piece.canvasW * scale));
+      const trayHeight = Math.max(1, Math.round(piece.canvasH * scale));
       trayCanvas.className = 'tray-piece';
       trayCanvas.dataset.pieceId = piece.id;
-      const tc = trayCanvas.getContext('2d');
-      tc.drawImage(pc, 0, 0, trayCanvas.width, trayCanvas.height);
+      const tc = _resizeCanvas(trayCanvas, trayWidth, trayHeight);
+      tc.drawImage(pc, 0, 0, pc.width, pc.height, 0, 0, trayWidth, trayHeight);
 
       // Store scale for hit-testing
       trayCanvas._pieceScale = scale;
@@ -451,6 +473,9 @@ const PuzzleRender = (() => {
     window.addEventListener('pointerup',   _onPointerUp);
     window.addEventListener('pointercancel', _onPointerUp);
     window.addEventListener('resize', _onResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', _onResize);
+    }
 
     // Toolbar buttons
     document.getElementById('back-btn').addEventListener('click', _onBack);
@@ -466,6 +491,9 @@ const PuzzleRender = (() => {
     window.removeEventListener('pointerup',   _onPointerUp);
     window.removeEventListener('pointercancel', _onPointerUp);
     window.removeEventListener('resize', _onResize);
+    if (window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', _onResize);
+    }
     const backBtn = document.getElementById('back-btn');
     if (backBtn) backBtn.removeEventListener('click', _onBack);
     const hintBtn = document.getElementById('hint-btn');
@@ -485,8 +513,9 @@ const PuzzleRender = (() => {
 
       const nextCanvasW = area.clientWidth;
       const nextCanvasH = area.clientHeight;
+      const nextPixelRatio = _getPixelRatio();
       if (!nextCanvasW || !nextCanvasH) return;
-      if (nextCanvasW === _canvasW && nextCanvasH === _canvasH) return;
+      if (nextCanvasW === _canvasW && nextCanvasH === _canvasH && nextPixelRatio === _pixelRatio) return;
 
       const state = _captureState(_pieces.every(piece => piece.locked));
       const scaledState = _scaleStateForCanvas(state, _canvasW, _canvasH, nextCanvasW, nextCanvasH);
@@ -498,7 +527,6 @@ const PuzzleRender = (() => {
   function _onTrayPointerDown(e) {
     const el = e.target.closest('.tray-piece');
     if (!el) return;
-    e.preventDefault();
     _refreshLayoutRects();
 
     const pieceId = parseInt(el.dataset.pieceId, 10);
@@ -509,14 +537,42 @@ const PuzzleRender = (() => {
     const trayScrollLeft = tray ? tray.scrollLeft : 0;
     const originTrayIndex = piece.trayIndex;
     const rect = el.getBoundingClientRect();
+    if (e.pointerType === 'touch' || e.pointerType === 'pen') {
+      _trayGesture = {
+        captureEl: tray,
+        piece,
+        originTrayIndex,
+        pointerId: e.pointerId,
+        rect,
+        startClientX: e.clientX,
+        startClientY: e.clientY,
+        trayScrollLeft,
+      };
+      return;
+    }
+
+    e.preventDefault();
+    _startTrayDrag({
+      captureEl: tray,
+      piece,
+      originTrayIndex,
+      pointerId: e.pointerId,
+      rect,
+      trayScrollLeft,
+    }, e);
+  }
+
+  function _startTrayDrag(gesture, event) {
+    const { piece, originTrayIndex, rect } = gesture;
+    const tray = document.getElementById('piece-tray');
+    const trayScrollLeft = tray ? tray.scrollLeft : gesture.trayScrollLeft;
     const canvasRect = _canvasRect || _floatCanvas.getBoundingClientRect();
 
-    // Place piece onto float canvas at a sensible starting position
     piece.currentX = rect.left - canvasRect.left + piece.ox;
     piece.currentY = rect.top  - canvasRect.top  + piece.oy;
-
     piece.location = 'board';
     piece.trayIndex = -1;
+
     _normalizeTrayIndices();
     _populateTray(trayScrollLeft);
 
@@ -524,10 +580,20 @@ const PuzzleRender = (() => {
       piece,
       fromTray: true,
       originTrayIndex,
-      offsetX: (e.clientX - rect.left) * (piece.canvasW / rect.width)  - piece.ox,
-      offsetY: (e.clientY - rect.top)  * (piece.canvasH / rect.height) - piece.oy,
+      offsetX: (event.clientX - rect.left) * (piece.canvasW / rect.width) - piece.ox,
+      offsetY: (event.clientY - rect.top) * (piece.canvasH / rect.height) - piece.oy,
     };
-    _floatCanvas.setPointerCapture(e.pointerId);
+    _trayGesture = null;
+
+    if (gesture.captureEl && typeof gesture.captureEl.setPointerCapture === 'function') {
+      try {
+        gesture.captureEl.setPointerCapture(gesture.pointerId);
+      } catch (err) {
+        // Ignore browsers that reject late pointer capture during tray promotion.
+      }
+    }
+
+    _onPointerMove(event);
   }
 
   function _onCanvasPointerDown(e) {
@@ -565,6 +631,27 @@ const PuzzleRender = (() => {
   }
 
   function _onPointerMove(e) {
+    if (_trayGesture && !_dragging && e.pointerId === _trayGesture.pointerId) {
+      const dx = e.clientX - _trayGesture.startClientX;
+      const dy = e.clientY - _trayGesture.startClientY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+
+      if (absX < TRAY_GESTURE_THRESHOLD && absY < TRAY_GESTURE_THRESHOLD) {
+        return;
+      }
+
+      if (-dy >= TRAY_GESTURE_THRESHOLD && absY > absX) {
+        e.preventDefault();
+        _startTrayDrag(_trayGesture, e);
+        return;
+      }
+
+      if (absX >= absY || dy > 0) {
+        _trayGesture = null;
+      }
+    }
+
     if (!_dragging) return;
     const canvasRect = _canvasRect || _floatCanvas.getBoundingClientRect();
     const mx = e.clientX - canvasRect.left;
@@ -574,6 +661,19 @@ const PuzzleRender = (() => {
   }
 
   function _onPointerUp(e) {
+    if (_trayGesture && e.pointerId === _trayGesture.pointerId) {
+      if (_trayGesture.captureEl && typeof _trayGesture.captureEl.hasPointerCapture === 'function') {
+        try {
+          if (_trayGesture.captureEl.hasPointerCapture(e.pointerId)) {
+            _trayGesture.captureEl.releasePointerCapture(e.pointerId);
+          }
+        } catch (err) {
+          // Ignore browsers that do not keep pointer capture state here.
+        }
+      }
+      _trayGesture = null;
+    }
+
     if (!_dragging) return;
     _refreshLayoutRects();
 
@@ -630,28 +730,25 @@ const PuzzleRender = (() => {
 
     const boardPieces = _boardPieces();
     boardPieces.filter(piece => !_dragging || piece.id !== _dragging.piece.id).forEach(p => {
-      const pc = _pieceCanvases[p.id];
-      if (!pc) return;
-      _floatCtx.drawImage(
-        pc,
-        Math.round(p.currentX - p.ox),
-        Math.round(p.currentY - p.oy)
+      _drawPieceCanvas(
+        _floatCtx,
+        p,
+        p.currentX - p.ox,
+        p.currentY - p.oy
       );
     });
 
     if (_dragging && _dragging.piece.location === 'board') {
       const piece = _dragging.piece;
-      const pc = _pieceCanvases[piece.id];
       const drawCtx = _dragCtx || _floatCtx;
       const offsetX = _dragCtx ? _dragOffsetX : 0;
       const offsetY = _dragCtx ? _dragOffsetY : 0;
-      if (pc) {
-        drawCtx.drawImage(
-          pc,
-          Math.round(offsetX + piece.currentX - piece.ox),
-          Math.round(offsetY + piece.currentY - piece.oy)
-        );
-      }
+      _drawPieceCanvas(
+        drawCtx,
+        piece,
+        offsetX + piece.currentX - piece.ox,
+        offsetY + piece.currentY - piece.oy
+      );
     }
 
     _rafId = requestAnimationFrame(_tick);
@@ -757,6 +854,7 @@ const PuzzleRender = (() => {
     _pieceCanvases = [];
     _boardBounds = null;
     _dragging = null;
+    _trayGesture = null;
     _puzzleViewRect = null;
     _canvasRect = null;
     _trayRect = null;
