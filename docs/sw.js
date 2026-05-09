@@ -1,4 +1,4 @@
-const SHELL_VERSION = '20260509-6';
+const SHELL_VERSION = '20260509-7';
 const SHELL_CACHE = 'puzzle-shell-' + SHELL_VERSION;
 const IMAGE_CACHE = 'puzzle-images-v1';
 
@@ -7,11 +7,11 @@ const SHELL_ASSETS = [
   './index.html',
   './manifest.json',
   './css/variables.css?v=20260509-5',
-  './css/app.css?v=20260509-5',
+  './css/app.css?v=20260509-7',
   './css/puzzle.css?v=20260509-5',
   './js/storage.js?v=20260509-6',
   './js/puzzle-engine.js?v=20260509-6',
-  './js/puzzle-render.js?v=20260509-6',
+  './js/puzzle-render.js?v=20260509-7',
   './js/home.js?v=20260509-6',
   './js/app.js?v=20260509-6',
   './data/puzzles.json',

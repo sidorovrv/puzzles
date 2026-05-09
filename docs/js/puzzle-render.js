@@ -46,6 +46,8 @@ const PuzzleRender = (() => {
   let _dragOffsetX     = 0;
   let _dragOffsetY     = 0;
   let _pixelRatio      = 1;
+  let _squareImageCrop = null;
+  let _hintImageSrc    = '';
 
   // Drag state
   let _dragging  = null; // { piece, startX, startY, offsetX, offsetY, fromTray }
@@ -72,6 +74,8 @@ const PuzzleRender = (() => {
     const sourceSize = Math.max(1, Math.min(naturalWidth, naturalHeight));
     const sourceX = Math.max(0, (naturalWidth - sourceSize) / 2);
     const sourceY = Math.max(0, (naturalHeight - sourceSize) / 2);
+    _squareImageCrop = { x: sourceX, y: sourceY, size: sourceSize };
+    _hintImageSrc = '';
     const { cols, rows } = PuzzleEngine.gridDims(pieceCount, 1);
     _cols = cols;
     _rows = rows;
@@ -288,6 +292,43 @@ const PuzzleRender = (() => {
       width,
       height
     );
+  }
+
+  function _getSquareHintSrc() {
+    if (_hintImageSrc) return _hintImageSrc;
+    if (!_img || !_squareImageCrop) return _img ? _img.src : '';
+
+    const hintSize = Math.max(
+      1,
+      Math.round(
+        Math.min(
+          _squareImageCrop.size,
+          Math.max(_canvasW, _canvasH) * _pixelRatio,
+          1600
+        )
+      )
+    );
+    const canvas = document.createElement('canvas');
+    canvas.width = hintSize;
+    canvas.height = hintSize;
+
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(
+      _img,
+      _squareImageCrop.x,
+      _squareImageCrop.y,
+      _squareImageCrop.size,
+      _squareImageCrop.size,
+      0,
+      0,
+      hintSize,
+      hintSize
+    );
+
+    _hintImageSrc = canvas.toDataURL();
+    return _hintImageSrc;
   }
 
   function _pointInRect(clientX, clientY, rect) {
@@ -835,7 +876,7 @@ const PuzzleRender = (() => {
   function _onHint() {
     const overlay = document.getElementById('hint-overlay');
     const hintImg = document.getElementById('hint-img');
-    hintImg.src = _img.src;
+    hintImg.src = _getSquareHintSrc();
     overlay.classList.add('active');
     setTimeout(() => {
       overlay.classList.remove('active');
@@ -937,6 +978,8 @@ const PuzzleRender = (() => {
     _trayRect = null;
     _dragOffsetX = 0;
     _dragOffsetY = 0;
+    _squareImageCrop = null;
+    _hintImageSrc = '';
     _puzzle = null;
     _puzzleId = null;
     _storagePuzzleId = null;
