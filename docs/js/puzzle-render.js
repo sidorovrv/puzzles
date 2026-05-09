@@ -205,12 +205,16 @@ const PuzzleRender = (() => {
   }
 
   function _unbindEvents() {
+    if (!_floatCanvas) return; // never started — nothing was bound
     _floatCanvas.removeEventListener('pointerdown', _onCanvasPointerDown);
-    document.getElementById('piece-tray').removeEventListener('pointerdown', _onTrayPointerDown);
+    const tray = document.getElementById('piece-tray');
+    if (tray) tray.removeEventListener('pointerdown', _onTrayPointerDown);
     window.removeEventListener('pointermove', _onPointerMove);
     window.removeEventListener('pointerup',   _onPointerUp);
-    document.getElementById('back-btn').removeEventListener('click', _onBack);
-    document.getElementById('hint-btn').removeEventListener('click', _onHint);
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) backBtn.removeEventListener('click', _onBack);
+    const hintBtn = document.getElementById('hint-btn');
+    if (hintBtn) hintBtn.removeEventListener('click', _onHint);
   }
 
   // ── Pointer handlers ─────────────────────────────────
