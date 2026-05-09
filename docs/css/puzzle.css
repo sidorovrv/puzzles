@@ -125,31 +125,6 @@
   display: none;
 }
 
-#touch-debug-log {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: min(44vw, 320px);
-  max-height: 42%;
-  margin: 0;
-  padding: 10px 12px;
-  overflow: auto;
-  resize: none;
-  border: 0;
-  outline: none;
-  border-radius: 10px;
-  background: rgba(20, 24, 31, 0.82);
-  color: #f4f7fb;
-  font: 11px/1.35 Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
-  white-space: pre-wrap;
-  pointer-events: auto;
-  user-select: text;
-  -webkit-user-select: text;
-  -webkit-appearance: none;
-  z-index: 18;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-}
-
 /* ── Piece Tray ─────────────────────────────────────── */
 #piece-tray {
   height: var(--tray-height);
