@@ -223,6 +223,36 @@ const PuzzleRender = (() => {
     }
   }
 
+  function _clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function _getPieceBounds(piece, currentX = piece.currentX, currentY = piece.currentY) {
+    const left = currentX - piece.ox;
+    const top = currentY - piece.oy;
+
+    return {
+      left,
+      top,
+      right: left + piece.canvasW,
+      bottom: top + piece.canvasH,
+      width: piece.canvasW,
+      height: piece.canvasH,
+    };
+  }
+
+  function _constrainPieceToPlayArea(piece, targetX, targetY, { allowBottomOverflow = false } = {}) {
+    const minX = piece.ox;
+    const maxX = Math.max(minX, _canvasW - (piece.canvasW - piece.ox));
+    const minY = piece.oy;
+    const maxY = Math.max(minY, _canvasH - (piece.canvasH - piece.oy));
+
+    return {
+      x: _clamp(targetX, minX, maxX),
+      y: allowBottomOverflow ? Math.max(targetY, minY) : _clamp(targetY, minY, maxY),
+    };
+  }
+
   function _drawPieceCanvas(ctx, piece, x, y, width = piece.canvasW, height = piece.canvasH) {
     const pc = _pieceCanvases[piece.id];
     if (!pc || !ctx) return;
@@ -641,13 +671,13 @@ const PuzzleRender = (() => {
         return;
       }
 
-      if (-dy >= TRAY_GESTURE_THRESHOLD && absY > absX) {
+      if (-dy >= TRAY_GESTURE_THRESHOLD && -dy >= absX) {
         e.preventDefault();
         _startTrayDrag(_trayGesture, e);
         return;
       }
 
-      if (absX >= absY || dy > 0) {
+      if (absX > -dy || dy > 0) {
         _trayGesture = null;
       }
     }
@@ -656,8 +686,14 @@ const PuzzleRender = (() => {
     const canvasRect = _canvasRect || _floatCanvas.getBoundingClientRect();
     const mx = e.clientX - canvasRect.left;
     const my = e.clientY - canvasRect.top;
-    _dragging.piece.currentX = mx - _dragging.offsetX;
-    _dragging.piece.currentY = my - _dragging.offsetY;
+    const nextPosition = _constrainPieceToPlayArea(
+      _dragging.piece,
+      mx - _dragging.offsetX,
+      my - _dragging.offsetY,
+      { allowBottomOverflow: _dragging.fromTray }
+    );
+    _dragging.piece.currentX = nextPosition.x;
+    _dragging.piece.currentY = nextPosition.y;
   }
 
   function _onPointerUp(e) {
@@ -684,6 +720,14 @@ const PuzzleRender = (() => {
 
     if (_pointInRect(e.clientX, e.clientY, _trayRect)) {
       _returnPieceToTray(piece, fromTray ? originTrayIndex : _trayPieces().length);
+      _autoSave(_pieces.every(candidate => candidate.locked));
+      Home.refreshAfterSave();
+      return;
+    }
+
+    const pieceBounds = _getPieceBounds(piece);
+    if (fromTray && pieceBounds.bottom > _canvasH) {
+      _returnPieceToTray(piece, originTrayIndex);
       _autoSave(_pieces.every(candidate => candidate.locked));
       Home.refreshAfterSave();
       return;
@@ -740,14 +784,11 @@ const PuzzleRender = (() => {
 
     if (_dragging && _dragging.piece.location === 'board') {
       const piece = _dragging.piece;
-      const drawCtx = _dragCtx || _floatCtx;
-      const offsetX = _dragCtx ? _dragOffsetX : 0;
-      const offsetY = _dragCtx ? _dragOffsetY : 0;
       _drawPieceCanvas(
-        drawCtx,
+        _floatCtx,
         piece,
-        offsetX + piece.currentX - piece.ox,
-        offsetY + piece.currentY - piece.oy
+        piece.currentX - piece.ox,
+        piece.currentY - piece.oy
       );
     }
 
