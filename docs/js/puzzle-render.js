@@ -25,8 +25,8 @@ const PuzzleRender = (() => {
   // Snap radius (px, in assembled-canvas coordinate space)
   const SNAP_RADIUS = 28;
   const TRAY_GESTURE_THRESHOLD = 10;
-  const TRAY_PULL_MAX_ANGLE = Math.PI / 4;
-  const TRAY_SCROLL_MAX_ANGLE = Math.PI / 6;
+  const TRAY_SCROLL_RATIO = 3;
+  const TRAY_SCROLL_WINDOW_MS = 500;
 
   // Canvas elements
   let _assembledCanvas = null;
@@ -229,20 +229,15 @@ const PuzzleRender = (() => {
     return Math.min(Math.max(value, min), max);
   }
 
-  function _isWithinTrayPullAngle(dx, dy) {
-    const upwardDistance = -dy;
-    if (upwardDistance < TRAY_GESTURE_THRESHOLD) return false;
+  function _shouldStartTrayScroll(dx, dy, startedAt) {
+    const elapsed = performance.now() - startedAt;
+    if (elapsed > TRAY_SCROLL_WINDOW_MS) return false;
 
-    const angleFromVertical = Math.atan2(Math.abs(dx), upwardDistance);
-    return angleFromVertical <= TRAY_PULL_MAX_ANGLE;
-  }
-
-  function _isClearlyHorizontalTrayScroll(dx, dy) {
     const horizontalDistance = Math.abs(dx);
+    const verticalDistance = Math.abs(dy);
     if (horizontalDistance < TRAY_GESTURE_THRESHOLD) return false;
 
-    const angleFromHorizontal = Math.atan2(Math.abs(dy), horizontalDistance);
-    return angleFromHorizontal <= TRAY_SCROLL_MAX_ANGLE;
+    return horizontalDistance >= verticalDistance * TRAY_SCROLL_RATIO;
   }
 
   function _updateTrayScroll(dx) {
@@ -602,6 +597,7 @@ const PuzzleRender = (() => {
         rect,
         startClientX: e.clientX,
         startClientY: e.clientY,
+        startedAt: performance.now(),
         trayScrollLeft,
       };
 
@@ -710,18 +706,15 @@ const PuzzleRender = (() => {
         return;
       }
 
-      if (_isWithinTrayPullAngle(dx, dy)) {
-        e.preventDefault();
-        _startTrayDrag(_trayGesture, e);
-        return;
-      }
-
-      if (_isClearlyHorizontalTrayScroll(dx, dy)) {
+      if (_shouldStartTrayScroll(dx, dy, _trayGesture.startedAt)) {
         e.preventDefault();
         _trayGesture.mode = 'scrolling';
         _updateTrayScroll(dx);
+        return;
       }
 
+      e.preventDefault();
+      _startTrayDrag(_trayGesture, e);
       return;
     }
 
